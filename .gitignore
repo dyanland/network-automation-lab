@@ -1,0 +1,32 @@
+# Sensitive files
+*.key
+*.pem
+*password*
+*secret*
+credentials/
+.env
+.vault_pass
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Ansible
+*.retry
+.ansible/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+logs/
