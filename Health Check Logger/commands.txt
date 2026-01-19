@@ -1,0 +1,43 @@
+term len 0
+show version
+show platform
+show inventory
+show environment  altitude
+show fpd package
+show redundancy
+show operational Platform
+show sdr
+show install active summary
+show install inactive summary
+show environment fans
+show diag details
+show inventory all
+show context location all
+show users
+show diag details
+show inventory
+show filesystem
+show ipv4 vrf all interface brief
+show interfaces
+show process cpu
+show run
+show logging last 300
+show environment temperatures
+show cdp neighbors
+show cdp neighbors detail
+show ipv4 vrf all interface brief
+show ipv4 interface br
+show interface
+show bundle brief
+show isis neighbor
+show isis topology
+show isis database
+show isis adjacency
+show isis interface
+show route summary
+show bgp summary
+show bgp table
+show bgp vpnv4 unicast summary
+show logging last 1000
+show alarms brief system active
+show process blocked
