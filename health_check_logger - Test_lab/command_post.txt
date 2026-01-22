@@ -1,0 +1,73 @@
+# ================================================================================
+# MERALCO Post-Migration Verification Commands
+# Execute after completing ASR9010 to ASR9906 migration
+# Comprehensive validation for Change Management sign-off
+# ================================================================================
+
+# ==============================================================================
+# SECTION 1: SYSTEM VALIDATION
+# ==============================================================================
+show version
+show platform
+show redundancy
+show install active summary
+
+# ==============================================================================
+# SECTION 2: INTERFACE VALIDATION
+# ==============================================================================
+show interfaces brief
+show interfaces counters errors
+show bundle bundle-ether
+show lacp bundle-ether
+
+# ==============================================================================
+# SECTION 3: ROUTING VALIDATION
+# ==============================================================================
+show ospf neighbor
+show ospf database summary
+show bgp summary
+show bgp vpnv4 unicast summary
+show bgp neighbors | include state|Established
+
+# ==============================================================================
+# SECTION 4: MPLS AND SEGMENT ROUTING VALIDATION
+# ==============================================================================
+show mpls ldp neighbor
+show mpls forwarding summary
+show segment-routing local-block
+show mpls traffic-eng tunnels brief
+
+# ==============================================================================
+# SECTION 5: CRITICAL SERVICE VRF VALIDATION
+# ==============================================================================
+# SCADA - Must have exact route count match
+show route vrf VPN_SCADA summary
+show route vrf VPN_SCADA
+
+# ADMS - Critical for distribution management
+show route vrf VPN_ADMS summary
+show route vrf VPN_ADMS
+
+# Teleprotection - Critical for grid stability
+show route vrf VPN_Telepro summary
+show route vrf VPN_Telepro
+
+# TETRA - Radio communication
+show route vrf VPN_Tetra summary
+
+# ==============================================================================
+# SECTION 6: L2VPN VALIDATION
+# ==============================================================================
+show l2vpn xconnect summary
+show l2vpn bridge-domain summary
+
+# ==============================================================================
+# SECTION 7: BFD VALIDATION
+# ==============================================================================
+show bfd session
+show bfd summary
+
+# ==============================================================================
+# SECTION 8: LOGGING CHECK
+# ==============================================================================
+show logging last 50

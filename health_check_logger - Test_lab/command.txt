@@ -1,0 +1,133 @@
+# ================================================================================
+# MERALCO Network Migration Health Check Commands
+# Target: ASR9010 (Legacy Core) and ASR9906 (New Core) - IOS-XR
+# Also compatible with: ASR903/ASR920 (Aggregation) - IOS-XE
+# ================================================================================
+# Usage: This file contains show commands for health check collection
+#        Lines starting with # are comments and will be ignored
+#        Commands are executed in sequence on each target device
+# ================================================================================
+
+# ==============================================================================
+# SECTION 1: SYSTEM HEALTH
+# ==============================================================================
+show version
+show platform
+show inventory
+show environment all
+show redundancy
+show redundancy summary
+show fpd package
+show install active summary
+admin show environment
+admin show platform
+
+# ==============================================================================
+# SECTION 2: INTERFACE STATUS
+# ==============================================================================
+show interfaces brief
+show interfaces summary
+show interfaces description
+show ipv4 interface brief
+show bundle bundle-ether
+show lacp bundle-ether
+show lldp neighbors
+show cdp neighbors
+
+# ==============================================================================
+# SECTION 3: ROUTING - OSPF
+# ==============================================================================
+show ospf neighbor
+show ospf interface brief
+show ospf database summary
+show route ospf
+show ospf statistics
+
+# ==============================================================================
+# SECTION 4: ROUTING - BGP
+# ==============================================================================
+show bgp summary
+show bgp vpnv4 unicast summary
+show bgp neighbors
+show bgp vpnv4 unicast all
+show bgp l2vpn vpls summary
+show bgp all summary
+
+# ==============================================================================
+# SECTION 5: MPLS AND SEGMENT ROUTING
+# ==============================================================================
+show mpls ldp neighbor
+show mpls ldp neighbor brief
+show mpls ldp bindings summary
+show mpls forwarding
+show mpls forwarding summary
+show mpls interfaces
+show segment-routing local-block
+show isis segment-routing label table
+show mpls traffic-eng tunnels brief
+
+# ==============================================================================
+# SECTION 6: L3VPN SERVICES
+# ==============================================================================
+show vrf all
+show vrf all detail
+show route vrf all summary
+show bgp vrf all summary
+
+# Critical MERALCO VRFs
+show route vrf VPN_SCADA
+show route vrf VPN_SCADA summary
+show route vrf VPN_ADMS
+show route vrf VPN_ADMS summary
+show route vrf VPN_Telepro
+show route vrf VPN_Telepro summary
+show route vrf VPN_Tetra
+show route vrf VPN_Tetra summary
+show route vrf VPN_CCTV
+show route vrf VPN_CCTV summary
+show route vrf VPN_OT_Mgt
+show route vrf VPN_OT_Mgt summary
+show route vrf VPN_IT_Mgt
+show route vrf VPN_IT_Mgt summary
+show route vrf VPN_Metering
+show route vrf VPN_Metering summary
+show route vrf VPN_Data_Apps
+show route vrf VPN_Data_Apps summary
+show route vrf VPN_VoIP
+show route vrf VPN_VoIP summary
+show route vrf VPN_Video
+show route vrf VPN_Video summary
+
+# ==============================================================================
+# SECTION 7: L2VPN SERVICES
+# ==============================================================================
+show l2vpn xconnect summary
+show l2vpn bridge-domain summary
+show l2vpn discovery summary
+show l2vpn forwarding summary
+
+# ==============================================================================
+# SECTION 8: BFD (Bidirectional Forwarding Detection)
+# ==============================================================================
+show bfd session
+show bfd neighbors
+show bfd summary
+
+# ==============================================================================
+# SECTION 9: QOS
+# ==============================================================================
+show policy-map interface all
+show qos interface all
+
+# ==============================================================================
+# SECTION 10: LOGS AND ERRORS
+# ==============================================================================
+show logging last 100
+show context
+show interface counters errors
+show controllers optics 0/0/0/0
+
+# ==============================================================================
+# SECTION 11: CONFIGURATION BACKUP
+# ==============================================================================
+show running-config

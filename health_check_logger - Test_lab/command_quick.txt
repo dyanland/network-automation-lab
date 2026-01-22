@@ -1,0 +1,26 @@
+# ================================================================================
+# MERALCO Quick Health Check Commands
+# For rapid verification during maintenance windows
+# Estimated execution time: ~30 seconds per device
+# ================================================================================
+
+# System Status
+show version brief
+show platform
+
+# Routing Health
+show ospf neighbor
+show bgp summary
+show bgp vpnv4 unicast summary
+
+# MPLS Status
+show mpls ldp neighbor brief
+show mpls forwarding summary
+
+# Critical VRF Status
+show route vrf VPN_SCADA summary
+show route vrf VPN_ADMS summary
+show route vrf VPN_Telepro summary
+
+# Interface Health
+show interfaces brief | exclude unassigned
