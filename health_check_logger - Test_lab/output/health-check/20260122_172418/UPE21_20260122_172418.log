@@ -1,0 +1,873 @@
+================================================================================
+ MERALCO Network Health Check Logger
+ Phase: health-check
+================================================================================
+ Hostname:    UPE21
+ IP Address:  172.10.1.21
+ Device Type: ASR903
+ Site:        
+ Role:        PE Aggregation
+ Timestamp:   2026-01-22 17:24:24 UTC
+================================================================================
+
+--------------------------------------------------------------------------------
+ Command: show version
+ Duration: 606.481204ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.21' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.21 port 22:11: 
+Disconnected from 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show platform
+ Duration: 62.229157ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show inventory
+ Duration: 32.120591ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show environment all
+ Duration: 39.469428ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show redundancy
+ Duration: 31.637328ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show redundancy summary
+ Duration: 44.40668ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show fpd package
+ Duration: 49.741243ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show install active summary
+ Duration: 38.904809ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: admin show environment
+ Duration: 50.007069ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: admin show platform
+ Duration: 30.137393ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces brief
+ Duration: 49.993362ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces summary
+ Duration: 45.0763ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces description
+ Duration: 526.450498ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.21' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.21 port 22:11: 
+Disconnected from 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ipv4 interface brief
+ Duration: 90.004095ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bundle bundle-ether
+ Duration: 42.364932ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show lacp bundle-ether
+ Duration: 43.803807ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show lldp neighbors
+ Duration: 39.460408ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show cdp neighbors
+ Duration: 45.545917ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf neighbor
+ Duration: 50.745566ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf interface brief
+ Duration: 33.466811ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf database summary
+ Duration: 45.51465ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route ospf
+ Duration: 57.777796ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf statistics
+ Duration: 543.946521ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.21' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.21 port 22:11: 
+Disconnected from 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp summary
+ Duration: 40.847133ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast summary
+ Duration: 42.607441ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp neighbors
+ Duration: 43.334922ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast all
+ Duration: 39.906165ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp l2vpn vpls summary
+ Duration: 36.761595ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp all summary
+ Duration: 32.240727ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor
+ Duration: 31.876929ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor brief
+ Duration: 26.60159ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp bindings summary
+ Duration: 29.454352ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding
+ Duration: 36.557824ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding summary
+ Duration: 35.971271ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls interfaces
+ Duration: 34.955936ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show segment-routing local-block
+ Duration: 53.927007ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show isis segment-routing label table
+ Duration: 550.658535ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.21' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.21 port 22:11: 
+Disconnected from 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls traffic-eng tunnels brief
+ Duration: 71.612618ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show vrf all
+ Duration: 34.516486ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show vrf all detail
+ Duration: 23.333483ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf all summary
+ Duration: 22.905744ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vrf all summary
+ Duration: 29.577103ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA
+ Duration: 30.131754ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA summary
+ Duration: 34.697501ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS
+ Duration: 45.173776ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS summary
+ Duration: 41.05855ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro
+ Duration: 39.764758ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro summary
+ Duration: 32.890373ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra
+ Duration: 30.562467ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra summary
+ Duration: 56.462228ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV
+ Duration: 538.384369ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.21' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.21 port 22:11: 
+Disconnected from 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV summary
+ Duration: 85.029263ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt
+ Duration: 34.343239ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt summary
+ Duration: 30.636045ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt
+ Duration: 29.930823ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt summary
+ Duration: 27.420347ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering
+ Duration: 31.66144ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering summary
+ Duration: 33.621692ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps
+ Duration: 26.365189ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps summary
+ Duration: 39.842239ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP
+ Duration: 28.482184ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP summary
+ Duration: 33.905504ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video
+ Duration: 34.835369ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video summary
+ Duration: 29.560465ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn xconnect summary
+ Duration: 470.809027ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.21' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.21 port 22:11: 
+Disconnected from 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn bridge-domain summary
+ Duration: 73.232219ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn discovery summary
+ Duration: 39.91465ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn forwarding summary
+ Duration: 37.422059ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd session
+ Duration: 37.071136ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd neighbors
+ Duration: 37.991885ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd summary
+ Duration: 33.572878ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show policy-map interface all
+ Duration: 32.228539ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show qos interface all
+ Duration: 31.568375ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show logging last 100
+ Duration: 33.911244ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show context
+ Duration: 33.370128ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interface counters errors
+ Duration: 36.252269ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show controllers optics 0/0/0/0
+ Duration: 31.833162ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show running-config
+ Duration: 53.599476ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.21 port 22
+
+
+================================================================================
+ End of Health Check Log
+================================================================================

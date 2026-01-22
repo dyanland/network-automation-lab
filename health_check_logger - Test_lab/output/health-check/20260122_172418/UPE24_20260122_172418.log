@@ -1,0 +1,1289 @@
+================================================================================
+ MERALCO Network Health Check Logger
+ Phase: health-check
+================================================================================
+ Hostname:    UPE24
+ IP Address:  172.10.1.24
+ Device Type: ASR903
+ Site:        
+ Role:        PE Aggregation
+ Timestamp:   2026-01-22 17:24:42 UTC
+================================================================================
+
+--------------------------------------------------------------------------------
+ Command: show version
+ Duration: 910.329654ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show platform
+ Duration: 83.439027ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show inventory
+ Duration: 84.399021ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show environment all
+ Duration: 1.313182313s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show redundancy
+ Duration: 1.206016526s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show redundancy summary
+ Duration: 846.475282ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show fpd package
+ Duration: 103.423868ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show install active summary
+ Duration: 100.405184ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: admin show environment
+ Duration: 1.309616846s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: admin show platform
+ Duration: 716.125637ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces brief
+ Duration: 112.544781ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces summary
+ Duration: 101.463902ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces description
+ Duration: 55.363609ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ipv4 interface brief
+ Duration: 81.469989ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bundle bundle-ether
+ Duration: 704.781822ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show lacp bundle-ether
+ Duration: 121.495737ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show lldp neighbors
+ Duration: 84.871554ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show cdp neighbors
+ Duration: 63.05291ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf neighbor
+ Duration: 61.432059ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf interface brief
+ Duration: 1.099763986s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf database summary
+ Duration: 702.196684ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route ospf
+ Duration: 154.365884ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf statistics
+ Duration: 94.925266ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp summary
+ Duration: 76.351425ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast summary
+ Duration: 745.092492ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp neighbors
+ Duration: 134.451577ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast all
+ Duration: 132.492876ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp l2vpn vpls summary
+ Duration: 60.047797ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp all summary
+ Duration: 827.867145ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor
+ Duration: 155.11443ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor brief
+ Duration: 95.496254ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp bindings summary
+ Duration: 757.208477ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding
+ Duration: 125.005026ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding summary
+ Duration: 52.581965ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls interfaces
+ Duration: 54.529641ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show segment-routing local-block
+ Duration: 106.445627ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show isis segment-routing label table
+ Duration: 787.904573ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls traffic-eng tunnels brief
+ Duration: 86.038222ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show vrf all
+ Duration: 79.042771ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show vrf all detail
+ Duration: 802.394627ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf all summary
+ Duration: 121.856053ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vrf all summary
+ Duration: 113.799131ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA
+ Duration: 74.25618ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA summary
+ Duration: 726.101796ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS
+ Duration: 98.277588ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS summary
+ Duration: 106.160473ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro
+ Duration: 111.199923ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro summary
+ Duration: 697.852478ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra
+ Duration: 139.483187ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra summary
+ Duration: 77.44768ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV
+ Duration: 73.734408ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV summary
+ Duration: 108.483445ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt
+ Duration: 702.693099ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt summary
+ Duration: 107.127063ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt
+ Duration: 74.143731ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt summary
+ Duration: 43.056801ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering
+ Duration: 65.110813ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering summary
+ Duration: 53.667823ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps
+ Duration: 588.329457ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps summary
+ Duration: 70.777427ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP
+ Duration: 87.373561ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP summary
+ Duration: 61.566825ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video
+ Duration: 49.131771ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video summary
+ Duration: 105.742052ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn xconnect summary
+ Duration: 52.715902ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn bridge-domain summary
+ Duration: 593.942657ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn discovery summary
+ Duration: 107.489808ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn forwarding summary
+ Duration: 69.699899ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd session
+ Duration: 78.777416ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd neighbors
+ Duration: 53.000963ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd summary
+ Duration: 100.865859ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show policy-map interface all
+ Duration: 1.18379845s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show qos interface all
+ Duration: 701.983048ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show logging last 100
+ Duration: 124.120561ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show context
+ Duration: 79.387527ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interface counters errors
+ Duration: 108.607595ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show controllers optics 0/0/0/0
+ Duration: 101.078341ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.24 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show running-config
+ Duration: 596.731342ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.24' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.24 port 22:11: 
+Disconnected from 172.10.1.24 port 22
+
+
+================================================================================
+ End of Health Check Log
+================================================================================
