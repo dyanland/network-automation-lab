@@ -24,8 +24,8 @@ UPE24
 # Uncomment devices as needed for specific grid migration phases
 
 # Plaridel-Duhat Grid
-#SR201
-#SR204
+SR201
+SR204
 #SR101
 #SR104
 
@@ -39,13 +39,13 @@ UPE24
 # ==============================================================================
 # Uncomment as needed for local port migration
 
-#SR202
-#SR203
+SR202
+SR203
 #SR102
 #SR103
 
 # ==============================================================================
 # 9300 SWITCHES
 # ==============================================================================
-#Switch1
+Switch1
 #Switch2
