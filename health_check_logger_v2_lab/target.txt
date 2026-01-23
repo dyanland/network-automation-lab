@@ -1,0 +1,18 @@
+# ================================================================================
+# MERALCO Network Migration - Target Devices List
+# ================================================================================
+
+# IOS-XR Devices (ASR9K)
+UPE1
+UPE9
+UPE21
+UPE24
+
+# IOS-XE Devices (ASR903/920 equivalent)
+SR201
+SR202
+SR203
+SR204
+
+# L2 Switch
+Switch1
