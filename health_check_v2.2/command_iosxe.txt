@@ -1,0 +1,24 @@
+# ============================================
+# IOS-XE Commands (ASR903/920/ISR/IOSv)
+# ============================================
+show version
+show platform
+show inventory
+show redundancy
+show ip interface brief
+show interfaces description
+show interfaces status
+show ip ospf neighbor
+show ip ospf interface brief
+show bgp summary
+show bgp vpnv4 unicast all summary
+show mpls ldp neighbor
+show mpls forwarding-table summary
+show mpls interfaces
+show vrf
+show ip route vrf * summary
+show xconnect all
+show l2vpn service all
+show bfd neighbors
+show logging | tail 50
+show running-config

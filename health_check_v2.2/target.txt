@@ -1,0 +1,10 @@
+# Target devices
+UPE1
+UPE9
+UPE21
+UPE24
+SR201
+SR202
+SR203
+SR204
+Switch1
