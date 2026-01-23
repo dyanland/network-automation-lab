@@ -1,0 +1,25 @@
+# ============================================
+# IOS-XR Commands (ASR9K/XRv/NCS)
+# ============================================
+show version
+show platform
+show inventory
+show redundancy
+show interfaces brief
+show interfaces description
+show ipv4 interface brief
+show ospf neighbor
+show ospf interface brief
+show bgp summary
+show bgp vpnv4 unicast summary
+show mpls ldp neighbor brief
+show mpls forwarding summary
+show mpls interfaces
+show segment-routing local-block
+show vrf all
+show route vrf all summary
+show l2vpn xconnect summary
+show l2vpn bridge-domain summary
+show bfd session
+show logging last 50
+show running-config

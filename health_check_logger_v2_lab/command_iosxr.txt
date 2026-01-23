@@ -12,6 +12,8 @@ show platform
 show inventory
 show redundancy
 show install active summary
+show processes cpu  | i CPU
+show memory summary
 
 # ==============================================================================
 # SECTION 2: INTERFACE STATUS
