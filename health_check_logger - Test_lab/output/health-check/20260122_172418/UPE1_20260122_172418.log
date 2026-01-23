@@ -1,0 +1,2719 @@
+================================================================================
+ MERALCO Network Health Check Logger
+ Phase: health-check
+================================================================================
+ Hostname:    UPE1
+ IP Address:  172.10.1.1
+ Device Type: ASR9906
+ Site:        
+ Role:        Core P Router (New)
+ Timestamp:   2026-01-22 17:26:08 UTC
+================================================================================
+
+--------------------------------------------------------------------------------
+ Command: show version
+ Duration: 2.075105353s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show platform
+ Duration: 1.421739296s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show inventory
+ Duration: 1.854680184s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show environment all
+ Duration: 1.490109845s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show redundancy
+ Duration: 1.940803916s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show redundancy summary
+ Duration: 1.936949089s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show fpd package
+ Duration: 1.576213113s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show install active summary
+ Duration: 1.708002348s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: admin show environment
+ Duration: 2.002560258s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: admin show platform
+ Duration: 2.206582576s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces brief
+ Duration: 1.41964351s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces summary
+ Duration: 1.178394837s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interfaces description
+ Duration: 1.986682291s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ipv4 interface brief
+ Duration: 1.563544216s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bundle bundle-ether
+ Duration: 1.40211694s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show lacp bundle-ether
+ Duration: 1.066436613s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show lldp neighbors
+ Duration: 1.808689159s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show cdp neighbors
+ Duration: 1.546934581s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf neighbor
+ Duration: 1.677288402s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf interface brief
+ Duration: 1.228327174s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf database summary
+ Duration: 1.263699921s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route ospf
+ Duration: 1.824555579s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show ospf statistics
+ Duration: 1.411201597s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp summary
+ Duration: 1.132478745s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast summary
+ Duration: 1.637603021s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp neighbors
+ Duration: 1.181770271s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast all
+ Duration: 1.663339093s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp l2vpn vpls summary
+ Duration: 1.284108888s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp all summary
+ Duration: 1.179737483s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor
+ Duration: 1.140822106s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor brief
+ Duration: 1.42013218s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp bindings summary
+ Duration: 1.232077661s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding
+ Duration: 1.725718603s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding summary
+ Duration: 1.709018558s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls interfaces
+ Duration: 1.629772189s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show segment-routing local-block
+ Duration: 1.136416236s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show isis segment-routing label table
+ Duration: 1.562536614s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show mpls traffic-eng tunnels brief
+ Duration: 1.696454753s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show vrf all
+ Duration: 1.663870623s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show vrf all detail
+ Duration: 1.206448372s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf all summary
+ Duration: 1.218561255s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bgp vrf all summary
+ Duration: 1.141226168s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA
+ Duration: 1.170714808s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA summary
+ Duration: 1.496507651s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS
+ Duration: 1.362548875s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS summary
+ Duration: 1.140045858s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro
+ Duration: 1.762098537s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro summary
+ Duration: 1.162231144s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra
+ Duration: 1.610670056s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra summary
+ Duration: 1.663046573s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV
+ Duration: 1.070807131s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV summary
+ Duration: 1.078949658s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt
+ Duration: 1.020416556s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt summary
+ Duration: 1.051048136s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt
+ Duration: 1.532163963s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt summary
+ Duration: 1.142419202s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering
+ Duration: 1.101597123s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering summary
+ Duration: 1.187398642s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps
+ Duration: 1.091440389s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps summary
+ Duration: 1.567147409s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP
+ Duration: 1.532211978s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP summary
+ Duration: 1.183118802s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video
+ Duration: 1.606521307s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video summary
+ Duration: 1.081025079s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn xconnect summary
+ Duration: 1.126310852s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn bridge-domain summary
+ Duration: 1.689122217s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn discovery summary
+ Duration: 1.432093741s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn forwarding summary
+ Duration: 1.09155707s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd session
+ Duration: 1.587412537s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd neighbors
+ Duration: 1.018259184s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show bfd summary
+ Duration: 149.834892ms
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show policy-map interface all
+ Duration: 1.573968921s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show qos interface all
+ Duration: 1.164519316s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show logging last 100
+ Duration: 1.049892204s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show context
+ Duration: 1.149897731s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show interface counters errors
+ Duration: 1.265607937s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show controllers optics 0/0/0/0
+ Duration: 1.129969849s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+--------------------------------------------------------------------------------
+ Command: show running-config
+ Duration: 1.191296455s
+--------------------------------------------------------------------------------
+ERROR: command failed: exit status 255 - output: Pseudo-terminal will not be allocated because stdin is not a terminal.
+Warning: Permanently added '172.10.1.1' (RSA) to the list of known hosts.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+Received disconnect from 172.10.1.1 port 22:11: 
+Disconnected from 172.10.1.1 port 22
+
+
+================================================================================
+ End of Health Check Log
+================================================================================

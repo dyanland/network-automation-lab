@@ -1,0 +1,876 @@
+================================================================================
+ MERALCO Network Health Check Logger
+ Phase: health-check
+================================================================================
+ Hostname:    Switch1
+ IP Address:  172.10.1.50
+ Device Type: Cat9300
+ Site:        
+ Role:        Management Switch
+ Timestamp:   2026-01-22 17:27:39 UTC
+================================================================================
+
+--------------------------------------------------------------------------------
+ Command: show version
+ Duration: 1.495708331s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2024 by Cisco Systems, Inc.
+Compiled Thu 19-Dec-24 17:53 by mcpre
+ROM: Bootstrap program is Linux
+Switch1 uptime is 1 week, 12 hours, 41 minutes
+System returned to ROM by unknown reload cause - suspect boot_data[BOOT_COUNT] 0x9, BOOT_COUNT 0, BOOTDATA 19
+System image file is "unix:/x86_64_crb_linux_l2-adventerprisek9-ms.iol"
+Last reload reason: Unknown reason
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+Linux Unix (i686) processor with 794975K bytes of memory.
+Processor board ID 131184641
+4 Ethernet interfaces
+1 Virtual Ethernet interface
+256K bytes of NVRAM.
+Configuration register is 0x0
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show platform
+ Duration: 1.440785935s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show inventory
+ Duration: 1.374230822s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show environment all
+ Duration: 1.308800407s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show redundancy
+ Duration: 1.213476094s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show redundancy summary
+ Duration: 1.472783404s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show fpd package
+ Duration: 1.4393503s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show install active summary
+ Duration: 1.510780209s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: admin show environment
+ Duration: 1.339003298s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: admin show platform
+ Duration: 1.203090742s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show interfaces brief
+ Duration: 1.137608669s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show interfaces summary
+ Duration: 1.186421597s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+IHQ: pkts in input hold queue     IQD: pkts dropped from input queue
+OHQ: pkts in output hold queue    OQD: pkts dropped from output queue
+RXBS: rx rate (bits/sec)          RXPS: rx rate (pkts/sec)
+TXBS: tx rate (bits/sec)          TXPS: tx rate (pkts/sec)
+TRTL: throttle count
+Interface                   IHQ       IQD       OHQ       OQD      RXBS      RXPS      TXBS      TXPS      TRTL
+-----------------------------------------------------------------------------------------------------------------
+* Ethernet0/0                   0         0         0         0      4000         4      5000         4         0
+* Ethernet0/1                   0         0         0         0         0         0         0         0         0
+* Ethernet0/2                   0         0         0         0         0         0         0         0         0
+* Ethernet0/3                   0         0         0         0         0         0         0         0         0
+* Loopback10                    0         0         0         0         0         0         0         0         0
+* Vlan10                        0         0         0         0      4000         4      4000         4         0
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show interfaces description
+ Duration: 1.351318807s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Et0/0                          up             up       to_UPE9
+Et0/1                          up             up       To_SR201
+Et0/2                          up             up
+Et0/3                          up             up
+Lo10                           up             up
+Vl10                           up             up
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show ipv4 interface brief
+ Duration: 1.236890597s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bundle bundle-ether
+ Duration: 1.157961902s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show lacp bundle-ether
+ Duration: 1.344798687s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show lldp neighbors
+ Duration: 1.045610268s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show cdp neighbors
+ Duration: 1.218843296s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone,
+D - Remote, C - CVTA, M - Two-port Mac Relay
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+Total cdp entries displayed : 0
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show ospf neighbor
+ Duration: 1.296298891s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+
+--------------------------------------------------------------------------------
+ Command: show ospf interface brief
+ Duration: 1.582046327s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show ospf database summary
+ Duration: 1.297727615s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route ospf
+ Duration: 1.194729205s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show ospf statistics
+ Duration: 1.228980343s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bgp summary
+ Duration: 1.006421685s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% BGP not active
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast summary
+ Duration: 1.179388833s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bgp neighbors
+ Duration: 1.104993401s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% BGP not active
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast all
+ Duration: 1.166363829s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bgp l2vpn vpls summary
+ Duration: 1.068946982s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bgp all summary
+ Duration: 1.231148149s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor
+ Duration: 1.397633353s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor brief
+ Duration: 1.467585047s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp bindings summary
+ Duration: 1.47568819s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding
+ Duration: 1.295990631s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding summary
+ Duration: 1.245212416s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show mpls interfaces
+ Duration: 1.1261985s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show segment-routing local-block
+ Duration: 1.132319336s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show isis segment-routing label table
+ Duration: 1.313945824s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show mpls traffic-eng tunnels brief
+ Duration: 1.262123821s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+LSP Tunnels Process:            not running, disabled
+Passive LSP Listener:           not registered with RSVP
+RSVP Process:                   not running
+Forwarding:                     disabled
+auto-tunnel:
+p2p    Disabled (0), id-range:62336-64335
+Periodic reoptimization:        every 3600 seconds, next in 0 seconds
+Periodic FRR Promotion:         Not Running
+Periodic auto-bw collection:    every 300 seconds, next in 0 seconds
+SR tunnel max label push:       0 primary path labels (0 repair path labels)
+P2P TUNNELS/LSPs:
+Displayed 0 (of 0) heads, 0 (of 0) midpoints, 0 (of 0) tails
+P2MP TUNNELS:
+Displayed 0 (of 0) P2MP heads
+P2MP SUB-LSPS:
+Displayed 0 P2MP sub-LSPs:
+0 (of 0) heads, 0 (of 0) midpoints, 0 (of 0) tails
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show vrf all
+ Duration: 1.111004142s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show vrf all detail
+ Duration: 1.333364668s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf all summary
+ Duration: 1.387601542s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show bgp vrf all summary
+ Duration: 1.400877274s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% BGP not active
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA
+ Duration: 1.355540211s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_SCADA summary
+ Duration: 1.47262107s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS
+ Duration: 1.047183088s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_ADMS summary
+ Duration: 1.178741927s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro
+ Duration: 1.076381429s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Telepro summary
+ Duration: 1.198738728s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra
+ Duration: 1.160743618s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Tetra summary
+ Duration: 1.103057942s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV
+ Duration: 1.174232519s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_CCTV summary
+ Duration: 1.456440412s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt
+ Duration: 1.219888095s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_OT_Mgt summary
+ Duration: 1.301182366s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt
+ Duration: 1.148405454s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_IT_Mgt summary
+ Duration: 1.431229124s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering
+ Duration: 1.128465995s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Metering summary
+ Duration: 1.092176954s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps
+ Duration: 1.046896194s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Data_Apps summary
+ Duration: 1.284339543s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP
+ Duration: 1.114798594s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_VoIP summary
+ Duration: 1.091100515s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video
+ Duration: 1.096991426s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show route vrf VPN_Video summary
+ Duration: 1.246358531s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn xconnect summary
+ Duration: 1.135666529s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn bridge-domain summary
+ Duration: 1.254249876s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn discovery summary
+ Duration: 1.215742303s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn forwarding summary
+ Duration: 1.197912098s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bfd session
+ Duration: 1.209740575s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bfd neighbors
+ Duration: 1.041183062s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show bfd summary
+ Duration: 1.034154285s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+
+--------------------------------------------------------------------------------
+ Command: show policy-map interface all
+ Duration: 1.003646376s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show qos interface all
+ Duration: 1.093541294s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+
+--------------------------------------------------------------------------------
+ Command: show logging last 100
+ Duration: 1.041745397s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+No Active Message Discriminator.
+No Inactive Message Discriminator.
+Console logging: level debugging, 376 messages logged, xml disabled,
+filtering disabled
+Monitor logging: level debugging, 0 messages logged, xml disabled,
+filtering disabled
+Buffer logging:  level debugging, 376 messages logged, xml disabled,
+filtering disabled
+Exception Logging: size (4096 bytes)
+Count and timestamp logging messages: disabled
+Persistent logging: disabled
+Trap logging: level informational, 381 message lines logged
+Logging Source-Interface:       VRF Name:
+TLS Profiles:
+Showing last 100 lines
+Log Buffer (4096 bytes):
+6ha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:38.062: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: meralco] [Source: 172.21.21.101] [localport: 22] at 17:27:38 UTC Thu Jan 22 2026
+*Jan 22 17:27:38.062: %SSH-5-SSH2_USERAUTH: User 'meralco' authentication for SSH2 Session from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:38.500: %SSH-5-SSH2_CLOSE: SSH2 Session from 172.21.21.101 (tty = 0) for user 'meralco' using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' closed
+*Jan 22 17:27:38.947: %SSH-5-SSH2_SESSION: SSH2 Session request from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:39.244: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: meralco] [Source: 172.21.21.101] [localport: 22] at 17:27:39 UTC Thu Jan 22 2026
+*Jan 22 17:27:39.244: %SSH-5-SSH2_USERAUTH: User 'meralco' authentication for SSH2 Session from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:39.540: %SYS-6-LOGOUT: User meralco has exited tty session 2(172.21.21.101)
+*Jan 22 17:27:39.540: %SSH-5-SSH2_CLOSE: SSH2 Session from 172.21.21.101 (tty = 0) for user 'meralco' using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' closed
+*Jan 22 17:27:39.961: %SSH-5-SSH2_SESSION: SSH2 Session request from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:40.267: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: meralco] [Source: 172.21.21.101] [localport: 22] at 17:27:40 UTC Thu Jan 22 2026
+*Jan 22 17:27:40.267: %SSH-5-SSH2_USERAUTH: User 'meralco' authentication for SSH2 Session from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:40.574: %SSH-5-SSH2_CLOSE: SSH2 Session from 172.21.21.101 (tty = 0) for user 'meralco' using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' closed
+*Jan 22 17:27:41.007: %SSH-5-SSH2_SESSION: SSH2 Session request from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:41.272: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: meralco] [Source: 172.21.21.101] [localport: 22] at 17:27:41 UTC Thu Jan 22 2026
+*Jan 22 17:27:41.272: %SSH-5-SSH2_USERAUTH: User 'meralco' authentication for SSH2 Session from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:41.574: %SSH-5-SSH2_CLOSE: SSH2 Session from 172.21.21.101 (tty = 0) for user 'meralco' using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' closed
+*Jan 22 17:27:42.064: %SSH-5-SSH2_SESSION: SSH2 Session request from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:42.364: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: meralco] [Source: 172.21.21.101] [localport: 22] at 17:27:42 UTC Thu Jan 22 2026
+*Jan 22 17:27:42.364: %SSH-5-SSH2_USERAUTH: User 'meralco' authentication for SSH2 Session from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:42.675: %SSH-5-SSH2_CLOSE: SSH2 Session from 172.21.21.101 (tty = 0) for user 'meralco' using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' closed
+*Jan 22 17:27:43.070: %SSH-5-SSH2_SESSION: SSH2 Session request from 172.21.21.101 (tty = 0) using crypto cipher 'chacha20-poly1305@openssh.com', hmac 'hmac-sha2-256-etm@openssh.com' Succeeded
+*Jan 22 17:27:43.357: %SEC_LOGIN-5-LOGIN_SUCCESS: Login Success [user: meralco] [Source: 172.21.21.101] [localport: 22] at 17:27:43 UTC Thu Jan 22 202
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show context
+ Duration: 900.451884ms
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show interface counters errors
+ Duration: 1.111833365s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+
+--------------------------------------------------------------------------------
+ Command: show controllers optics 0/0/0/0
+ Duration: 1.121280743s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+% Invalid input detected at '^' marker.
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+--------------------------------------------------------------------------------
+ Command: show running-config
+ Duration: 1.019912949s
+--------------------------------------------------------------------------------
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Current configuration : 1497 bytes
+!
+! Last configuration change at 17:07:56 UTC Thu Jan 22 2026
+!
+version 17.16
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname Switch1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+ip domain name meralco.com.ph
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+memory free low-watermark processor 79497
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+username ame
+username meralco privilege 15 secret 9 $9$gGLLx3mEouoRcE$x6INNlpD/XCPSIKTaEqzcGkZSgG7/BIY4rB1mI.9O36
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+interface Loopback10
+ip address 172.10.1.50 255.255.255.255
+!
+interface Ethernet0/0
+description to_UPE9
+switchport trunk encapsulation dot1q
+switchport trunk allowed vlan 10,201
+switchport mode trunk
+switchport nonegotiate
+!
+interface Ethernet0/1
+description To_SR201
+switchport access vlan 201
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+!
+interface Ethernet0/2
+switchport access vlan 201
+!
+interface Ethernet0/3
+!
+interface Vlan10
+ip address 10.240.10.14 255.255.255.252
+!
+ip forward-protocol nd
+ip forward-protocol udp
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+ip route 172.0.0.0 255.0.0.0 10.240.10.13
+!
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+logging synchronous
+line aux 0
+line vty 0 4
+login local
+transport input ssh
+!
+!
+end
+Switch1#exit
+Connection to 172.10.1.50 closed by remote host.
+
+================================================================================
+ End of Health Check Log
+================================================================================
