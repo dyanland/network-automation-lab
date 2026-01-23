@@ -422,57 +422,84 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 	return results, nil
 }
 
-// executeIOSXRCommands runs commands on IOS-XR using SSH command mode
-// Each command is executed as: ssh user@host "command"
+// executeIOSXRCommands runs commands on IOS-XR using a bash script with heredoc
+// This keeps the SSH session alive long enough to execute all commands
 func (c *SSHClient) executeIOSXRCommands(commands []string) (map[string]string, error) {
 	results := make(map[string]string)
-	var allOutput strings.Builder
 
-	sshBaseArgs := []string{
-		"-p", c.password,
-		"ssh",
-		"-o", "StrictHostKeyChecking=no",
-		"-o", "UserKnownHostsFile=/dev/null",
-		"-o", "ConnectTimeout=30",
-		"-o", "LogLevel=ERROR",
-		"-p", strconv.Itoa(c.port),
-		fmt.Sprintf("%s@%s", c.username, c.host),
+	// Build the command script with markers for parsing
+	var cmdScript strings.Builder
+	cmdScript.WriteString("terminal length 0\n")
+	cmdScript.WriteString("terminal width 512\n")
+
+	for i, cmd := range commands {
+		cmdScript.WriteString(fmt.Sprintf("echo __MARKER_START_%d__\n", i))
+		cmdScript.WriteString(cmd + "\n")
+		cmdScript.WriteString(fmt.Sprintf("echo __MARKER_END_%d__\n", i))
+	}
+	cmdScript.WriteString("exit\n")
+
+	// Create a bash script that uses expect-like functionality via bash
+	// Use: bash -c 'sshpass ... ssh ... << EOF ... EOF'
+	bashScript := fmt.Sprintf(`sshpass -p '%s' ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=30 -o LogLevel=ERROR -o ServerAliveInterval=5 -o ServerAliveCountMax=3 -tt -p %d %s@%s << 'EOFMARKER'
+%s
+EOFMARKER`,
+		c.password,
+		c.port,
+		c.username,
+		c.host,
+		cmdScript.String())
+
+	cmd := exec.Command("bash", "-c", bashScript)
+
+	var output strings.Builder
+	var stderr strings.Builder
+	cmd.Stdout = &output
+	cmd.Stderr = &stderr
+
+	err := cmd.Start()
+	if err != nil {
+		return nil, fmt.Errorf("failed to start: %v", err)
 	}
 
-	for _, cmdStr := range commands {
-		// Build command: sshpass -p 'pass' ssh user@host "show version"
-		args := append(sshBaseArgs, cmdStr)
-		cmd := exec.Command("sshpass", args...)
+	done := make(chan error)
+	go func() { done <- cmd.Wait() }()
 
-		var output strings.Builder
-		cmd.Stdout = &output
-		cmd.Stderr = &output
+	select {
+	case <-done:
+		// Command completed
+	case <-time.After(c.cmdTimeout):
+		cmd.Process.Kill()
+		return nil, fmt.Errorf("timeout")
+	}
 
-		err := cmd.Start()
-		if err != nil {
-			results[cmdStr] = fmt.Sprintf("(failed to start: %v)", err)
+	fullOutput := output.String()
+
+	// DEBUG: Save raw output
+	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
+	debugContent := fmt.Sprintf("=== STDOUT ===\n%s\n\n=== STDERR ===\n%s\n", fullOutput, stderr.String())
+	os.WriteFile(debugFile, []byte(debugContent), 0644)
+
+	// Parse output using markers
+	for i, cmdStr := range commands {
+		startMarker := fmt.Sprintf("__MARKER_START_%d__", i)
+		endMarker := fmt.Sprintf("__MARKER_END_%d__", i)
+
+		startIdx := strings.Index(fullOutput, startMarker)
+		if startIdx == -1 {
+			results[cmdStr] = "(no output - marker not found)"
 			continue
 		}
+		startIdx += len(startMarker)
 
-		done := make(chan error)
-		go func() { done <- cmd.Wait() }()
-
-		select {
-		case <-done:
-			out := output.String()
-			// Clean the output
-			cleaned := cleanIOSXRCommandOutput(out)
-			results[cmdStr] = cleaned
-			allOutput.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", cmdStr, out))
-		case <-time.After(30 * time.Second):
-			cmd.Process.Kill()
-			results[cmdStr] = "(timeout)"
+		endIdx := strings.Index(fullOutput[startIdx:], endMarker)
+		if endIdx == -1 {
+			// Take everything from start to end
+			results[cmdStr] = cleanIOSXRCommandOutput(fullOutput[startIdx:])
+		} else {
+			results[cmdStr] = cleanIOSXRCommandOutput(fullOutput[startIdx : startIdx+endIdx])
 		}
 	}
-
-	// DEBUG: Save all raw output
-	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
-	os.WriteFile(debugFile, []byte(allOutput.String()), 0644)
 
 	return results, nil
 }
@@ -482,11 +509,34 @@ func cleanIOSXRCommandOutput(output string) string {
 	lines := strings.Split(output, "\n")
 	var clean []string
 
+	// Compile prompt pattern once
+	promptPattern := regexp.MustCompile(`^(RP/\d+/(RSP)?\d+/CPU\d+:)?[A-Za-z0-9_-]+#`)
+
 	for _, line := range lines {
 		trimmed := strings.TrimSpace(line)
 
 		// Skip empty lines at start
 		if len(clean) == 0 && trimmed == "" {
+			continue
+		}
+
+		// Skip markers
+		if strings.Contains(trimmed, "__MARKER_START_") || strings.Contains(trimmed, "__MARKER_END_") {
+			continue
+		}
+
+		// Skip echo commands
+		if strings.HasPrefix(trimmed, "echo __MARKER") {
+			continue
+		}
+
+		// Skip IOS-XR prompts
+		if promptPattern.MatchString(trimmed) {
+			continue
+		}
+
+		// Skip terminal settings
+		if strings.HasPrefix(trimmed, "terminal length") || strings.HasPrefix(trimmed, "terminal width") {
 			continue
 		}
 
