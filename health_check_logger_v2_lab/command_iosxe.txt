@@ -1,0 +1,78 @@
+# ================================================================================
+# MERALCO Health Check Commands - IOS-XE (ASR903/ASR920/ISR/CSR)
+# ================================================================================
+# These commands are specific to Cisco IOS-XE platform
+# ================================================================================
+
+# ==============================================================================
+# SECTION 1: SYSTEM HEALTH
+# ==============================================================================
+show version
+show platform
+show inventory
+show redundancy
+show environment all
+
+# ==============================================================================
+# SECTION 2: INTERFACE STATUS
+# ==============================================================================
+show ip interface brief
+show interfaces summary
+show interfaces description
+show interfaces status
+show etherchannel summary
+show lldp neighbors
+show cdp neighbors
+
+# ==============================================================================
+# SECTION 3: ROUTING - OSPF
+# ==============================================================================
+show ip ospf neighbor
+show ip ospf interface brief
+show ip ospf database database-summary
+show ip route ospf
+
+# ==============================================================================
+# SECTION 4: ROUTING - BGP
+# ==============================================================================
+show bgp summary
+show bgp vpnv4 unicast all summary
+show bgp neighbors | include BGP neighbor|BGP state
+show bgp l2vpn vpls all summary
+
+# ==============================================================================
+# SECTION 5: MPLS
+# ==============================================================================
+show mpls ldp neighbor
+show mpls ldp bindings summary
+show mpls forwarding-table summary
+show mpls interfaces
+
+# ==============================================================================
+# SECTION 6: L3VPN SERVICES
+# ==============================================================================
+show vrf
+show ip route vrf * summary
+show bgp vpnv4 unicast all summary
+
+# ==============================================================================
+# SECTION 7: L2VPN SERVICES
+# ==============================================================================
+show l2vpn service all
+show xconnect all
+
+# ==============================================================================
+# SECTION 8: BFD
+# ==============================================================================
+show bfd neighbors
+show bfd summary
+
+# ==============================================================================
+# SECTION 9: SYSTEM LOGS
+# ==============================================================================
+show logging | tail 50
+
+# ==============================================================================
+# SECTION 10: CONFIGURATION
+# ==============================================================================
+show running-config
