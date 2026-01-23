@@ -84,28 +84,28 @@ type Config struct {
 
 func detectDeviceOS(deviceType string) string {
 	dt := strings.ToUpper(strings.TrimSpace(deviceType))
-	
+
 	// =====================================================
 	// CHECK SPECIFIC PATTERNS FIRST (before generic ones!)
 	// =====================================================
-	
+
 	// IOS-XE: ASR903, ASR920 (must check BEFORE ASR9 pattern!)
 	if strings.Contains(dt, "ASR903") || strings.Contains(dt, "ASR-903") ||
 		strings.Contains(dt, "ASR920") || strings.Contains(dt, "ASR-920") {
 		return "IOS-XE"
 	}
-	
+
 	// IOS-XR: ASR9000 series (ASR9K, ASR9006, ASR9010, ASR9906, etc.)
 	// Only match ASR9 followed by 0 or K (not ASR903/ASR920)
 	if strings.Contains(dt, "ASR9K") || strings.Contains(dt, "ASR-9K") ||
-		strings.Contains(dt, "ASR90") || strings.Contains(dt, "ASR91") || 
+		strings.Contains(dt, "ASR90") || strings.Contains(dt, "ASR91") ||
 		strings.Contains(dt, "ASR99") || // ASR9006, ASR9010, ASR9901, ASR9906, etc.
 		strings.Contains(dt, "XRV") || strings.Contains(dt, "IOS-XR") ||
 		strings.Contains(dt, "IOSXR") || strings.Contains(dt, "NCS") ||
 		strings.Contains(dt, "CRS") {
 		return "IOS-XR"
 	}
-	
+
 	// IOS-XE: Other patterns
 	if strings.Contains(dt, "ASR1") || strings.Contains(dt, "ASR-1") ||
 		strings.Contains(dt, "ISR") || strings.Contains(dt, "CSR") ||
@@ -115,7 +115,7 @@ func detectDeviceOS(deviceType string) string {
 		strings.Contains(dt, "C11") || strings.Contains(dt, "C12") {
 		return "IOS-XE"
 	}
-	
+
 	// L2 Switch patterns
 	if strings.Contains(dt, "SWITCH") || strings.Contains(dt, "SW") ||
 		strings.Contains(dt, "CAT") || strings.Contains(dt, "CATALYST") ||
@@ -129,7 +129,7 @@ func detectDeviceOS(deviceType string) string {
 		strings.Contains(dt, "I86BI") {
 		return "L2-SWITCH"
 	}
-	
+
 	// Default
 	return "IOS-XE"
 }
@@ -329,7 +329,7 @@ func readLines(filename string) ([]string, error) {
 }
 
 // ============================================================================
-// SSH CLIENT
+// SSH CLIENT - Fixed for IOS-XR (no echo command available)
 // ============================================================================
 
 type SSHClient struct {
@@ -338,19 +338,35 @@ type SSHClient struct {
 	username   string
 	password   string
 	cmdTimeout time.Duration
+	deviceOS   string
 }
 
 func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error) {
 	results := make(map[string]string)
 
 	var script strings.Builder
-	script.WriteString("terminal length 0\n")
-	script.WriteString("terminal width 512\n")
 
-	for i, cmd := range commands {
-		script.WriteString(fmt.Sprintf("echo ===START_%d===\n", i))
-		script.WriteString(cmd + "\n")
-		script.WriteString(fmt.Sprintf("echo ===END_%d===\n", i))
+	// IOS-XR uses different terminal commands
+	if c.deviceOS == "IOS-XR" {
+		script.WriteString("terminal length 0\n")
+		script.WriteString("terminal width 512\n")
+	} else {
+		script.WriteString("terminal length 0\n")
+		script.WriteString("terminal width 512\n")
+	}
+
+	// For IOS-XR: No echo available, just run commands sequentially
+	// For IOS-XE/L2: Use echo markers
+	if c.deviceOS == "IOS-XR" {
+		for _, cmd := range commands {
+			script.WriteString(cmd + "\n")
+		}
+	} else {
+		for i, cmd := range commands {
+			script.WriteString(fmt.Sprintf("echo ===START_%d===\n", i))
+			script.WriteString(cmd + "\n")
+			script.WriteString(fmt.Sprintf("echo ===END_%d===\n", i))
+		}
 	}
 	script.WriteString("exit\n")
 
@@ -386,26 +402,161 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 	}
 
 	fullOutput := output.String()
-	for i, cmdStr := range commands {
-		start := fmt.Sprintf("===START_%d===", i)
-		end := fmt.Sprintf("===END_%d===", i)
 
-		startIdx := strings.Index(fullOutput, start)
-		if startIdx == -1 {
-			results[cmdStr] = "(no output)"
-			continue
-		}
-		startIdx += len(start)
+	// Parse output based on device OS
+	if c.deviceOS == "IOS-XR" {
+		// For IOS-XR: Parse by finding command in output and extracting until next command/prompt
+		results = parseIOSXROutput(fullOutput, commands)
+	} else {
+		// For IOS-XE/L2: Use echo markers
+		for i, cmdStr := range commands {
+			start := fmt.Sprintf("===START_%d===", i)
+			end := fmt.Sprintf("===END_%d===", i)
 
-		endIdx := strings.Index(fullOutput[startIdx:], end)
-		if endIdx == -1 {
-			results[cmdStr] = strings.TrimSpace(fullOutput[startIdx:])
-		} else {
-			results[cmdStr] = cleanOutput(fullOutput[startIdx : startIdx+endIdx])
+			startIdx := strings.Index(fullOutput, start)
+			if startIdx == -1 {
+				results[cmdStr] = "(no output)"
+				continue
+			}
+			startIdx += len(start)
+
+			endIdx := strings.Index(fullOutput[startIdx:], end)
+			if endIdx == -1 {
+				results[cmdStr] = strings.TrimSpace(fullOutput[startIdx:])
+			} else {
+				results[cmdStr] = cleanOutput(fullOutput[startIdx : startIdx+endIdx])
+			}
 		}
 	}
 
 	return results, nil
+}
+
+// parseIOSXROutput parses IOS-XR output by finding commands and extracting output between them
+func parseIOSXROutput(fullOutput string, commands []string) map[string]string {
+	results := make(map[string]string)
+
+	// Find positions of each command in the output
+	type cmdPos struct {
+		cmd   string
+		start int
+		end   int
+	}
+
+	var positions []cmdPos
+
+	for _, cmd := range commands {
+		// Find the command in the output (it will be echoed back)
+		// Look for the command followed by newline
+		searchPattern := cmd
+		idx := strings.Index(fullOutput, searchPattern)
+		if idx != -1 {
+			positions = append(positions, cmdPos{cmd: cmd, start: idx + len(searchPattern)})
+		}
+	}
+
+	// Sort positions by start index
+	for i := 0; i < len(positions); i++ {
+		for j := i + 1; j < len(positions); j++ {
+			if positions[j].start < positions[i].start {
+				positions[i], positions[j] = positions[j], positions[i]
+			}
+		}
+	}
+
+	// Set end positions (next command start or end of output)
+	for i := range positions {
+		if i+1 < len(positions) {
+			// Find where the next command starts (look for the command text before its position)
+			nextCmdStart := positions[i+1].start - len(positions[i+1].cmd)
+			if nextCmdStart > positions[i].start {
+				positions[i].end = nextCmdStart
+			} else {
+				positions[i].end = positions[i+1].start
+			}
+		} else {
+			positions[i].end = len(fullOutput)
+		}
+	}
+
+	// Extract output for each command
+	for _, pos := range positions {
+		if pos.start < pos.end && pos.end <= len(fullOutput) {
+			output := fullOutput[pos.start:pos.end]
+			results[pos.cmd] = cleanIOSXROutput(output, pos.cmd)
+		} else {
+			results[pos.cmd] = "(no output)"
+		}
+	}
+
+	// Fill in any missing commands
+	for _, cmd := range commands {
+		if _, exists := results[cmd]; !exists {
+			results[cmd] = "(no output)"
+		}
+	}
+
+	return results
+}
+
+// cleanIOSXROutput removes prompts, echoed commands, and noise from IOS-XR output
+func cleanIOSXROutput(output, command string) string {
+	lines := strings.Split(output, "\n")
+	var clean []string
+
+	// Pattern to match IOS-XR prompts: RP/0/RSP0/CPU0:hostname#
+	promptPattern := regexp.MustCompile(`^(RP/\d+/(RSP)?\d+/CPU\d+:)?[A-Za-z0-9_-]+#`)
+	// Also match simple prompts
+	simplePromptPattern := regexp.MustCompile(`^[A-Za-z0-9_-]+[#>]\s*$`)
+
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+
+		// Skip empty lines
+		if trimmed == "" {
+			continue
+		}
+
+		// Skip if line contains the command itself (echoed back)
+		if strings.Contains(trimmed, command) {
+			continue
+		}
+
+		// Skip terminal settings
+		if strings.HasPrefix(trimmed, "terminal length") || strings.HasPrefix(trimmed, "terminal width") {
+			continue
+		}
+
+		// Skip IOS-XR prompts
+		if promptPattern.MatchString(trimmed) {
+			continue
+		}
+
+		// Skip simple prompts
+		if simplePromptPattern.MatchString(trimmed) {
+			continue
+		}
+
+		// Skip SSH noise
+		if strings.Contains(trimmed, "Pseudo-terminal") {
+			continue
+		}
+		if strings.Contains(trimmed, "Connection to") && strings.Contains(trimmed, "closed") {
+			continue
+		}
+		if strings.Contains(trimmed, "Warning:") && strings.Contains(trimmed, "known hosts") {
+			continue
+		}
+
+		// Skip exit command
+		if trimmed == "exit" {
+			continue
+		}
+
+		clean = append(clean, line)
+	}
+
+	return strings.TrimSpace(strings.Join(clean, "\n"))
 }
 
 func cleanOutput(s string) string {
@@ -420,18 +571,18 @@ func cleanOutput(s string) string {
 			continue
 		}
 		// Skip IOS.sh shell warning messages
-		if strings.Contains(t, "IOS.sh") || 
-		   strings.Contains(t, "shell is currently disabled") ||
-		   strings.Contains(t, "term shell") ||
-		   strings.Contains(t, "shell processing full") ||
-		   strings.Contains(t, "man command") ||
-		   strings.Contains(t, "man IOS.sh") ||
-		   strings.Contains(t, "The command you have entered") ||
-		   strings.Contains(t, "You can enable") ||
-		   strings.Contains(t, "You can also enable") ||
-		   strings.Contains(t, "For more information") ||
-		   strings.Contains(t, "However, the shell") ||
-		   strings.Contains(t, "There is additional information") {
+		if strings.Contains(t, "IOS.sh") ||
+			strings.Contains(t, "shell is currently disabled") ||
+			strings.Contains(t, "term shell") ||
+			strings.Contains(t, "shell processing full") ||
+			strings.Contains(t, "man command") ||
+			strings.Contains(t, "man IOS.sh") ||
+			strings.Contains(t, "The command you have entered") ||
+			strings.Contains(t, "You can enable") ||
+			strings.Contains(t, "You can also enable") ||
+			strings.Contains(t, "For more information") ||
+			strings.Contains(t, "However, the shell") ||
+			strings.Contains(t, "There is additional information") {
 			continue
 		}
 		// Skip prompts with commands echoed (e.g., "Switch1#show ip interface brief")
@@ -558,6 +709,7 @@ func processDevice(device DeviceInfo, config *Config, commands *CommandSet) *Dev
 		username:   config.Username,
 		password:   config.Password,
 		cmdTimeout: config.CmdTimeout,
+		deviceOS:   osType,
 	}
 
 	startTime := time.Now()
