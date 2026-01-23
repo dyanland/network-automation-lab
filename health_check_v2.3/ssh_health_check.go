@@ -344,29 +344,21 @@ type SSHClient struct {
 func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error) {
 	results := make(map[string]string)
 
-	var script strings.Builder
-
-	// IOS-XR uses different terminal commands
+	// For IOS-XR: Execute each command separately using SSH command mode
+	// This is because IOS-XR closes stdin-based sessions
 	if c.deviceOS == "IOS-XR" {
-		script.WriteString("terminal length 0\n")
-		script.WriteString("terminal width 512\n")
-	} else {
-		script.WriteString("terminal length 0\n")
-		script.WriteString("terminal width 512\n")
+		return c.executeIOSXRCommands(commands)
 	}
 
-	// For IOS-XR: No echo available, just run commands sequentially
-	// For IOS-XE/L2: Use echo markers
-	if c.deviceOS == "IOS-XR" {
-		for _, cmd := range commands {
-			script.WriteString(cmd + "\n")
-		}
-	} else {
-		for i, cmd := range commands {
-			script.WriteString(fmt.Sprintf("echo ===START_%d===\n", i))
-			script.WriteString(cmd + "\n")
-			script.WriteString(fmt.Sprintf("echo ===END_%d===\n", i))
-		}
+	// For IOS-XE/L2: Use stdin with echo markers
+	var script strings.Builder
+	script.WriteString("terminal length 0\n")
+	script.WriteString("terminal width 512\n")
+
+	for i, cmd := range commands {
+		script.WriteString(fmt.Sprintf("echo ===START_%d===\n", i))
+		script.WriteString(cmd + "\n")
+		script.WriteString(fmt.Sprintf("echo ===END_%d===\n", i))
 	}
 	script.WriteString("exit\n")
 
@@ -407,124 +399,150 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
 	os.WriteFile(debugFile, []byte(fullOutput), 0644)
 
-	// Parse output based on device OS
-	if c.deviceOS == "IOS-XR" {
-		// For IOS-XR: Parse by finding command in output and extracting until next command/prompt
-		results = parseIOSXROutput(fullOutput, commands)
-	} else {
-		// For IOS-XE/L2: Use echo markers
-		for i, cmdStr := range commands {
-			start := fmt.Sprintf("===START_%d===", i)
-			end := fmt.Sprintf("===END_%d===", i)
+	// Parse using echo markers
+	for i, cmdStr := range commands {
+		start := fmt.Sprintf("===START_%d===", i)
+		end := fmt.Sprintf("===END_%d===", i)
 
-			startIdx := strings.Index(fullOutput, start)
-			if startIdx == -1 {
-				results[cmdStr] = "(no output)"
-				continue
-			}
-			startIdx += len(start)
+		startIdx := strings.Index(fullOutput, start)
+		if startIdx == -1 {
+			results[cmdStr] = "(no output)"
+			continue
+		}
+		startIdx += len(start)
 
-			endIdx := strings.Index(fullOutput[startIdx:], end)
-			if endIdx == -1 {
-				results[cmdStr] = strings.TrimSpace(fullOutput[startIdx:])
-			} else {
-				results[cmdStr] = cleanOutput(fullOutput[startIdx : startIdx+endIdx])
-			}
+		endIdx := strings.Index(fullOutput[startIdx:], end)
+		if endIdx == -1 {
+			results[cmdStr] = strings.TrimSpace(fullOutput[startIdx:])
+		} else {
+			results[cmdStr] = cleanOutput(fullOutput[startIdx : startIdx+endIdx])
 		}
 	}
 
 	return results, nil
 }
 
-// parseIOSXROutput parses IOS-XR output by finding commands and extracting output between them
-func parseIOSXROutput(fullOutput string, commands []string) map[string]string {
+// executeIOSXRCommands runs commands on IOS-XR using SSH command mode
+// Each command is executed as: ssh user@host "command"
+func (c *SSHClient) executeIOSXRCommands(commands []string) (map[string]string, error) {
 	results := make(map[string]string)
+	var allOutput strings.Builder
 
-	// Check if we got any output at all
-	if strings.TrimSpace(fullOutput) == "" {
-		for _, cmd := range commands {
-			results[cmd] = "(no output - empty response)"
-		}
-		return results
+	sshBaseArgs := []string{
+		"-p", c.password,
+		"ssh",
+		"-o", "StrictHostKeyChecking=no",
+		"-o", "UserKnownHostsFile=/dev/null",
+		"-o", "ConnectTimeout=30",
+		"-o", "LogLevel=ERROR",
+		"-p", strconv.Itoa(c.port),
+		fmt.Sprintf("%s@%s", c.username, c.host),
 	}
 
-	// Split output into lines for processing
-	lines := strings.Split(fullOutput, "\n")
+	for _, cmdStr := range commands {
+		// Build command: sshpass -p 'pass' ssh user@host "show version"
+		args := append(sshBaseArgs, cmdStr)
+		cmd := exec.Command("sshpass", args...)
 
-	// Find each command and its output
-	for _, cmd := range commands {
-		var cmdOutput []string
-		capturing := false
+		var output strings.Builder
+		cmd.Stdout = &output
+		cmd.Stderr = &output
 
-		for _, line := range lines {
-			trimmed := strings.TrimSpace(line)
-
-			// Check if this line contains our command (might have prompt prefix)
-			// IOS-XR prompts: RP/0/RSP0/CPU0:hostname#show version
-			// Or simpler: hostname#show version
-			if strings.Contains(line, cmd) && !capturing {
-				capturing = true
-				continue // Skip the command line itself
-			}
-
-			// If capturing, collect output until we hit next command
-			if capturing {
-				// Check if this is a new command (any of the commands we're looking for)
-				isNextCommand := false
-				for _, otherCmd := range commands {
-					if otherCmd != cmd && strings.Contains(line, otherCmd) {
-						isNextCommand = true
-						break
-					}
-				}
-
-				// Stop if we hit next command
-				if isNextCommand {
-					break
-				}
-
-				// Check if it's the exit command
-				if trimmed == "exit" {
-					break
-				}
-
-				// Skip prompt-only lines (but continue capturing)
-				if regexp.MustCompile(`^(RP/\d+/(RSP)?\d+/CPU\d+:)?[A-Za-z0-9_-]+#\s*$`).MatchString(trimmed) {
-					continue
-				}
-
-				// Skip terminal settings
-				if strings.HasPrefix(trimmed, "terminal length") || strings.HasPrefix(trimmed, "terminal width") {
-					continue
-				}
-
-				// Skip SSH noise
-				if strings.Contains(trimmed, "Pseudo-terminal") ||
-					(strings.Contains(trimmed, "Connection to") && strings.Contains(trimmed, "closed")) ||
-					(strings.Contains(trimmed, "Warning:") && strings.Contains(trimmed, "known hosts")) {
-					continue
-				}
-
-				// Skip empty lines at start of output
-				if len(cmdOutput) == 0 && trimmed == "" {
-					continue
-				}
-
-				// Add this line to output
-				cmdOutput = append(cmdOutput, line)
-			}
+		err := cmd.Start()
+		if err != nil {
+			results[cmdStr] = fmt.Sprintf("(failed to start: %v)", err)
+			continue
 		}
 
-		// Store result
-		output := strings.TrimSpace(strings.Join(cmdOutput, "\n"))
-		if output == "" {
-			results[cmd] = "(no output)"
-		} else {
-			results[cmd] = output
+		done := make(chan error)
+		go func() { done <- cmd.Wait() }()
+
+		select {
+		case <-done:
+			out := output.String()
+			// Clean the output
+			cleaned := cleanIOSXRCommandOutput(out)
+			results[cmdStr] = cleaned
+			allOutput.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", cmdStr, out))
+		case <-time.After(30 * time.Second):
+			cmd.Process.Kill()
+			results[cmdStr] = "(timeout)"
 		}
 	}
 
-	return results
+	// DEBUG: Save all raw output
+	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
+	os.WriteFile(debugFile, []byte(allOutput.String()), 0644)
+
+	return results, nil
+}
+
+// cleanIOSXRCommandOutput cleans output from IOS-XR SSH command execution
+func cleanIOSXRCommandOutput(output string) string {
+	lines := strings.Split(output, "\n")
+	var clean []string
+
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+
+		// Skip empty lines at start
+		if len(clean) == 0 && trimmed == "" {
+			continue
+		}
+
+		// Skip SSH warnings
+		if strings.Contains(trimmed, "Warning:") && strings.Contains(trimmed, "known hosts") {
+			continue
+		}
+		if strings.Contains(trimmed, "Pseudo-terminal") {
+			continue
+		}
+		if strings.Contains(trimmed, "Connection to") && strings.Contains(trimmed, "closed") {
+			continue
+		}
+
+		// Skip the IMPORTANT license banner (common on XRv)
+		if strings.Contains(trimmed, "IMPORTANT:") && strings.Contains(trimmed, "READ CAREFULLY") {
+			continue
+		}
+		if strings.Contains(trimmed, "Demo Version") || strings.Contains(trimmed, "XRv") && strings.Contains(trimmed, "Software") {
+			continue
+		}
+		if strings.Contains(trimmed, "End User License") || strings.Contains(trimmed, "License Agreement") {
+			continue
+		}
+		if strings.Contains(trimmed, "cisco.com/go/terms") {
+			continue
+		}
+		if strings.Contains(trimmed, "demonstration and evaluation") {
+			continue
+		}
+		if strings.Contains(trimmed, "non-production environment") {
+			continue
+		}
+		if strings.Contains(trimmed, "Downloading, installing") {
+			continue
+		}
+		if strings.Contains(trimmed, "binding yourself") {
+			continue
+		}
+		if strings.Contains(trimmed, "unwilling to license") {
+			continue
+		}
+		if strings.Contains(trimmed, "return the Software") {
+			continue
+		}
+		if strings.Contains(trimmed, "Please login with") {
+			continue
+		}
+		if strings.Contains(trimmed, "configured user/password") {
+			continue
+		}
+
+		clean = append(clean, line)
+	}
+
+	return strings.TrimSpace(strings.Join(clean, "\n"))
 }
 
 func cleanOutput(s string) string {
