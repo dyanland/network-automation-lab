@@ -1,0 +1,88 @@
+=== show version ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show platform ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show inventory ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show redundancy ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show interfaces brief ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show interfaces description ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show ipv4 interface brief ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show ospf neighbor ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show ospf interface brief ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show bgp summary ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show bgp vpnv4 unicast summary ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show mpls ldp neighbor brief ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show mpls forwarding summary ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show mpls interfaces ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show segment-routing local-block ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show vrf all ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show route vrf all summary ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show l2vpn xconnect summary ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show l2vpn bridge-domain summary ===
+kex_exchange_identification: read: Connection reset by peer
+
+
+=== show bfd session ===
+kex_exchange_identification: read: Connection reset by peer
+
+
+=== show logging last 50 ===
+Connection to 172.10.1.9 closed by remote host.
+
+
+=== show running-config ===
+Connection to 172.10.1.9 closed by remote host.
+
+
