@@ -1,7 +1,7 @@
 /*
 ================================================================================
-MERALCO Network Health Check Logger v2.2
-Fixed: Proper OS-specific command selection
+MERALCO Network Health Check Logger v2.3
+Fixed: ASR903/920 detection, Added comparison summary
 ================================================================================
 */
 
@@ -20,6 +20,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -27,11 +28,11 @@ import (
 )
 
 const (
-	Version = "2.2.0"
+	Version = "2.3.0"
 	Banner  = `
 ================================================================================
   MERALCO Network Health Check Logger v%s
-  Fixed: Proper OS-specific command selection
+  Fixed: ASR903/920 detection, Added Pre/Post comparison
 ================================================================================
 `
 )
@@ -46,7 +47,7 @@ type DeviceInfo struct {
 	DeviceType string
 	Site       string
 	Role       string
-	DetectedOS string // NEW: Store detected OS
+	DetectedOS string
 }
 
 type ExecutionResult struct {
@@ -74,62 +75,62 @@ type Config struct {
 	Verbose       bool
 	DryRun        bool
 	Phase         string
+	CompareDir    string // For pre/post comparison
 }
 
 // ============================================================================
-// OS DETECTION - IMPROVED WITH EXPLICIT MAPPING
+// OS DETECTION - FIXED ORDER (specific patterns first!)
 // ============================================================================
 
 func detectDeviceOS(deviceType string) string {
 	dt := strings.ToUpper(strings.TrimSpace(deviceType))
 	
-	// IOS-XR patterns (ASR9K family, NCS, XRv)
-	iosxrPatterns := []string{
-		"ASR9", "ASR-9", "ASR 9",  // ASR9000 series
-		"XRV", "IOS-XR", "IOSXR",  // XRv and explicit IOS-XR
-		"NCS",                      // NCS series
-		"CRS",                      // CRS series
-	}
-	for _, pattern := range iosxrPatterns {
-		if strings.Contains(dt, pattern) {
-			return "IOS-XR"
-		}
+	// =====================================================
+	// CHECK SPECIFIC PATTERNS FIRST (before generic ones!)
+	// =====================================================
+	
+	// IOS-XE: ASR903, ASR920 (must check BEFORE ASR9 pattern!)
+	if strings.Contains(dt, "ASR903") || strings.Contains(dt, "ASR-903") ||
+		strings.Contains(dt, "ASR920") || strings.Contains(dt, "ASR-920") {
+		return "IOS-XE"
 	}
 	
-	// IOS-XE patterns (ASR1K, ASR903/920, ISR, CSR, Cat9K)
-	iosxePatterns := []string{
-		"ASR1", "ASR-1", "ASR 1",      // ASR1000 series
-		"ASR903", "ASR-903", "ASR 903", // ASR903
-		"ASR920", "ASR-920", "ASR 920", // ASR920
-		"ISR", "CSR",                   // ISR/CSR routers
-		"IOS-XE", "IOSXE",              // Explicit IOS-XE
-		"IOSV", "IOS-V", "VIOS",        // IOSv (virtual)
-		"C8", "C11", "C12",             // Catalyst 8000/ISR
+	// IOS-XR: ASR9000 series (ASR9K, ASR9006, ASR9010, ASR9906, etc.)
+	// Only match ASR9 followed by 0 or K (not ASR903/ASR920)
+	if strings.Contains(dt, "ASR9K") || strings.Contains(dt, "ASR-9K") ||
+		strings.Contains(dt, "ASR90") || strings.Contains(dt, "ASR91") || 
+		strings.Contains(dt, "ASR99") || // ASR9006, ASR9010, ASR9901, ASR9906, etc.
+		strings.Contains(dt, "XRV") || strings.Contains(dt, "IOS-XR") ||
+		strings.Contains(dt, "IOSXR") || strings.Contains(dt, "NCS") ||
+		strings.Contains(dt, "CRS") {
+		return "IOS-XR"
 	}
-	for _, pattern := range iosxePatterns {
-		if strings.Contains(dt, pattern) {
-			return "IOS-XE"
-		}
+	
+	// IOS-XE: Other patterns
+	if strings.Contains(dt, "ASR1") || strings.Contains(dt, "ASR-1") ||
+		strings.Contains(dt, "ISR") || strings.Contains(dt, "CSR") ||
+		strings.Contains(dt, "IOS-XE") || strings.Contains(dt, "IOSXE") ||
+		strings.Contains(dt, "IOSV") || strings.Contains(dt, "IOS-V") ||
+		strings.Contains(dt, "VIOS") || strings.Contains(dt, "C8") ||
+		strings.Contains(dt, "C11") || strings.Contains(dt, "C12") {
+		return "IOS-XE"
 	}
 	
 	// L2 Switch patterns
-	switchPatterns := []string{
-		"SWITCH", "SW",
-		"CAT", "CATALYST",
-		"C9300", "C9200", "C9400", "C9500", "C9600",
-		"C3850", "C3750", "C3650", "C3560",
-		"C2960", "C2950",
-		"9300", "9200", "9400", "3850", "3750", "2960",
-		"L2", "L3-SW",
-		"IOL", "I86BI", // IOS-on-Linux (lab switches)
-	}
-	for _, pattern := range switchPatterns {
-		if strings.Contains(dt, pattern) {
-			return "L2-SWITCH"
-		}
+	if strings.Contains(dt, "SWITCH") || strings.Contains(dt, "SW") ||
+		strings.Contains(dt, "CAT") || strings.Contains(dt, "CATALYST") ||
+		strings.Contains(dt, "C9300") || strings.Contains(dt, "C9200") ||
+		strings.Contains(dt, "C9400") || strings.Contains(dt, "C9500") ||
+		strings.Contains(dt, "C3850") || strings.Contains(dt, "C3750") ||
+		strings.Contains(dt, "C2960") || strings.Contains(dt, "9300") ||
+		strings.Contains(dt, "9200") || strings.Contains(dt, "3850") ||
+		strings.Contains(dt, "3750") || strings.Contains(dt, "2960") ||
+		strings.Contains(dt, "L2") || strings.Contains(dt, "IOL") ||
+		strings.Contains(dt, "I86BI") {
+		return "L2-SWITCH"
 	}
 	
-	// Default to IOS-XE if unknown
+	// Default
 	return "IOS-XE"
 }
 
@@ -157,7 +158,7 @@ func parseCSV(filename string) (map[string]DeviceInfo, error) {
 
 	for i, record := range records {
 		if i == 0 {
-			continue // Skip header
+			continue
 		}
 		if len(record) < 2 {
 			continue
@@ -192,7 +193,6 @@ func parseCSV(filename string) (map[string]DeviceInfo, error) {
 	return devices, nil
 }
 
-// XLSX parser structures
 type xlsxSST struct {
 	SI []struct {
 		T string `xml:"t"`
@@ -220,7 +220,6 @@ func parseXLSX(filename string) (map[string]DeviceInfo, error) {
 	}
 	defer r.Close()
 
-	// Read shared strings
 	var sharedStrings []string
 	for _, f := range r.File {
 		if f.Name == "xl/sharedStrings.xml" {
@@ -236,7 +235,6 @@ func parseXLSX(filename string) (map[string]DeviceInfo, error) {
 		}
 	}
 
-	// Read worksheet
 	for _, f := range r.File {
 		if strings.Contains(f.Name, "worksheets/sheet") {
 			rc, _ := f.Open()
@@ -302,16 +300,14 @@ func loadHostInventory(filename string) (map[string]DeviceInfo, error) {
 	if ext == ".xlsx" {
 		devices, err := parseXLSX(filename)
 		if err != nil || len(devices) == 0 {
-			// Try CSV fallback
 			csvFile := strings.TrimSuffix(filename, ext) + ".csv"
 			if _, e := os.Stat(csvFile); e == nil {
-				log.Printf("XLSX failed, using CSV: %s", csvFile)
 				return parseCSV(csvFile)
 			}
 		}
 		return devices, err
 	}
-	return parseCSV(filename) // Default to CSV parsing
+	return parseCSV(filename)
 }
 
 func readLines(filename string) ([]string, error) {
@@ -333,7 +329,7 @@ func readLines(filename string) ([]string, error) {
 }
 
 // ============================================================================
-// SSH CLIENT - SINGLE SESSION
+// SSH CLIENT
 // ============================================================================
 
 type SSHClient struct {
@@ -347,7 +343,6 @@ type SSHClient struct {
 func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error) {
 	results := make(map[string]string)
 
-	// Build script with markers
 	var script strings.Builder
 	script.WriteString("terminal length 0\n")
 	script.WriteString("terminal width 512\n")
@@ -359,14 +354,13 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 	}
 	script.WriteString("exit\n")
 
-	// SSH with forced PTY
 	sshArgs := []string{
 		"-o", "StrictHostKeyChecking=no",
 		"-o", "UserKnownHostsFile=/dev/null",
 		"-o", "ConnectTimeout=30",
 		"-o", "LogLevel=ERROR",
 		"-p", strconv.Itoa(c.port),
-		"-t", "-t", // Force PTY
+		"-t", "-t",
 		fmt.Sprintf("%s@%s", c.username, c.host),
 	}
 
@@ -391,7 +385,6 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 		return nil, fmt.Errorf("timeout")
 	}
 
-	// Parse output
 	fullOutput := output.String()
 	for i, cmdStr := range commands {
 		start := fmt.Sprintf("===START_%d===", i)
@@ -399,7 +392,7 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 
 		startIdx := strings.Index(fullOutput, start)
 		if startIdx == -1 {
-			results[cmdStr] = "(no output captured)"
+			results[cmdStr] = "(no output)"
 			continue
 		}
 		startIdx += len(start)
@@ -435,7 +428,7 @@ func cleanOutput(s string) string {
 }
 
 // ============================================================================
-// COMMAND LOADER - WITH OS MAPPING
+// COMMAND LOADER
 // ============================================================================
 
 type CommandSet struct {
@@ -448,36 +441,32 @@ type CommandSet struct {
 func loadAllCommands(config *Config) (*CommandSet, error) {
 	cs := &CommandSet{}
 
-	// Load IOS-XR commands
 	if cmds, err := readLines(config.CommandFileXR); err == nil {
 		cs.IOSXR = cmds
 		log.Printf("✓ Loaded %d IOS-XR commands from %s", len(cmds), config.CommandFileXR)
 	} else {
-		log.Printf("✗ IOS-XR command file not found: %s", config.CommandFileXR)
+		log.Printf("✗ IOS-XR commands not found: %s", config.CommandFileXR)
 	}
 
-	// Load IOS-XE commands
 	if cmds, err := readLines(config.CommandFileXE); err == nil {
 		cs.IOSXE = cmds
 		log.Printf("✓ Loaded %d IOS-XE commands from %s", len(cmds), config.CommandFileXE)
 	} else {
-		log.Printf("✗ IOS-XE command file not found: %s", config.CommandFileXE)
+		log.Printf("✗ IOS-XE commands not found: %s", config.CommandFileXE)
 	}
 
-	// Load L2 Switch commands
 	if cmds, err := readLines(config.CommandFileL2); err == nil {
 		cs.L2Switch = cmds
 		log.Printf("✓ Loaded %d L2-Switch commands from %s", len(cmds), config.CommandFileL2)
 	} else {
-		log.Printf("✗ L2-Switch command file not found: %s", config.CommandFileL2)
+		log.Printf("✗ L2-Switch commands not found: %s", config.CommandFileL2)
 	}
 
-	// Load default commands
 	if cmds, err := readLines(config.CommandFile); err == nil {
 		cs.Default = cmds
 		log.Printf("✓ Loaded %d default commands from %s", len(cmds), config.CommandFile)
 	} else {
-		return nil, fmt.Errorf("default command file required: %s", config.CommandFile)
+		return nil, fmt.Errorf("default commands required: %s", config.CommandFile)
 	}
 
 	return cs, nil
@@ -502,7 +491,7 @@ func (cs *CommandSet) GetCommandsForOS(osType string) []string {
 }
 
 // ============================================================================
-// WORKER
+// DEVICE RESULT & PROCESSING
 // ============================================================================
 
 type DeviceResult struct {
@@ -520,11 +509,9 @@ func processDevice(device DeviceInfo, config *Config, commands *CommandSet) *Dev
 		Success: true,
 	}
 
-	// Get commands for this device's OS
 	osType := device.DetectedOS
 	cmds := commands.GetCommandsForOS(osType)
 
-	// Determine which file was used
 	switch osType {
 	case "IOS-XR":
 		result.CommandFile = config.CommandFileXR
@@ -537,8 +524,8 @@ func processDevice(device DeviceInfo, config *Config, commands *CommandSet) *Dev
 	}
 
 	if config.Verbose {
-		log.Printf("  → %s (%s) | Type: %s | OS: %s | Commands: %d from %s",
-			device.Hostname, device.IPAddress, device.DeviceType, osType, len(cmds), result.CommandFile)
+		log.Printf("  → %s (%s) | Type: %s | OS: %s | Cmds: %d",
+			device.Hostname, device.IPAddress, device.DeviceType, osType, len(cmds))
 	}
 
 	if config.DryRun {
@@ -577,7 +564,7 @@ func processDevice(device DeviceInfo, config *Config, commands *CommandSet) *Dev
 }
 
 // ============================================================================
-// OUTPUT WRITER
+// OUTPUT WRITER WITH COMPARISON SUMMARY
 // ============================================================================
 
 type OutputWriter struct {
@@ -633,6 +620,175 @@ func (w *OutputWriter) WriteDevice(result *DeviceResult) error {
 	return nil
 }
 
+// WriteSummaryCSV creates a CSV summary of key metrics per device/command
+func (w *OutputWriter) WriteSummaryCSV(results []*DeviceResult) error {
+	filename := filepath.Join(w.dir, fmt.Sprintf("SUMMARY_%s.csv", w.timestamp))
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// Write CSV header
+	fmt.Fprintf(file, "Phase,Timestamp,Hostname,IP,DeviceType,OS,Command,MetricName,MetricValue\n")
+
+	for _, r := range results {
+		if !r.Success {
+			fmt.Fprintf(file, "%s,%s,%s,%s,%s,%s,CONNECTION,Status,FAILED\n",
+				w.phase, w.timestamp, r.Device.Hostname, r.Device.IPAddress,
+				r.Device.DeviceType, r.Device.DetectedOS)
+			continue
+		}
+
+		for _, exec := range r.Results {
+			metrics := extractMetrics(exec.Command, exec.Output)
+			for metricName, metricValue := range metrics {
+				fmt.Fprintf(file, "%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+					w.phase, w.timestamp, r.Device.Hostname, r.Device.IPAddress,
+					r.Device.DeviceType, r.Device.DetectedOS,
+					exec.Command, metricName, metricValue)
+			}
+		}
+	}
+
+	return nil
+}
+
+// extractMetrics parses command output and extracts key metrics
+func extractMetrics(command, output string) map[string]string {
+	metrics := make(map[string]string)
+	lines := strings.Split(output, "\n")
+
+	switch {
+	case strings.Contains(command, "show version"):
+		for _, line := range lines {
+			if strings.Contains(line, "uptime is") {
+				metrics["Uptime"] = extractAfter(line, "uptime is")
+			}
+			if strings.Contains(line, "Version") || strings.Contains(line, "version") {
+				if strings.Contains(line, "IOS") || strings.Contains(line, "Cisco") {
+					metrics["Version"] = strings.TrimSpace(line)
+				}
+			}
+		}
+
+	case strings.Contains(command, "ospf neighbor"):
+		count := 0
+		fullCount := 0
+		for _, line := range lines {
+			if strings.Contains(line, "FULL") {
+				fullCount++
+			}
+			// Count lines with IP addresses (neighbor entries)
+			if regexp.MustCompile(`\d+\.\d+\.\d+\.\d+`).MatchString(line) {
+				count++
+			}
+		}
+		metrics["OSPF_Neighbors_Total"] = strconv.Itoa(count)
+		metrics["OSPF_Neighbors_FULL"] = strconv.Itoa(fullCount)
+
+	case strings.Contains(command, "bgp summary") || strings.Contains(command, "bgp vpnv4"):
+		established := 0
+		total := 0
+		for _, line := range lines {
+			fields := strings.Fields(line)
+			if len(fields) >= 3 && regexp.MustCompile(`^\d+\.\d+\.\d+\.\d+$`).MatchString(fields[0]) {
+				total++
+				// Check if state/pfxrcd is a number (established) not a state string
+				lastField := fields[len(fields)-1]
+				if _, err := strconv.Atoi(lastField); err == nil {
+					established++
+				}
+			}
+		}
+		metrics["BGP_Neighbors_Total"] = strconv.Itoa(total)
+		metrics["BGP_Neighbors_Established"] = strconv.Itoa(established)
+
+	case strings.Contains(command, "mpls ldp neighbor"):
+		count := 0
+		for _, line := range lines {
+			if regexp.MustCompile(`\d+\.\d+\.\d+\.\d+`).MatchString(line) {
+				count++
+			}
+		}
+		metrics["LDP_Neighbors"] = strconv.Itoa(count)
+
+	case strings.Contains(command, "interface") && strings.Contains(command, "brief"):
+		up := 0
+		down := 0
+		admin_down := 0
+		for _, line := range lines {
+			lineLower := strings.ToLower(line)
+			if strings.Contains(lineLower, "up") && strings.Contains(lineLower, "up") {
+				up++
+			} else if strings.Contains(lineLower, "administratively") || strings.Contains(lineLower, "admin") {
+				admin_down++
+			} else if strings.Contains(lineLower, "down") {
+				down++
+			}
+		}
+		metrics["Interfaces_Up"] = strconv.Itoa(up)
+		metrics["Interfaces_Down"] = strconv.Itoa(down)
+		metrics["Interfaces_AdminDown"] = strconv.Itoa(admin_down)
+
+	case strings.Contains(command, "show vrf"):
+		count := 0
+		for _, line := range lines {
+			line = strings.TrimSpace(line)
+			if line != "" && !strings.HasPrefix(line, "Name") && !strings.HasPrefix(line, "VRF") {
+				if !strings.Contains(line, "-----") {
+					count++
+				}
+			}
+		}
+		metrics["VRF_Count"] = strconv.Itoa(count)
+
+	case strings.Contains(command, "bfd"):
+		up := 0
+		down := 0
+		for _, line := range lines {
+			if strings.Contains(strings.ToLower(line), "up") {
+				up++
+			}
+			if strings.Contains(strings.ToLower(line), "down") {
+				down++
+			}
+		}
+		metrics["BFD_Sessions_Up"] = strconv.Itoa(up)
+		metrics["BFD_Sessions_Down"] = strconv.Itoa(down)
+
+	case strings.Contains(command, "xconnect") || strings.Contains(command, "l2vpn"):
+		up := 0
+		down := 0
+		for _, line := range lines {
+			if strings.Contains(strings.ToUpper(line), "UP") {
+				up++
+			}
+			if strings.Contains(strings.ToUpper(line), "DOWN") {
+				down++
+			}
+		}
+		metrics["L2VPN_Up"] = strconv.Itoa(up)
+		metrics["L2VPN_Down"] = strconv.Itoa(down)
+	}
+
+	// If no specific metrics extracted, just note it was captured
+	if len(metrics) == 0 {
+		metrics["Captured"] = "Yes"
+		metrics["OutputLines"] = strconv.Itoa(len(lines))
+	}
+
+	return metrics
+}
+
+func extractAfter(line, marker string) string {
+	idx := strings.Index(line, marker)
+	if idx == -1 {
+		return ""
+	}
+	return strings.TrimSpace(line[idx+len(marker):])
+}
+
 func (w *OutputWriter) WriteSummary(results []*DeviceResult) error {
 	filename := filepath.Join(w.dir, fmt.Sprintf("SUMMARY_%s.log", w.timestamp))
 	file, err := os.Create(filename)
@@ -657,7 +813,7 @@ func (w *OutputWriter) WriteSummary(results []*DeviceResult) error {
 	fmt.Fprintf(file, " Total: %d | Success: %d | Failed: %d | Rate: %.1f%%\n\n",
 		len(results), success, fail, float64(success)/float64(len(results))*100)
 
-	fmt.Fprintf(file, "%-12s %-15s %-12s %-10s %-10s %s\n",
+	fmt.Fprintf(file, "%-12s %-15s %-10s %-10s %-10s %s\n",
 		"HOSTNAME", "IP", "TYPE", "OS", "STATUS", "CMD_FILE")
 	fmt.Fprintf(file, "--------------------------------------------------------------------------------\n")
 
@@ -666,14 +822,191 @@ func (w *OutputWriter) WriteSummary(results []*DeviceResult) error {
 		if !r.Success {
 			status = "FAILED"
 		}
-		fmt.Fprintf(file, "%-12s %-15s %-12s %-10s %-10s %s\n",
+		fmt.Fprintf(file, "%-12s %-15s %-10s %-10s %-10s %s\n",
 			r.Device.Hostname, r.Device.IPAddress, r.Device.DeviceType,
 			r.Device.DetectedOS, status, filepath.Base(r.CommandFile))
 	}
 
 	fmt.Fprintf(file, "--------------------------------------------------------------------------------\n")
 	fmt.Fprintf(file, "\nOutput: %s\n", w.dir)
+	fmt.Fprintf(file, "CSV Summary: SUMMARY_%s.csv\n", w.timestamp)
 	return nil
+}
+
+// ============================================================================
+// COMPARISON FUNCTION - Pre vs Post Migration
+// ============================================================================
+
+func comparePhases(preDir, postDir, outputFile string) error {
+	// Find CSV files
+	preCSV := findCSVFile(preDir)
+	postCSV := findCSVFile(postDir)
+
+	if preCSV == "" || postCSV == "" {
+		return fmt.Errorf("could not find CSV summary files in pre/post directories")
+	}
+
+	log.Printf("Comparing:\n  Pre:  %s\n  Post: %s", preCSV, postCSV)
+
+	// Load data
+	preData, err := loadCSVData(preCSV)
+	if err != nil {
+		return fmt.Errorf("failed to load pre-migration data: %v", err)
+	}
+
+	postData, err := loadCSVData(postCSV)
+	if err != nil {
+		return fmt.Errorf("failed to load post-migration data: %v", err)
+	}
+
+	// Create comparison report
+	file, err := os.Create(outputFile)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	fmt.Fprintf(file, "================================================================================\n")
+	fmt.Fprintf(file, " MERALCO Pre/Post Migration Comparison Report\n")
+	fmt.Fprintf(file, " Generated: %s\n", time.Now().Format("2006-01-02 15:04:05"))
+	fmt.Fprintf(file, "================================================================================\n\n")
+
+	// Get all unique hostnames
+	hostnames := make(map[string]bool)
+	for key := range preData {
+		parts := strings.Split(key, "|")
+		if len(parts) > 0 {
+			hostnames[parts[0]] = true
+		}
+	}
+	for key := range postData {
+		parts := strings.Split(key, "|")
+		if len(parts) > 0 {
+			hostnames[parts[0]] = true
+		}
+	}
+
+	// Sort hostnames
+	var sortedHosts []string
+	for h := range hostnames {
+		sortedHosts = append(sortedHosts, h)
+	}
+	sort.Strings(sortedHosts)
+
+	// Compare each host
+	for _, hostname := range sortedHosts {
+		fmt.Fprintf(file, "\n=== %s ===\n", hostname)
+		fmt.Fprintf(file, "%-40s %-15s %-15s %-10s\n", "Metric", "Pre-Migration", "Post-Migration", "Status")
+		fmt.Fprintf(file, "--------------------------------------------------------------------------------\n")
+
+		// Get all metrics for this host
+		metrics := make(map[string]bool)
+		for key := range preData {
+			if strings.HasPrefix(key, hostname+"|") {
+				parts := strings.Split(key, "|")
+				if len(parts) >= 2 {
+					metrics[parts[1]] = true
+				}
+			}
+		}
+		for key := range postData {
+			if strings.HasPrefix(key, hostname+"|") {
+				parts := strings.Split(key, "|")
+				if len(parts) >= 2 {
+					metrics[parts[1]] = true
+				}
+			}
+		}
+
+		for metric := range metrics {
+			key := hostname + "|" + metric
+			preVal := preData[key]
+			postVal := postData[key]
+
+			status := "OK"
+			if preVal != postVal {
+				// Check if it's a numeric comparison
+				preNum, preErr := strconv.Atoi(preVal)
+				postNum, postErr := strconv.Atoi(postVal)
+				if preErr == nil && postErr == nil {
+					if postNum < preNum {
+						status = "⚠ DECREASED"
+					} else if postNum > preNum {
+						status = "↑ INCREASED"
+					} else {
+						status = "OK"
+					}
+				} else {
+					status = "CHANGED"
+				}
+			}
+
+			fmt.Fprintf(file, "%-40s %-15s %-15s %-10s\n", metric, preVal, postVal, status)
+		}
+	}
+
+	fmt.Fprintf(file, "\n================================================================================\n")
+	fmt.Fprintf(file, " End of Comparison Report\n")
+	fmt.Fprintf(file, "================================================================================\n")
+
+	return nil
+}
+
+func findCSVFile(dir string) string {
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		return ""
+	}
+	for _, f := range files {
+		if strings.HasPrefix(f.Name(), "SUMMARY_") && strings.HasSuffix(f.Name(), ".csv") {
+			return filepath.Join(dir, f.Name())
+		}
+	}
+	// Check subdirectories
+	for _, f := range files {
+		if f.IsDir() {
+			subFiles, _ := os.ReadDir(filepath.Join(dir, f.Name()))
+			for _, sf := range subFiles {
+				if strings.HasPrefix(sf.Name(), "SUMMARY_") && strings.HasSuffix(sf.Name(), ".csv") {
+					return filepath.Join(dir, f.Name(), sf.Name())
+				}
+			}
+		}
+	}
+	return ""
+}
+
+func loadCSVData(filename string) (map[string]string, error) {
+	data := make(map[string]string)
+
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+
+	for i, record := range records {
+		if i == 0 {
+			continue // Skip header
+		}
+		if len(record) >= 9 {
+			// Key: Hostname|Command|MetricName
+			hostname := record[2]
+			command := record[6]
+			metricName := record[7]
+			metricValue := record[8]
+			key := fmt.Sprintf("%s|%s_%s", hostname, command, metricName)
+			data[key] = metricValue
+		}
+	}
+
+	return data, nil
 }
 
 // ============================================================================
@@ -684,11 +1017,24 @@ func main() {
 	config := parseFlags()
 	fmt.Printf(Banner, Version)
 
+	// Handle comparison mode
+	if config.CompareDir != "" {
+		parts := strings.Split(config.CompareDir, ",")
+		if len(parts) != 2 {
+			log.Fatal("Compare requires: -compare pre_dir,post_dir")
+		}
+		outputFile := filepath.Join(config.OutputDir, "COMPARISON_REPORT.txt")
+		if err := comparePhases(parts[0], parts[1], outputFile); err != nil {
+			log.Fatalf("Comparison failed: %v", err)
+		}
+		log.Printf("Comparison report: %s", outputFile)
+		return
+	}
+
 	if config.Username == "" || config.Password == "" {
 		log.Fatal("Username (-u) and password (-p) required")
 	}
 
-	// Load host inventory
 	log.Printf("Loading inventory from %s...", config.HostFile)
 	devices, err := loadHostInventory(config.HostFile)
 	if err != nil {
@@ -696,29 +1042,25 @@ func main() {
 	}
 	log.Printf("Loaded %d devices\n", len(devices))
 
-	// Show OS detection results
 	fmt.Println("\n--- Device OS Detection ---")
-	fmt.Printf("%-12s %-15s %-12s → %-10s\n", "HOSTNAME", "IP", "TYPE", "DETECTED_OS")
-	fmt.Println(strings.Repeat("-", 60))
+	fmt.Printf("%-12s %-15s %-10s → %-10s\n", "HOSTNAME", "IP", "TYPE", "DETECTED_OS")
+	fmt.Println(strings.Repeat("-", 55))
 	for _, d := range devices {
-		fmt.Printf("%-12s %-15s %-12s → %-10s\n", d.Hostname, d.IPAddress, d.DeviceType, d.DetectedOS)
+		fmt.Printf("%-12s %-15s %-10s → %-10s\n", d.Hostname, d.IPAddress, d.DeviceType, d.DetectedOS)
 	}
 	fmt.Println()
 
-	// Load targets
 	targets, err := readLines(config.TargetFile)
 	if err != nil {
 		log.Fatalf("Failed to read targets: %v", err)
 	}
 
-	// Load commands
 	commands, err := loadAllCommands(config)
 	if err != nil {
 		log.Fatalf("Failed to load commands: %v", err)
 	}
 	fmt.Println()
 
-	// Match targets
 	var targetDevices []DeviceInfo
 	for _, t := range targets {
 		if d, ok := devices[strings.ToUpper(t)]; ok {
@@ -732,7 +1074,6 @@ func main() {
 		log.Fatal("No valid devices")
 	}
 
-	// Process devices
 	log.Printf("Processing %d devices with %d workers...\n", len(targetDevices), config.MaxWorkers)
 
 	writer := NewOutputWriter(config.OutputDir, config.Phase)
@@ -775,6 +1116,7 @@ func main() {
 	}
 
 	writer.WriteSummary(allResults)
+	writer.WriteSummaryCSV(allResults)
 
 	success := 0
 	for _, r := range allResults {
@@ -785,7 +1127,9 @@ func main() {
 
 	fmt.Printf("\n================================================================================\n")
 	fmt.Printf(" COMPLETE: %d/%d successful\n", success, len(allResults))
-	fmt.Printf(" Output: %s\n", writer.dir)
+	fmt.Printf(" Output:   %s\n", writer.dir)
+	fmt.Printf(" Summary:  SUMMARY_%s.log\n", writer.timestamp)
+	fmt.Printf(" CSV:      SUMMARY_%s.csv (for comparison)\n", writer.timestamp)
 	fmt.Printf("================================================================================\n")
 }
 
@@ -804,7 +1148,8 @@ func parseFlags() *Config {
 	flag.IntVar(&config.SSHPort, "port", 22, "SSH port")
 	flag.BoolVar(&config.Verbose, "v", false, "Verbose")
 	flag.BoolVar(&config.DryRun, "dry-run", false, "Dry run")
-	flag.StringVar(&config.Phase, "phase", "health-check", "Phase")
+	flag.StringVar(&config.Phase, "phase", "health-check", "Phase (pre-migration/post-migration)")
+	flag.StringVar(&config.CompareDir, "compare", "", "Compare pre,post directories")
 	var timeout int
 	flag.IntVar(&timeout, "timeout", 180, "Timeout (seconds)")
 	flag.Parse()
