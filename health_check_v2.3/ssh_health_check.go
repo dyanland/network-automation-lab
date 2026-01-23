@@ -419,6 +419,26 @@ func cleanOutput(s string) string {
 		if strings.Contains(t, "Pseudo-terminal") {
 			continue
 		}
+		// Skip IOS.sh shell warning messages
+		if strings.Contains(t, "IOS.sh") || 
+		   strings.Contains(t, "shell is currently disabled") ||
+		   strings.Contains(t, "term shell") ||
+		   strings.Contains(t, "shell processing full") ||
+		   strings.Contains(t, "man command") ||
+		   strings.Contains(t, "man IOS.sh") ||
+		   strings.Contains(t, "The command you have entered") ||
+		   strings.Contains(t, "You can enable") ||
+		   strings.Contains(t, "You can also enable") ||
+		   strings.Contains(t, "For more information") ||
+		   strings.Contains(t, "However, the shell") ||
+		   strings.Contains(t, "There is additional information") {
+			continue
+		}
+		// Skip prompts with commands echoed (e.g., "Switch1#show ip interface brief")
+		if regexp.MustCompile(`^[A-Za-z0-9_-]+[#>]`).MatchString(t) && strings.Contains(t, "show ") {
+			continue
+		}
+		// Skip standalone prompts
 		if regexp.MustCompile(`^[A-Za-z0-9_-]+[#>]$`).MatchString(t) {
 			continue
 		}
