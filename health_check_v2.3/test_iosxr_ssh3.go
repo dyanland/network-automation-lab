@@ -55,26 +55,13 @@ PORT="%d"
 `, *host, *user, *pass, *port)
 
 	// Send all commands in one SSH session to avoid connection resets
-	// Add IOS-XR compatible SSH options
-	scriptContent += fmt.Sprintf(`sshpass -p "$PASS" ssh \
-  -o StrictHostKeyChecking=no \
-  -o UserKnownHostsFile=/dev/null \
-  -o ConnectTimeout=10 \
-  -o ServerAliveInterval=60 \
-  -o ServerAliveCountMax=3 \
-  -o KexAlgorithms=diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 \
-  -o Ciphers=aes128-cbc,aes192-cbc,aes256-cbc,3des-cbc \
-  -o MACs=hmac-sha1,hmac-md5 \
-  -o HostKeyAlgorithms=ssh-rsa \
-  -p $PORT "$USER@$HOST" << 'EOF'
-`)
+	scriptContent += `sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p $PORT "$USER@$HOST" << 'EOF'
+`
 
 	// Add each command
 	for _, cmd := range commands {
-		scriptContent += fmt.Sprintf(`echo "=== %s ==="
-%s
-echo ""
-`, cmd, cmd)
+		scriptContent += fmt.Sprintf(`%s
+`, cmd)
 	}
 
 	scriptContent += `EOF`
