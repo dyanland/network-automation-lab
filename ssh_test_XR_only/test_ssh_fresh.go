@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Replace with your IOS XR device details
-	host := "172.10.1.1"
+	host := "172.10.1.1:22"
 	user := "meralco"
 	password := "meralco"
 
