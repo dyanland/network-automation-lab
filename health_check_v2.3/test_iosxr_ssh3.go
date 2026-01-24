@@ -45,7 +45,7 @@ func main() {
 		"show interfaces brief",
 	}
 
-	// Create temp shell script - send all commands in a single SSH session
+	// Create temp shell script (exactly like test_iosxr.sh)
 	scriptContent := fmt.Sprintf(`#!/bin/bash
 HOST="%s"
 USER="%s"
@@ -54,17 +54,19 @@ PORT="%d"
 
 `, *host, *user, *pass, *port)
 
-	// Send all commands in one SSH session to avoid connection resets
-	scriptContent += `sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p $PORT "$USER@$HOST" << 'EOF'
-`
-
-	// Add each command
+	// Add each command - execute individually
 	for _, cmd := range commands {
-		scriptContent += fmt.Sprintf(`%s
-`, cmd)
-	}
+		scriptContent += fmt.Sprintf(`echo "=== %s ==="
+sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p $PORT "$USER@$HOST" "%s"
+EXIT_CODE=$?
+if [ $EXIT_CODE -ne 0 ]; then
+  echo "ERROR: Command failed with exit code $EXIT_CODE"
+  exit $EXIT_CODE
+fi
+echo ""
 
-	scriptContent += `EOF`
+`, cmd, cmd)
+	}
 
 	// Write script to temp file
 	scriptPath := "/tmp/test_iosxr_temp.sh"
