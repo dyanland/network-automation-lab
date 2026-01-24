@@ -10,9 +10,9 @@ import (
 
 func main() {
 	// Replace with your IOS XR device details
-	host := "192.168.1.1:22"
-	user := "your-username"
-	password := "your-password"
+	host := "172.10.1.1"
+	user := "meralco"
+	password := "meralco"
 
 	// SSH client configuration
 	config := &ssh.ClientConfig{
