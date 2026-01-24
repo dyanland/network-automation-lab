@@ -57,7 +57,7 @@ PORT="%d"
 	// Add each command - execute individually
 	for _, cmd := range commands {
 		scriptContent += fmt.Sprintf(`echo "=== %s ==="
-sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p $PORT "$USER@$HOST" "%s"
+sshpass -p "$PASS" ssh -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p $PORT "$USER@$HOST" "%s" 2>&1
 EXIT_CODE=$?
 if [ $EXIT_CODE -ne 0 ]; then
   echo "ERROR: Command failed with exit code $EXIT_CODE"
