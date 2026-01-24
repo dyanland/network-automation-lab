@@ -1,0 +1,998 @@
+================================================================================
+ MERALCO Network Health Check Logger v2.3.0
+ Phase: test
+================================================================================
+ Hostname:     SR201
+ IP Address:   172.10.1.201
+ Device Type:  ASR903
+ Detected OS:  IOS-XE
+ Command File: command_iosxe.txt
+ Timestamp:    2026-01-23 15:09:04
+================================================================================
+
+--------------------------------------------------------------------------------
+ Command: show version
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Cisco IOS Software, IOSv Software (VIOS-ADVENTERPRISEK9-M), Version 15.9(3)M4, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2021 by Cisco Systems, Inc.
+Compiled Wed 04-Aug-21 08:13 by mcpre
+ROM: Bootstrap program is IOSv
+SRT201 uptime is 1 week, 1 day, 10 hours, 20 minutes
+System returned to ROM by reload
+System image file is "flash0:/vios-adventerprisek9-m"
+Last reload reason: Unknown reason
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+Cisco IOSv (revision 1.0) with  with 410861K/111616K bytes of memory.
+Processor board ID 9MCZWTEEHGBTR4EGYQ1TE
+8 Gigabit Ethernet interfaces
+DRAM configuration is 72 bits wide with parity disabled.
+256K bytes of non-volatile configuration memory.
+2097152K bytes of ATA System CompactFlash 0 (Read/Write)
+0K bytes of ATA CompactFlash 1 (Read/Write)
+11264K bytes of ATA CompactFlash 2 (Read/Write)
+0K bytes of ATA CompactFlash 3 (Read/Write)
+Configuration register is 0x0
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show platform
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Cisco IOS Software, IOSv Software (VIOS-ADVENTERPRISEK9-M), Version 15.9(3)M4, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2021 by Cisco Systems, Inc.
+Compiled Wed 04-Aug-21 08:13 by mcpre
+Disk: flash0: 16 heads, 4161 cylinders, 512 sector size
+  Device    Boot Sec/Cl StartS  EndS         System
+  fatdisk    *     8    63      4193279 FAT32 LBA(12) 1.99GB
+  Total size 1.99GB, 2146927104 bytes, sectors 4193217
+GRUB multiboot info:
+  IOMEM percent       '25'
+  Boot loader         'GRUB 2.00'
+  Command line        '/vios-adventerprisek9-m'
+  Memory size         510Mb, low 639K, high 523116K
+  Multiboot info      0x06A6AC70, flags 0x00000247
+  Boot device         0x8000FFFF
+  Memory map          0x06A6AECE (168 bytes)
+    0x00000000 .. 0x0009FBFF (     639K, available)
+    0x0009FC00 .. 0x0009FFFF (       1K, reserved)
+    0x000F0000 .. 0x000FFFFF (      64K, reserved)
+    0x00100000 .. 0x1FFDAFFF (  523116K, available)
+    0x1FFDB000 .. 0x1FFFFFFF (     148K, reserved)
+    0xFEFFC000 .. 0xFEFFFFFF (      16K, reserved)
+    0xFFFC0000 .. 0xFFFFFFFF (     256K, reserved)
+Linker:
+  _initdata_start     0x7DF31E4
+  _data1_start        0x8BBDD20
+  _initdata_end       0x8BBDD10
+Router memory: 510Mb, 535016448 bytes
+Program counter profiling:
+      PC             Invoked
+  ----------------------------------
+Interrupt service routine profiling:
+  IOAPIC IntCaught IntBlockd      TotalCycle   AvgCycles Name
+  ------------------------------------------------------------------
+Probes profiling:
+     Invoked     TotalCycle      AvgCycles Caller PC / Name
+  ---------------------------------------------------------------------
+  3093167568 80278876275397          25953 0x00287D01/ISR raise level
+  3093167796 156065250931776          50454 0x00287D69/ISR reset level
+      269883    13043252148          48329 0x00277874/ISR set level
+   728448829   710158565958            974 0x0015AE3F/PIC 0 (timer)
+   728448829   463685949286            636 0x0015A275/PC ISR clock tick
+           2      162027166       81013583 0x002203AA/Buffer init
+           1    15124303085    15124303085 0x0015948E/Filesys pre init
+           3     9709940636     3236646878 0x001615BA/PCI discover
+       42492     1461867918          34403 0x00162875/VirtIO req
+      386560       38893980            100 0x00163114/VirtIO ring alloc
+       42492     1257706764          29598 0x0016332A/VirtIO ring write
+       42492     1253268870          29494 0x00165A98/VirtIO ring write done
+       42491   110128115402        2591798 0x00162996/VirtIO queue read
+       42491    54675745522        1286760 0x00162996/VirtIO queue read wait
+       42491    55420706861        1304292 0x00165D37/VirtIO ring read done
+     2800960  6604518748374        2357948 0x0015B83F/PIC 10 (pci)
+    18949599 44456223952634        2346024 0x0015B93F/PIC 11 (pci)
+           1     2759204371     2759204371 0x0113CB0C/PD interface init
+           1     9715318134     9715318134 0x03EAA3C0/Interface init
+           1       13234631       13234631 0x0113CE2D/Filesys init
+           1       16093069       16093069 0x0113CCF9/Line init
+    14104313  2797143283956         198318 0x03EB2C00/AUX/CON poller
+    14104313  1447613389754         102636 0x001319BD/TTY read
+       12591    22984423211        1825464 0x001319BD/TTY read thre
+          47      134403535        2859649 0x03EB2C00/e1000 sw poller
+    88758556              0              0 0x00000000/VIRTIO ack
+      439048  1072157427629        2442005 0x0015BD3F/PIC 15 (harddisk)
+           1   132949964223   132949964223 0x03EB2C00/Code sign
+           1     2291721722     2291721722 0x011F6A44/E1000 BIA record
+        4851     1233511141         254279 0x001319BD/TTY read to
+           8       78163530        9770441 0x001319BD/TTY read avail
+           8        1370200         171275 0x0015EF3F/PC profiling
+% CPU profiling needs to be enabled via;
+    'test platform profile start'
+CPU information:
+  Running at 2199 ticks per millisecond
+  Watchdog is not present
+CPU capabilities:
+      Supported,  MSR (Model Specific Register)
+      Supported,  APIC (Advanced Programmable Interrupt Controller)
+      Supported,  SSE3
+      Supported,  PCL-MUL
+  NOT supported,  DTES-64
+  NOT supported,  MONITOR
+  NOT supported,  DS CPL
+      Supported,  VMX
+  NOT supported,  SMX
+  NOT supported,  EST
+  NOT supported,  TM2
+      Supported,  SSSE3
+  NOT supported,  CID
+      Supported,  FMA
+      Supported,  CX16
+  NOT supported,  ETPRD
+  NOT supported,  PDCM
+  NOT supported,  DCA
+      Supported,  SSE4.1
+      Supported,  SSE4.2
+      Supported,  X2-APIC
+      Supported,  MOVBE
+      Supported,  POP-CNT
+      Supported,  AES
+      Supported,  X-SAVE
+  NOT supported,  OSX-SAVE
+      Supported,  AVX
+      Supported,  FPU
+      Supported,  VME
+      Supported,  DE
+      Supported,  PSE
+      Supported,  TSC
+      Supported,  PAE
+      Supported,  MCE
+      Supported,  CX8
+      Supported,  SEP
+      Supported,  MTRR
+      Supported,  PGE
+      Supported,  MCA
+      Supported,  CMOV
+      Supported,  PAT
+      Supported,  PSE36
+  NOT supported,  PSN
+      Supported,  CLF
+  NOT supported,  DTES
+  NOT supported,  ACPI
+      Supported,  MMX
+      Supported,  FXSR
+      Supported,  SSE
+      Supported,  SSE2
+      Supported,  SS
+  NOT supported,  HTT
+  NOT supported,  TM1
+  NOT supported,  IA-64
+  NOT supported,  PBE
+CPU controllers:
+  APIC: base FEE00900, ID 0
+    Physical ID                              Offset 0x020/32, raw data: 00000000
+      APIC ID                                  00000000 (0)
+    Version                                  Offset 0x030/48, raw data: 00050014
+      Version                                  00000014 (20)
+      Reserved                                 00000000 (0)
+      Lvt Count                                00000005 (5)
+      Reserved                                 00000000 (0)
+      Reserved                                 00050014 (327700)
+      Reserved                                 00050014 (327700)
+      Reserved                                 00050014 (327700)
+    TPR (Task Priority Register)             Offset 0x080/128, raw data: 00000000
+      Priority                                 00000000 (0)
+    APR (Arbitration priority register)      Offset 0x090/144, raw data: 00000000
+      Priority                                 00000000 (0)
+    PPR (Processor Priority Register)        Offset 0x0A0/160, raw data: 00000000
+      Priority                                 00000000 (0)
+    EOI (End of Interrupt Register)          Offset 0x0B0/176, raw data: 00000000
+      EOI                                      00000000 (0)
+    LDR (Logical Destination Register)       Offset 0x0D0/208, raw data: 00000000
+      Logical Dest                             00000000 (0)
+    DFR (Destination Format Register)        Offset 0x0E0/224, raw data: FFFFFFFF
+      Model                                    0000000F (15)
+    SVR (Spurious Vector Register)           Offset 0x0F0/240, raw data: 000001FF
+      Spurious Vector                          000000FF (255)
+      APIC Enabled                             00000001 (1)
+      CPU                                      00000000 (0)
+      Reserved                                 00000000 (0)
+      Reserved                                 000001FF (511)
+      Reserved                                 000001FF (511)
+      Reserved                                 000001FF (511)
+    ISR (In-service Register)                Offset 0x100/256, raw data: 00000000
+      [0] bitfield                             00000000 (0)
+      [1] bitfield                             00000000 (0)
+      [2] bitfield                             00000000 (0)
+      [3] bitfield                             00000000 (0)
+      [4] bitfield                             00000000 (0)
+      [5] bitfield                             00000000 (0)
+      [6] bitfield                             00000000 (0)
+      [7] bitfield                             00000000 (0)
+    TMR (Trigger Mode Register)              Offset 0x180/384, raw data: 00000000
+      [0] bitfield                             00000000 (0)
+      [1] bitfield                             00000000 (0)
+      [2] bitfield                             00000000 (0)
+      [3] bitfield                             00000000 (0)
+      [4] bitfield                             00000000 (0)
+      [5] bitfield                             00000000 (0)
+      [6] bitfield                             00000000 (0)
+      [7] bitfield                             00000000 (0)
+    IRR (Interrupt Request Register)         Offset 0x200/512, raw data: 00000000
+      [0] bitfield                             00000000 (0)
+      [1] bitfield                             00000000 (0)
+      [2] bitfield                             00000000 (0)
+      [3] bitfield                             00000000 (0)
+      [4] bitfield                             00000000 (0)
+      [5] bitfield                             00000000 (0)
+      [6] bitfield                             00000000 (0)
+      [7] bitfield                             00000000 (0)
+    ESR (Error Status Register)              Offset 0x280/640, raw data: 00000000
+      Send                                     00000000 (0)
+      Receive                                  00000000 (0)
+      Send Accept                              00000000 (0)
+      Receive Accept                           00000000 (0)
+      Send Illegal                             00000000 (0)
+      Receive Illegal Vector                   00000000 (0)
+      Illegal Reg Address                      00000000 (0)
+      Errors                                   00000000 (0)
+    ICR1 (Interrupt Command Register)        Offset 0x300/768, raw data: 000C4610
+      Int Vector                               00000010 (16)
+      Delivery Mode                            00000006 (6)
+      Destination Mode                         00000000 (0)
+      Delivery Status                          00000000 (0)
+      Reserved                                 00000000 (0)
+      Level                                    00000001 (1)
+      Trigger                                  00000000 (0)
+      Reserved                                 00000000 (0)
+      Shorthand                                00000003 (3)
+      Reserved                                 00000000 (0)
+    ICR2 (Interrupt Command Register)        Offset 0x310/784, raw data: 00000000
+      destination                              00000000 (0)
+    Level Trigger Timer                      Offset 0x320/800, raw data: 00010000
+      Int Vector                               00000000 (0)
+      Delivery Status                          00000000 (0)
+      Mask                                     00000001 (1)
+      Timer Mode                               00000000 (0)
+    Level Trigger Thermal                    Offset 0x330/816, raw data: 00010000
+      Int Vector                               00000000 (0)
+      Delivery Mode                            00000000 (0)
+      Delivery Status                          00000000 (0)
+      Mask                                     00000001 (1)
+    Level Trigger PC                         Offset 0x340/832, raw data: 00010000
+      Interrupt Vector                         00000000 (0)
+      Delivery Mode                            00000000 (0)
+      Delivery Status                          00000000 (0)
+    Level Trigger LINT0                      Offset 0x350/848, raw data: 00008700
+      Interrupt Vector                         00000000 (0)
+      Delivery Mode (ExtInt)                   00000007 (7)
+      Reserved                                 00000000 (0)
+      Delivery Status                          00000000 (0)
+      Polarity                                 00000000 (0)
+      Remote IRR                               00000000 (0)
+      Trigger (Level)                          00000001 (1)
+      Mask                                     00000000 (0)
+      Reserved                                 00000000 (0)
+    Level Trigger LINT1                      Offset 0x360/864, raw data: 00008400
+      Interrupt Vector                         00000000 (0)
+      Delivery Mode (NMI)                      00000004 (4)
+      Reserved                                 00000000 (0)
+      Delivery Status                          00000000 (0)
+      polarity                                 00000000 (0)
+      Remote IRR                               00000000 (0)
+      Trigger (Level)                          00000001 (1)
+      Mask                                     00000000 (0)
+      Reserved                                 00000000 (0)
+    Level Trigger Error                      Offset 0x370/880, raw data: 00010000
+      Interrupt Vector                         00000000 (0)
+      Delivery Status                          00000000 (0)
+      Mask                                     00000001 (1)
+    Timer ICR (Interrupt Command Register)   Offset 0x380/896, raw data: 00000000
+      Initial count                            00000000 (0)
+    Timer CCR (Current Count Register)       Offset 0x390/912, raw data: 00000000
+      Current Count                            00000000 (0)
+    Timer DCR (Divide Config Register)       Offset 0x3E0/992, raw data: 00000000
+      Divisor                                  00000000 (0)
+Total physical DRAM 522477K bytes
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show inventory
+--------------------------------------------------------------------------------
+it on this terminal by typing
+NAME: "IOSv", DESCR: "IOSv chassis, Hw Serial#: 9MCZWTEEHGBTR4EGYQ1TE, Hw Revision: 1.0"
+PID: IOSv              , VID: 1.0, SN: 9MCZWTEEHGBTR4EGYQ1TE
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show redundancy
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Redundant System Information :
+------------------------------
+       Available system uptime = 0 minutes
+Switchovers system experienced = 0
+              Standby failures = 0
+        Last switchover reason = unsupported
+                 Hardware Mode = Simplex
+              Maintenance Mode = Disabled
+                Communications = Down      Reason: Failure
+Current Processor Information :
+-------------------------------
+               Active Location = slot 0
+        Current Software state = ACTIVE
+       Uptime in current state = 1 week, 1 day, 10 hours, 17 minutes
+                 Image Version = Cisco IOS Software, IOSv Software (VIOS-ADVENTERPRISEK9-M), Version 15.9(3)M4, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2021 by Cisco Systems, Inc.
+Compiled Wed 04-Aug-21 08:13 by mcpre
+        Configuration register = 0x0
+Peer (slot: 0) information is not available because it is in 'DISABLED' state
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show ip interface brief
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         10.9.201.2      YES TFTP   administratively down down    
+GigabitEthernet0/1         10.201.202.1    YES TFTP   up                    up      
+GigabitEthernet0/2         10.201.204.1    YES TFTP   up                    up      
+GigabitEthernet0/3         20.23.201.2     YES manual up                    up      
+GigabitEthernet0/4         unassigned      YES unset  down                  down    
+GigabitEthernet0/4.110     unassigned      YES unset  deleted               down    
+GigabitEthernet0/4.201     10.9.201.2      YES manual down                  down    
+GigabitEthernet0/4.210     unassigned      YES unset  deleted               down    
+GigabitEthernet0/5         unassigned      YES unset  administratively down down    
+GigabitEthernet0/6         unassigned      YES unset  administratively down down    
+GigabitEthernet0/7         unassigned      YES unset  administratively down down    
+Loopback0                  1.1.200.201     YES TFTP   up                    up      
+Loopback10                 172.10.1.201    YES manual up                    up      
+Loopback100                201.100.1.1     YES TFTP   up                    up      
+Loopback2200               1.22.200.201    YES TFTP   up                    up      
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show interfaces description
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Interface                      Status         Protocol Description
+Gi0/0                          admin down     down     "To UPE9"
+Gi0/1                          up             up       "To SRT202"
+Gi0/2                          up             up       "To SRT204"
+Gi0/3                          up             up       "To UPE23"
+Gi0/4                          down           down     
+Gi0/4.110                      deleted        down     
+Gi0/4.201                      down           down     "To UPE9"
+Gi0/4.210                      deleted        down     
+Gi0/5                          admin down     down     
+Gi0/6                          admin down     down     
+Gi0/7                          admin down     down     
+Lo0                            up             up       "RouterID"
+Lo10                           up             up       
+Lo100                          up             up       
+Lo2200                         up             up       "RouterID"
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show interfaces status
+--------------------------------------------------------------------------------
+it on this terminal by typing
+                           ^
+% Invalid input detected at '^' marker.
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show ip ospf neighbor
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+1.22.200.202      0   FULL/  -        00:00:38    10.201.202.2    GigabitEthernet0/1
+1.2.2.23          0   FULL/  -        00:00:37    20.23.201.1     GigabitEthernet0/3
+1.1.200.204       0   FULL/  -        00:00:35    10.201.204.2    GigabitEthernet0/2
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show ip ospf interface brief
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Interface    PID   Area            IP Address/Mask    Cost  State Nbrs F/C
+Lo2200       2200  0               1.22.200.201/32    1     P2P   0/0
+Gi0/1        2200  0               10.201.202.1/30    1     P2P   1/1
+Lo0          200   0               1.1.200.201/32     1     P2P   0/0
+Gi0/4.201    200   0               10.9.201.2/30      1     DOWN  0/0
+Gi0/3        200   0               20.23.201.2/30     1     P2P   1/1
+Gi0/2        200   0               10.201.204.1/30    1     P2P   1/1
+Gi0/0        200   0               10.9.201.2/30      1     DOWN  0/0
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show bgp summary
+--------------------------------------------------------------------------------
+it on this terminal by typing
+BGP router identifier 1.1.200.201, local AS number 65000
+BGP table version is 6254, main routing table version 6254
+19 network entries using 2736 bytes of memory
+37 path entries using 3108 bytes of memory
+28/16 BGP path/bestpath attribute entries using 4480 bytes of memory
+46 BGP rrinfo entries using 1456 bytes of memory
+7 BGP community entries using 168 bytes of memory
+6 BGP extended community entries using 144 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 12092 total bytes of memory
+BGP activity 183/91 prefixes, 7705/7551 paths, scan interval 60 secs
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+1.1.1.9         4        65000       0       0        1    0    0 1w1d     Idle
+1.1.1.10        4        65000       0       0        1    0    0 1w1d     Idle
+1.2.2.23        4        65000   12592   13190     6254    0    0 1w1d           17
+1.2.2.24        4        65000   13153   13171     6254    0    0 1w1d           17
+1.22.200.202    4        65000     547     613     6254    0    0 08:10:11        1
+1.22.200.203    4        65000   13413   22622     6254    0    0 1w1d            1
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show bgp vpnv4 unicast all summary
+--------------------------------------------------------------------------------
+it on this terminal by typing
+BGP router identifier 1.1.200.201, local AS number 65000
+BGP table version is 4491, main routing table version 4491
+73 network entries using 11388 bytes of memory
+117 path entries using 9828 bytes of memory
+14/14 BGP path/bestpath attribute entries using 2352 bytes of memory
+46 BGP rrinfo entries using 1456 bytes of memory
+7 BGP community entries using 168 bytes of memory
+6 BGP extended community entries using 144 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 25336 total bytes of memory
+BGP activity 183/91 prefixes, 7705/7551 paths, scan interval 60 secs
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+1.1.1.9         4        65000       0       0        1    0    0 1w1d     Idle
+1.1.1.10        4        65000       0       0        1    0    0 1w1d     Idle
+1.2.2.23        4        65000   12592   13190     4491    0    0 1w1d           44
+1.2.2.24        4        65000   13153   13171     4491    0    0 1w1d           44
+1.22.200.202    4        65000     547     613     4491    0    0 08:10:12        3
+1.22.200.203    4        65000   13413   22622     4491    0    0 1w1d            4
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show mpls ldp neighbor
+--------------------------------------------------------------------------------
+it on this terminal by typing
+    Peer LDP Ident: 1.1.200.204:0; Local LDP Ident 1.1.200.201:0
+	TCP connection: 1.1.200.204.37660 - 1.1.200.201.646
+	State: Oper; Msgs sent/rcvd: 31259/31219; Downstream
+	Up time: 1w1d
+	LDP discovery sources:
+	  GigabitEthernet0/2, Src IP addr: 10.201.204.2
+	  Targeted Hello 1.1.200.201 -> 1.1.200.204, active, passive
+        Addresses bound to peer LDP Ident:
+          1.1.200.204     1.22.200.204    10.203.204.2    10.201.204.2    
+          10.202.204.2    20.24.204.2     
+    Peer LDP Ident: 1.2.2.23:0; Local LDP Ident 1.1.200.201:0
+	TCP connection: 1.2.2.23.58561 - 1.1.200.201.646
+	State: Oper; Msgs sent/rcvd: 30852/30974; Downstream
+	Up time: 1w1d
+	LDP discovery sources:
+	  Targeted Hello 1.1.200.201 -> 1.2.2.23, active, passive
+	  GigabitEthernet0/3, Src IP addr: 20.23.201.1
+        Addresses bound to peer LDP Ident:
+          1.2.2.23        20.23.201.1     20.23.31.1      20.23.24.1      
+          20.21.23.2      
+    Peer LDP Ident: 1.22.200.202:0; Local LDP Ident 1.1.200.201:0
+	TCP connection: 1.22.200.202.42534 - 1.1.200.201.646
+	State: Oper; Msgs sent/rcvd: 1276/1283; Downstream
+	Up time: 08:10:19
+	LDP discovery sources:
+	  GigabitEthernet0/1, Src IP addr: 10.201.202.2
+	  Targeted Hello 1.1.200.201 -> 1.22.200.202, active, passive
+        Addresses bound to peer LDP Ident:
+          1.1.200.202     1.22.200.202    10.201.202.2    10.202.203.1    
+          10.202.204.1    
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show mpls forwarding-table summary
+--------------------------------------------------------------------------------
+it on this terminal by typing
+                                   ^
+% Invalid input detected at '^' marker.
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show mpls interfaces
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Interface              IP            Tunnel   BGP Static Operational
+GigabitEthernet0/0     Yes           No       No  No     No         
+GigabitEthernet0/1     Yes (ldp)     No       No  No     Yes        
+GigabitEthernet0/2     Yes (ldp)     No       No  No     Yes        
+GigabitEthernet0/3     Yes (ldp)     No       No  No     Yes        
+GigabitEthernet0/4.201 Yes           No       No  No     No         
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show vrf
+--------------------------------------------------------------------------------
+it on this terminal by typing
+  Name                             Default RD            Protocols   Interfaces
+  VPN_ADMS                         65000:100             ipv4        Lo100
+  VPN_Data_Apps                    65000:10              ipv4        Lo10
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show ip route vrf * summary
+--------------------------------------------------------------------------------
+it on this terminal by typing
+% IP routing table vrf * does not exist
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show xconnect all
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Legend:    XC ST=Xconnect State  S1=Segment1 State  S2=Segment2 State
+  UP=Up       DN=Down            AD=Admin Down      IA=Inactive
+  SB=Standby  HS=Hot Standby     RV=Recovering      NH=No Hardware
+XC ST  Segment 1                         S1 Segment 2                         S2
+------+---------------------------------+--+---------------------------------+--
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show l2vpn service all
+--------------------------------------------------------------------------------
+it on this terminal by typing
+                  ^
+% Invalid input detected at '^' marker.
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show bfd neighbors
+--------------------------------------------------------------------------------
+it on this terminal by typing
+IPv4 Sessions
+NeighAddr                              LD/RD         RH/RS     State     Int
+10.201.204.2                            6/6          Up        Up        Gi0/2
+20.23.201.1                             3/0          Down      Down      Gi0/3
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show logging | tail 50
+--------------------------------------------------------------------------------
+it on this terminal by typing
+                       ^
+% Invalid input detected at '^' marker.
+SRT201#echo
+
+--------------------------------------------------------------------------------
+ Command: show running-config
+--------------------------------------------------------------------------------
+The command you have entered is available in the IOS.sh.
+However, the shell is currently disabled. You can enable
+it on this terminal by typing
+   'term shell'
+You can also enable it for all terminals by configuring the
+   'shell processing full'
+command. There is additional information in the man command.
+For more information, enable shell, and then enter:
+'man IOS.sh'
+SRT201#show running-config
+Building configuration...
+
+  
+Current configuration : 9990 bytes
+!
+! Last configuration change at 03:35:09 UTC Sun Jan 18 2026
+!
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SRT201
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition VPN_ADMS
+ description { MERALCO ADMS VRF }
+ rd 65000:100
+ route-target export 65000:101
+ route-target import 65000:100
+ !
+ address-family ipv4
+ exit-address-family
+!
+vrf definition VPN_Data_Apps
+ description { Enterprise data (LAN, WLAN, IP Phones, Applications) }
+ rd 65000:10
+ route-target export 65000:10
+ route-target import 65000:10
+ route-target import 65000:20
+ !
+ address-family ipv4
+ exit-address-family
+!
+logging console informational
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name meralco.com.ph
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+mpls label protocol ldp
+mpls ldp backoff 5 10
+mpls ldp explicit-null
+mpls ldp graceful-restart timers neighbor-liveness 300
+mpls ldp graceful-restart timers max-recovery 600
+mpls ldp graceful-restart
+mpls ldp session protection
+mpls ldp igp sync holddown 2000
+mpls ldp holdtime 80
+mpls ldp discovery hello interval 15
+mpls ldp discovery hello holdtime 45
+mpls ldp discovery targeted-hello accept
+!
+!
+!
+!
+username admin privilege 15 password 0 admin123
+username meralco privilege 15 secret 9 $9$v6INph1ndje.8f$Q6Yp5ju/pumVtYJ0wzl8PggaU2SdnCzCoTojMiRm1Pw
+!
+redundancy
+bfd-template multi-hop BFD-BGP
+ interval min-tx 950 min-rx 950 multiplier 3
+ dampening 3 1500 3000 5
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description "RouterID"
+ ip address 1.1.200.201 255.255.255.255
+ ip ospf network point-to-point
+ ip ospf 200 area 0
+!
+interface Loopback10
+ vrf forwarding VPN_Data_Apps
+ ip address 172.10.1.201 255.255.255.255
+!
+interface Loopback100
+ vrf forwarding VPN_ADMS
+ ip address 201.100.1.1 255.255.255.0
+!
+interface Loopback2200
+ description "RouterID"
+ ip address 1.22.200.201 255.255.255.255
+ ip ospf network point-to-point
+ ip ospf 2200 area 0
+!
+interface GigabitEthernet0/0
+ description "To UPE9"
+ dampening
+ mtu 8986
+ ip address 10.9.201.2 255.255.255.252
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 cisco
+ ip ospf network point-to-point
+ ip ospf 200 area 0
+ load-interval 30
+ carrier-delay msec 0
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+ mpls ldp igp sync delay 25
+ mpls ip
+ bfd interval 100 min_rx 100 multiplier 3
+ no bfd echo
+!
+interface GigabitEthernet0/1
+ description "To SRT202"
+ dampening
+ mtu 9192
+ ip address 10.201.202.1 255.255.255.252
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 cisco
+ ip ospf network point-to-point
+ ip ospf 2200 area 0
+ load-interval 30
+ carrier-delay msec 0
+ duplex auto
+ speed auto
+ media-type rj45
+ mpls ldp igp sync delay 25
+ mpls ip
+ bfd interval 100 min_rx 100 multiplier 3
+ no bfd echo
+!
+interface GigabitEthernet0/2
+ description "To SRT204"
+ dampening
+ mtu 9192
+ ip address 10.201.204.1 255.255.255.252
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 cisco
+ ip ospf network point-to-point
+ ip ospf 200 area 0
+ load-interval 30
+ carrier-delay msec 0
+ duplex auto
+ speed auto
+ media-type rj45
+ mpls ldp igp sync delay 25
+ mpls ip
+ bfd interval 100 min_rx 100 multiplier 3
+ no bfd echo
+!
+interface GigabitEthernet0/3
+ description "To UPE23"
+ dampening
+ mtu 8986
+ ip address 20.23.201.2 255.255.255.252
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 cisco
+ ip ospf network point-to-point
+ ip ospf 200 area 0
+ load-interval 30
+ carrier-delay msec 0
+ duplex auto
+ speed auto
+ media-type rj45
+ mpls ldp igp sync delay 25
+ mpls ip
+ bfd interval 100 min_rx 100 multiplier 3
+ no bfd echo
+!
+interface GigabitEthernet0/4
+ dampening
+ no ip address
+ load-interval 30
+ carrier-delay msec 0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4.201
+ description "To UPE9"
+ encapsulation dot1Q 201
+ ip address 10.9.201.2 255.255.255.252
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 cisco
+ ip ospf network point-to-point
+ ip ospf 200 area 0
+ mpls ldp igp sync delay 25
+ mpls ip
+ bfd interval 100 min_rx 100 multiplier 3
+ no bfd echo
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/6
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/7
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 200
+ mpls ldp sync
+ router-id 1.1.200.201
+ max-metric router-lsa on-startup 100
+ ispf
+ area 0 authentication message-digest
+ timers throttle spf 5 50 5000
+ timers throttle lsa 0 20 5000
+ timers lsa arrival 15
+ passive-interface Loopback0
+ bfd all-interfaces
+!
+router ospf 2200
+ mpls ldp sync
+ router-id 1.22.200.201
+ max-metric router-lsa on-startup 100
+ ispf
+ timers throttle spf 5 50 5000
+ timers throttle lsa 0 20 5000
+ timers lsa arrival 15
+ redistribute connected metric-type 1 subnets route-map RED-CONN
+ passive-interface Loopback2200
+!
+router bgp 65000
+ bgp router-id 1.1.200.201
+ bgp log-neighbor-changes
+ bgp graceful-restart
+ no bgp default ipv4-unicast
+ neighbor ME-SUB-STN-IBGP-GRP peer-group
+ neighbor ME-SUB-STN-IBGP-GRP remote-as 65000
+ neighbor ME-SUB-STN-IBGP-GRP update-source Loopback0
+ neighbor iBGP-PE peer-group
+ neighbor iBGP-PE remote-as 65000
+ neighbor iBGP-PE update-source Loopback0
+ neighbor 1.1.1.9 peer-group iBGP-PE
+ neighbor 1.1.1.10 peer-group iBGP-PE
+ neighbor 1.2.2.23 peer-group iBGP-PE
+ neighbor 1.2.2.24 peer-group iBGP-PE
+ neighbor 1.22.200.202 peer-group ME-SUB-STN-IBGP-GRP
+ neighbor 1.22.200.203 peer-group ME-SUB-STN-IBGP-GRP
+ !
+ address-family ipv4
+  bgp nexthop trigger delay 0
+  network 1.1.200.201 mask 255.255.255.255 route-map SET-ASR903-COMM
+  neighbor ME-SUB-STN-IBGP-GRP send-community
+  neighbor ME-SUB-STN-IBGP-GRP route-reflector-client
+  neighbor ME-SUB-STN-IBGP-GRP aigp
+  neighbor ME-SUB-STN-IBGP-GRP next-hop-self all
+  neighbor ME-SUB-STN-IBGP-GRP route-map SB-STN-OUT out
+  neighbor ME-SUB-STN-IBGP-GRP send-label
+  neighbor iBGP-PE send-community
+  neighbor iBGP-PE aigp
+  neighbor iBGP-PE next-hop-self all
+  neighbor iBGP-PE send-label
+  neighbor 1.1.1.9 activate
+  neighbor 1.1.1.10 activate
+  neighbor 1.2.2.23 activate
+  neighbor 1.2.2.24 activate
+  neighbor 1.22.200.202 activate
+  neighbor 1.22.200.203 activate
+ exit-address-family
+ !
+ address-family vpnv4
+  bgp nexthop trigger delay 20
+  neighbor ME-SUB-STN-IBGP-GRP send-community extended
+  neighbor ME-SUB-STN-IBGP-GRP route-reflector-client
+  neighbor iBGP-PE send-community extended
+  neighbor 1.1.1.9 activate
+  neighbor 1.1.1.10 activate
+  neighbor 1.2.2.23 activate
+  neighbor 1.2.2.24 activate
+  neighbor 1.22.200.202 activate
+  neighbor 1.22.200.203 activate
+ exit-address-family
+ !
+ address-family ipv4 vrf VPN_ADMS
+  redistribute connected
+ exit-address-family
+ !
+ address-family ipv4 vrf VPN_Data_Apps
+  redistribute connected
+ exit-address-family
+!
+ip forward-protocol nd
+!
+ip community-list standard ALL-LOOPBACK-COMM permit 4259905001
+ip community-list standard ALL-LOOPBACK-COMM permit 4259905002
+ip community-list standard ALL-LOOPBACK-COMM permit 4259905003
+!
+no ip http server
+no ip http secure-server
+ip ssh source-interface Loopback0
+ip ssh version 2
+ip ssh server algorithm encryption 3des-cbc aes128-ctr aes192-ctr aes256-ctr aes128-cbc aes192-cbc aes256-cbc
+ip ssh client algorithm encryption 3des-cbc aes128-ctr aes192-ctr aes256-ctr aes128-cbc aes192-cbc aes256-cbc
+!
+ipv6 ioam timestamp
+!
+route-map SB-STN-OUT permit 10
+ match community ALL-LOOPBACK-COMM
+ set mpls-label
+!
+route-map SET-ASR903-COMM permit 10
+ set aigp-metric igp-metric
+ set community 4259905002
+!
+route-map RED-CONN permit 10
+ match interface Loopback0
+ set tag 50
+!
+!
+mpls ldp router-id Loopback0
+!
+control-plane
+!
+banner exec ^CCCCCCC
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^CCCCCCC
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^CCCCCCC
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+ exec-timeout 0 0
+line aux 0
+line vty 0 4
+ exec-timeout 0 0
+ login local
+ transport input ssh
+line vty 5 15
+ exec-timeout 0 0
+ login local
+ transport input ssh
+!
+no scheduler allocate
+!
+end
+
+SRT201#echo ===END_20==
+
+================================================================================

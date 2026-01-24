@@ -1,0 +1,18 @@
+# ============================================
+# L2 Switch Commands (Cat9300/3850/IOL)
+# ============================================
+show version
+show inventory
+show ip interface brief
+show interfaces description
+show interfaces status
+show interfaces trunk
+show vlan brief
+show spanning-tree summary
+show spanning-tree root
+show etherchannel summary
+show mac address-table count
+show lldp neighbors
+show cdp neighbors
+show logging | tail 50
+show running-config

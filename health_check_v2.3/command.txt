@@ -1,0 +1,7 @@
+# ============================================
+# Default Commands (fallback)
+# ============================================
+show version
+show inventory
+show interfaces description
+show running-config
