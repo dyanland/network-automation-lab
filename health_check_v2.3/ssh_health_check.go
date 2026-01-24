@@ -25,6 +25,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"golang.org/x/crypto/ssh"
 )
 
 const (
@@ -422,47 +424,86 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 	return results, nil
 }
 
-// executeIOSXRCommands runs commands on IOS-XR using SSH command mode
-// Each command is executed as: sshpass -p 'pass' ssh user@host "command"
+// executeIOSXRCommands runs commands on IOS-XR using native Go SSH
 func (c *SSHClient) executeIOSXRCommands(commands []string) (map[string]string, error) {
 	results := make(map[string]string)
 	var allOutput strings.Builder
 
+	// SSH client configuration
+	config := &ssh.ClientConfig{
+		User: c.username,
+		Auth: []ssh.AuthMethod{
+			ssh.Password(c.password),
+		},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+	}
+
+	// Dial IOS XR
+	addr := fmt.Sprintf("%s:%d", c.host, c.port)
+	client, err := ssh.Dial("tcp", addr, config)
+	if err != nil {
+		return nil, fmt.Errorf("failed to dial: %w", err)
+	}
+	defer client.Close()
+
+	// Start interactive session
+	session, err := client.NewSession()
+	if err != nil {
+		return nil, fmt.Errorf("failed to create session: %w", err)
+	}
+	defer session.Close()
+
+	// Request PTY (needed for IOS XR CLI)
+	if err := session.RequestPty("vt100", 80, 40, ssh.TerminalModes{}); err != nil {
+		return nil, fmt.Errorf("failed to request PTY: %w", err)
+	}
+
+	stdin, _ := session.StdinPipe()
+	stdout, _ := session.StdoutPipe()
+
+	// Start shell
+	if err := session.Shell(); err != nil {
+		return nil, fmt.Errorf("failed to start shell: %w", err)
+	}
+
+	// Send commands
 	for _, cmdStr := range commands {
-		// Build: sshpass -p 'pass' ssh -o StrictHostKeyChecking=no user@host "command"
-		sshArgs := []string{
-			"-p", c.password,
-			"ssh",
-			"-o", "StrictHostKeyChecking=no",
-			"-o", "UserKnownHostsFile=/dev/null",
-			"-o", "LogLevel=ERROR",
-			"-p", strconv.Itoa(c.port),
-			fmt.Sprintf("%s@%s", c.username, c.host),
-			cmdStr, // Command as last argument
+		fmt.Fprintf(stdin, "%s\n", cmdStr)
+	}
+
+	// Exit session cleanly
+	fmt.Fprintln(stdin, "exit")
+
+	// Capture output
+	scanner := bufio.NewScanner(stdout)
+	var currentCmd string
+	for scanner.Scan() {
+		line := scanner.Text()
+		allOutput.WriteString(line + "\n")
+
+		// crude detection: if line contains command string, switch context
+		for _, cmdStr := range commands {
+			if strings.Contains(line, cmdStr) {
+				currentCmd = cmdStr
+				results[currentCmd] = ""
+			}
 		}
-
-		cmd := exec.Command("sshpass", sshArgs...)
-
-		// Capture output
-		output, err := cmd.CombinedOutput()
-
-		outStr := string(output)
-		allOutput.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", cmdStr, outStr))
-
-		if err != nil {
-			// Still save output even if error (might have partial output)
-			results[cmdStr] = cleanIOSXRCommandOutput(outStr)
-		} else {
-			results[cmdStr] = cleanIOSXRCommandOutput(outStr)
+		if currentCmd != "" {
+			results[currentCmd] += line + "\n"
 		}
-
-		// Small delay between commands to prevent connection issues
-		time.Sleep(500 * time.Millisecond)
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("error reading output: %w", err)
 	}
 
 	// DEBUG: Save all raw output
 	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
-	os.WriteFile(debugFile, []byte(allOutput.String()), 0644)
+	_ = os.WriteFile(debugFile, []byte(allOutput.String()), 0644)
+
+	// Clean outputs
+	for cmdStr, out := range results {
+		results[cmdStr] = cleanIOSXRCommandOutput(out)
+	}
 
 	return results, nil
 }
