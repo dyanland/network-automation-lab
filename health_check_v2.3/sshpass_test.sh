@@ -1,29 +1,18 @@
-sshpass -p 'meralco' ssh -tt -o StrictHostKeyChecking=no meralco@172.10.1.1 << 'EOF'
-terminal length 0
-show version
-exit
-EOF
+#!/bin/bash
+# test_iosxr.sh - Test IOS-XR command execution
 
----------------------------------------
+HOST="172.10.1.1"
+USER="meralco"
+PASS="meralco"
 
-sshpass -p 'meralco' ssh -o StrictHostKeyChecking=no meralco@172.10.1.1 << 'EOF'
-terminal length 0
-show version
-exit
-EOF
+COMMANDS=(
+    "show version"
+    "show platform"
+    "show interfaces brief"
+)
 
----------------------------------
-
-bash -c "sshpass -p 'meralco' ssh -tt -o StrictHostKeyChecking=no meralco@172.10.1.1 << 'EOF'
-terminal length 0
-show version
-exit
-EOF"
-
-----------------------------------
-
-echo -e "terminal length 0\nshow version\nexit" | sshpass -p 'meralco' ssh -tt -o StrictHostKeyChecking=no meralco@172.10.1.1
-
-=---------------------------------
-
-printf "terminal length 0\nshow version\nexit\n" | sshpass -p 'meralco' ssh -tt -o StrictHostKeyChecking=no meralco@172.10.1.1
+for CMD in "${COMMANDS[@]}"; do
+    echo "=== $CMD ==="
+    sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR "$USER@$HOST" "$CMD"
+    echo ""
+done
