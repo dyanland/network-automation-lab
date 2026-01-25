@@ -44,7 +44,17 @@ type VRFInfo struct {
 	RTExport    string `json:"rt_export"`
 	Description string `json:"description"`
 	Priority    string `json:"priority"`
+	Source      string `json:"source"` // "static" or device hostname
 }
+
+// DeviceVRF stores VRFs collected from a specific device
+type DeviceVRF struct {
+	DeviceHostname string    `json:"device_hostname"`
+	VRFs           []VRFInfo `json:"vrfs"`
+	CollectedAt    time.Time `json:"collected_at"`
+}
+
+var deviceVRFs = make(map[string]DeviceVRF) // VRFs per device
 
 type ValidationResult struct {
 	CheckName string    `json:"check_name"`
@@ -155,20 +165,58 @@ func getClient(d DeviceInfo) (*ssh.Client, error) {
 func execCmd(d DeviceInfo, cmd string) (string, error) {
 	c, err := getClient(d)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("connection failed: %v", err)
 	}
 	s, err := c.NewSession()
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("session failed: %v", err)
 	}
 	defer s.Close()
+
+	// Request PTY for IOS-XR devices (they need it for proper output)
 	if d.DeviceType == "ios-xr" {
-		s.RequestPty("xterm", 80, 200, ssh.TerminalModes{ssh.ECHO: 0})
+		modes := ssh.TerminalModes{
+			ssh.ECHO:          0,
+			ssh.TTY_OP_ISPEED: 14400,
+			ssh.TTY_OP_OSPEED: 14400,
+		}
+		if err := s.RequestPty("xterm", 80, 400, modes); err != nil {
+			// Try without PTY if it fails
+			s.Close()
+			s, _ = c.NewSession()
+		}
 	}
-	var out bytes.Buffer
-	s.Stdout = &out
-	s.Run(fmt.Sprintf("terminal length 0\n%s", cmd))
-	return out.String(), nil
+
+	var stdout, stderr bytes.Buffer
+	s.Stdout = &stdout
+	s.Stderr = &stderr
+
+	// Build full command with terminal length
+	var fullCmd string
+	if d.DeviceType == "ios-xr" {
+		fullCmd = fmt.Sprintf("terminal length 0\n%s", cmd)
+	} else {
+		fullCmd = fmt.Sprintf("terminal length 0\n%s", cmd)
+	}
+
+	err = s.Run(fullCmd)
+
+	// Combine stdout and stderr
+	output := stdout.String()
+	if stderr.Len() > 0 {
+		output += "\n" + stderr.String()
+	}
+
+	// Even if there's an error, return output if we got any
+	if output != "" {
+		return output, nil
+	}
+
+	if err != nil {
+		return "", fmt.Errorf("command failed: %v", err)
+	}
+
+	return output, nil
 }
 
 func closeAll() {
@@ -233,10 +281,11 @@ func deviceMenu(r *bufio.Reader) {
 		fmt.Println("\n╔══════════════════════════════════════════════════════╗")
 		fmt.Println("║           DEVICE MANAGEMENT                          ║")
 		fmt.Println("╠══════════════════════════════════════════════════════╣")
-		fmt.Println("║  1. Add Device          5. Import from JSON          ║")
-		fmt.Println("║  2. Remove Device       6. Export to JSON            ║")
-		fmt.Println("║  3. List Devices        7. List VRFs                 ║")
-		fmt.Println("║  4. Test Connectivity   0. Back                      ║")
+		fmt.Println("║  1. Add Device          6. Export to JSON            ║")
+		fmt.Println("║  2. Remove Device       7. List Static VRFs          ║")
+		fmt.Println("║  3. List Devices        8. Collect VRFs from Device  ║")
+		fmt.Println("║  4. Test Connectivity   9. List Device VRFs          ║")
+		fmt.Println("║  5. Import from JSON    0. Back                      ║")
 		fmt.Println("╚══════════════════════════════════════════════════════╝")
 		fmt.Print("\nSelect: ")
 		switch readLine(r) {
@@ -254,6 +303,10 @@ func deviceMenu(r *bufio.Reader) {
 			exportDev(r)
 		case "7":
 			listVRFs()
+		case "8":
+			collectVRFsFromDevice(r)
+		case "9":
+			listDeviceVRFs(r)
 		case "0":
 			return
 		}
@@ -361,8 +414,11 @@ func connMenu(r *bufio.Reader) {
 		fmt.Println("\n╔══════════════════════════════════════════════════════╗")
 		fmt.Println("║          CONNECTIVITY TESTING                        ║")
 		fmt.Println("╠══════════════════════════════════════════════════════╣")
-		fmt.Println("║  1. Single Ping Test    3. Traceroute                ║")
-		fmt.Println("║  2. Batch Ping (VRFs)   4. MPLS Traceroute           ║")
+		fmt.Println("║  1. Single Ping Test (manual VRF input)              ║")
+		fmt.Println("║  2. Ping Test (select from device VRFs)              ║")
+		fmt.Println("║  3. Batch Ping (all device VRFs)                     ║")
+		fmt.Println("║  4. Traceroute                                       ║")
+		fmt.Println("║  5. MPLS Traceroute                                  ║")
 		fmt.Println("║  0. Back                                             ║")
 		fmt.Println("╚══════════════════════════════════════════════════════╝")
 		fmt.Print("\nSelect: ")
@@ -370,10 +426,12 @@ func connMenu(r *bufio.Reader) {
 		case "1":
 			singlePing(r)
 		case "2":
-			batchPing(r)
+			pingWithDeviceVRF(r)
 		case "3":
-			traceroute(r)
+			batchPing(r)
 		case "4":
+			traceroute(r)
+		case "5":
 			mplsTrace(r)
 		case "0":
 			return
@@ -551,6 +609,280 @@ func listVRFs() {
 			i+1, trunc(v.Name, 20), trunc(v.RD, 10), trunc(v.Priority, 8), trunc(v.Description, 26))
 	}
 	fmt.Println("╚════╩══════════════════════╩════════════╩══════════╩════════════════════════════╝")
+	fmt.Printf("\nTotal: %d static VRFs configured\n", len(vrfs))
+}
+
+// collectVRFsFromDevice - Auto-collect VRFs from a device
+func collectVRFsFromDevice(r *bufio.Reader) {
+	d := selectDev(r)
+	if d == nil {
+		return
+	}
+
+	fmt.Printf("\nCollecting VRFs from %s (%s)...\n", d.Hostname, d.IPAddress)
+
+	// Try IOS-XR command first
+	var out string
+	var err error
+
+	if d.DeviceType == "ios-xr" {
+		out, err = execCmd(*d, "show vrf all")
+		if err != nil {
+			fmt.Printf("Error: %v\n", err)
+			return
+		}
+	} else {
+		// IOS-XE or IOS
+		out, err = execCmd(*d, "show vrf")
+		if err != nil {
+			fmt.Printf("Error: %v\n", err)
+			return
+		}
+	}
+
+	fmt.Println("\n--- Raw VRF Output ---")
+	fmt.Println(out)
+	fmt.Println("--- End of Output ---")
+
+	// Parse VRFs from output
+	collectedVRFs := parseVRFOutput(out, d.DeviceType)
+
+	if len(collectedVRFs) == 0 {
+		fmt.Println("\n⚠ No VRFs found or unable to parse output")
+		fmt.Println("Trying alternative command...")
+
+		// Try alternative command
+		out, err = execCmd(*d, "show vrf all detail")
+		if err == nil {
+			fmt.Println("\n--- Raw VRF Detail Output ---")
+			fmt.Println(out)
+			fmt.Println("--- End of Output ---")
+			collectedVRFs = parseVRFDetailOutput(out)
+		}
+	}
+
+	if len(collectedVRFs) > 0 {
+		// Store in deviceVRFs map
+		deviceVRFs[d.Hostname] = DeviceVRF{
+			DeviceHostname: d.Hostname,
+			VRFs:           collectedVRFs,
+			CollectedAt:    time.Now(),
+		}
+
+		fmt.Printf("\n✓ Collected %d VRFs from %s:\n", len(collectedVRFs), d.Hostname)
+		fmt.Println("╔════╦══════════════════════════════╦══════════════════════╗")
+		fmt.Println("║ #  ║ VRF Name                     ║ RD                   ║")
+		fmt.Println("╠════╬══════════════════════════════╬══════════════════════╣")
+		for i, v := range collectedVRFs {
+			fmt.Printf("║ %-2d ║ %-28s ║ %-20s ║\n", i+1, trunc(v.Name, 28), trunc(v.RD, 20))
+		}
+		fmt.Println("╚════╩══════════════════════════════╩══════════════════════╝")
+
+		// Ask to save
+		fmt.Print("\nSave collected VRFs to file? (y/n): ")
+		if strings.ToLower(readLine(r)) == "y" {
+			ts := time.Now().Format("20060102_150405")
+			path := filepath.Join(outputDir, fmt.Sprintf("vrfs_%s_%s.json", d.Hostname, ts))
+			data, _ := json.MarshalIndent(collectedVRFs, "", "  ")
+			os.WriteFile(path, data, 0644)
+			fmt.Printf("✓ Saved to %s\n", path)
+		}
+	} else {
+		fmt.Println("\n⚠ Could not collect VRFs. Please check device connectivity and permissions.")
+	}
+}
+
+// parseVRFOutput parses "show vrf all" output for IOS-XR
+func parseVRFOutput(output, deviceType string) []VRFInfo {
+	var vrfList []VRFInfo
+	lines := strings.Split(output, "\n")
+
+	// Skip header lines
+	startParsing := false
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+
+		// Skip empty lines
+		if line == "" {
+			continue
+		}
+
+		// Look for header line to start parsing
+		if strings.Contains(line, "VRF") && (strings.Contains(line, "RD") || strings.Contains(line, "Name")) {
+			startParsing = true
+			continue
+		}
+
+		// Skip separator lines
+		if strings.HasPrefix(line, "-") || strings.HasPrefix(line, "=") {
+			continue
+		}
+
+		if !startParsing {
+			continue
+		}
+
+		// Parse VRF line - format varies by device
+		fields := strings.Fields(line)
+		if len(fields) >= 1 {
+			vrfName := fields[0]
+
+			// Skip management VRFs and default
+			if vrfName == "default" || vrfName == "management" || vrfName == "__bgp_vrf__" {
+				continue
+			}
+
+			vrf := VRFInfo{
+				Name:     vrfName,
+				Priority: "medium", // Default priority
+				Source:   "device",
+			}
+
+			// Try to extract RD if present
+			if len(fields) >= 2 {
+				// Check if second field looks like an RD (contains :)
+				if strings.Contains(fields[1], ":") {
+					vrf.RD = fields[1]
+				}
+			}
+
+			// Check if this VRF is in our static list for priority
+			for _, staticVRF := range vrfs {
+				if strings.EqualFold(staticVRF.Name, vrfName) {
+					vrf.Priority = staticVRF.Priority
+					vrf.Description = staticVRF.Description
+					break
+				}
+			}
+
+			vrfList = append(vrfList, vrf)
+		}
+	}
+
+	return vrfList
+}
+
+// parseVRFDetailOutput parses "show vrf all detail" output
+func parseVRFDetailOutput(output string) []VRFInfo {
+	var vrfList []VRFInfo
+	lines := strings.Split(output, "\n")
+
+	var currentVRF *VRFInfo
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+
+		// Look for VRF name line
+		if strings.HasPrefix(line, "VRF ") && !strings.Contains(line, "Table") {
+			// Save previous VRF if exists
+			if currentVRF != nil && currentVRF.Name != "" {
+				vrfList = append(vrfList, *currentVRF)
+			}
+
+			// Extract VRF name
+			parts := strings.Fields(line)
+			if len(parts) >= 2 {
+				vrfName := strings.TrimSuffix(parts[1], ",")
+				vrfName = strings.TrimSuffix(vrfName, ";")
+
+				if vrfName != "default" && vrfName != "management" {
+					currentVRF = &VRFInfo{
+						Name:     vrfName,
+						Priority: "medium",
+						Source:   "device",
+					}
+				} else {
+					currentVRF = nil
+				}
+			}
+		}
+
+		// Look for RD line
+		if currentVRF != nil && strings.Contains(line, "RD") {
+			parts := strings.Split(line, ":")
+			if len(parts) >= 2 {
+				rdPart := strings.TrimSpace(strings.Join(parts[1:], ":"))
+				rdPart = strings.TrimSuffix(rdPart, ";")
+				if rdPart != "not set" && rdPart != "" {
+					currentVRF.RD = rdPart
+				}
+			}
+		}
+
+		// Look for RT import/export
+		if currentVRF != nil {
+			if strings.Contains(line, "Import") && strings.Contains(line, "RT") {
+				re := regexp.MustCompile(`(\d+:\d+)`)
+				if m := re.FindString(line); m != "" {
+					currentVRF.RTImport = m
+				}
+			}
+			if strings.Contains(line, "Export") && strings.Contains(line, "RT") {
+				re := regexp.MustCompile(`(\d+:\d+)`)
+				if m := re.FindString(line); m != "" {
+					currentVRF.RTExport = m
+				}
+			}
+		}
+	}
+
+	// Don't forget the last VRF
+	if currentVRF != nil && currentVRF.Name != "" {
+		vrfList = append(vrfList, *currentVRF)
+	}
+
+	return vrfList
+}
+
+// listDeviceVRFs - Show VRFs collected from a specific device
+func listDeviceVRFs(r *bufio.Reader) {
+	if len(deviceVRFs) == 0 {
+		fmt.Println("\nNo VRFs collected from devices yet.")
+		fmt.Println("Use option 8 'Collect VRFs from Device' first.")
+		return
+	}
+
+	fmt.Println("\nDevices with collected VRFs:")
+	i := 1
+	var deviceList []string
+	for hostname, dvrf := range deviceVRFs {
+		fmt.Printf("  %d. %s (%d VRFs, collected %s)\n",
+			i, hostname, len(dvrf.VRFs), dvrf.CollectedAt.Format("15:04:05"))
+		deviceList = append(deviceList, hostname)
+		i++
+	}
+
+	fmt.Print("\nSelect device # (0=show all): ")
+	n, _ := strconv.Atoi(readLine(r))
+
+	if n == 0 {
+		// Show all
+		for hostname, dvrf := range deviceVRFs {
+			fmt.Printf("\n=== %s ===\n", hostname)
+			for j, v := range dvrf.VRFs {
+				fmt.Printf("  %d. %-25s RD: %-15s Priority: %s\n", j+1, v.Name, v.RD, v.Priority)
+			}
+		}
+	} else if n > 0 && n <= len(deviceList) {
+		hostname := deviceList[n-1]
+		dvrf := deviceVRFs[hostname]
+		fmt.Printf("\n=== VRFs on %s ===\n", hostname)
+		fmt.Println("╔════╦══════════════════════════════╦══════════════════════╦══════════╗")
+		fmt.Println("║ #  ║ VRF Name                     ║ RD                   ║ Priority ║")
+		fmt.Println("╠════╬══════════════════════════════╬══════════════════════╬══════════╣")
+		for j, v := range dvrf.VRFs {
+			fmt.Printf("║ %-2d ║ %-28s ║ %-20s ║ %-8s ║\n",
+				j+1, trunc(v.Name, 28), trunc(v.RD, 20), trunc(v.Priority, 8))
+		}
+		fmt.Println("╚════╩══════════════════════════════╩══════════════════════╩══════════╝")
+	}
+}
+
+// getVRFsForDevice returns VRFs for a specific device (from device collection or static list)
+func getVRFsForDevice(hostname string) []VRFInfo {
+	if dvrf, ok := deviceVRFs[hostname]; ok {
+		return dvrf.VRFs
+	}
+	return vrfs // fallback to static list
 }
 
 func testConn(r *bufio.Reader) {
@@ -1029,22 +1361,159 @@ func singlePing(r *bufio.Reader) {
 	if d == nil {
 		return
 	}
-	fmt.Print("VRF (blank=default): ")
+	fmt.Print("VRF (blank=global/default): ")
 	vrf := readLine(r)
-	fmt.Print("Destination: ")
+	fmt.Print("Destination IP: ")
 	dst := readLine(r)
-	var cmd string
-	if vrf == "" {
-		cmd = fmt.Sprintf("ping %s repeat 5", dst)
-	} else {
-		cmd = fmt.Sprintf("ping vrf %s %s repeat 5", vrf, dst)
+	fmt.Print("Repeat count [5]: ")
+	cnt := 5
+	if c, _ := strconv.Atoi(readLine(r)); c > 0 {
+		cnt = c
 	}
-	out, _ := execCmd(*d, cmd)
-	fmt.Println("\n" + out)
-	if pingRate(out) == 100 {
-		fmt.Println("✓ PASSED")
+
+	// Build command based on device type and VRF
+	var cmd string
+	if vrf == "" || vrf == "default" || vrf == "global" {
+		if d.DeviceType == "ios-xr" {
+			cmd = fmt.Sprintf("ping %s count %d", dst, cnt)
+		} else {
+			cmd = fmt.Sprintf("ping %s repeat %d", dst, cnt)
+		}
 	} else {
-		fmt.Println("✗ FAILED")
+		if d.DeviceType == "ios-xr" {
+			cmd = fmt.Sprintf("ping vrf %s %s count %d", vrf, dst, cnt)
+		} else {
+			cmd = fmt.Sprintf("ping vrf %s %s repeat %d", vrf, dst, cnt)
+		}
+	}
+
+	fmt.Printf("\n--- Executing on %s ---\n", d.Hostname)
+	fmt.Printf("Command: %s\n", cmd)
+	fmt.Println(strings.Repeat("-", 50))
+
+	out, err := execCmd(*d, cmd)
+	if err != nil {
+		fmt.Printf("\n✗ ERROR: %v\n", err)
+		fmt.Println("Check SSH connectivity and device credentials.")
+		return
+	}
+
+	// Show full output
+	fmt.Println(out)
+	fmt.Println(strings.Repeat("-", 50))
+
+	// Parse and show result
+	rate := pingRate(out)
+	if rate == 100 {
+		fmt.Println("\n✓ PING SUCCESSFUL (100%)")
+	} else if rate > 0 {
+		fmt.Printf("\n⚠ PARTIAL SUCCESS (%d%%)\n", rate)
+	} else {
+		// Check if it's a timeout or complete failure
+		if strings.Contains(out, "timed out") || strings.Contains(out, "0 percent") || strings.Contains(out, "0/") {
+			fmt.Println("\n✗ PING FAILED (0% - timeout/unreachable)")
+		} else if strings.Contains(out, "Invalid") || strings.Contains(out, "error") || strings.Contains(out, "Error") {
+			fmt.Println("\n✗ COMMAND ERROR - Check VRF name and destination")
+		} else {
+			fmt.Println("\n✗ PING FAILED - Could not determine success rate")
+		}
+	}
+}
+
+// pingWithDeviceVRF - Select VRF from device's collected VRFs
+func pingWithDeviceVRF(r *bufio.Reader) {
+	d := selectDev(r)
+	if d == nil {
+		return
+	}
+
+	// Get VRFs for this device
+	vrfList := getVRFsForDevice(d.Hostname)
+
+	if len(vrfList) == 0 {
+		fmt.Println("\nNo VRFs available for this device.")
+		fmt.Println("Use 'Device Management' → 'Collect VRFs from Device' first.")
+		fmt.Print("\nEnter VRF name manually: ")
+		vrf := readLine(r)
+		if vrf != "" {
+			doPingTest(r, d, vrf)
+		}
+		return
+	}
+
+	// Show available VRFs
+	fmt.Printf("\n--- VRFs available on %s ---\n", d.Hostname)
+	fmt.Println("╔════╦══════════════════════════════╦══════════╗")
+	fmt.Println("║ #  ║ VRF Name                     ║ Priority ║")
+	fmt.Println("╠════╬══════════════════════════════╬══════════╣")
+	for i, v := range vrfList {
+		fmt.Printf("║ %-2d ║ %-28s ║ %-8s ║\n", i+1, trunc(v.Name, 28), trunc(v.Priority, 8))
+	}
+	fmt.Println("╚════╩══════════════════════════════╩══════════╝")
+
+	fmt.Print("\nSelect VRF # (0=manual input): ")
+	n, _ := strconv.Atoi(readLine(r))
+
+	var vrf string
+	if n == 0 {
+		fmt.Print("Enter VRF name: ")
+		vrf = readLine(r)
+	} else if n > 0 && n <= len(vrfList) {
+		vrf = vrfList[n-1].Name
+	} else {
+		fmt.Println("Invalid selection")
+		return
+	}
+
+	doPingTest(r, d, vrf)
+}
+
+// doPingTest performs the actual ping test
+func doPingTest(r *bufio.Reader, d *DeviceInfo, vrf string) {
+	fmt.Print("Destination IP: ")
+	dst := readLine(r)
+	if dst == "" {
+		fmt.Println("No destination specified")
+		return
+	}
+
+	fmt.Print("Repeat count [5]: ")
+	cnt := 5
+	if c, _ := strconv.Atoi(readLine(r)); c > 0 {
+		cnt = c
+	}
+
+	// Build command
+	var cmd string
+	if d.DeviceType == "ios-xr" {
+		cmd = fmt.Sprintf("ping vrf %s %s count %d", vrf, dst, cnt)
+	} else {
+		cmd = fmt.Sprintf("ping vrf %s %s repeat %d", vrf, dst, cnt)
+	}
+
+	fmt.Printf("\n--- Executing on %s ---\n", d.Hostname)
+	fmt.Printf("VRF: %s\n", vrf)
+	fmt.Printf("Command: %s\n", cmd)
+	fmt.Println(strings.Repeat("-", 50))
+
+	out, err := execCmd(*d, cmd)
+	if err != nil {
+		fmt.Printf("\n✗ ERROR: %v\n", err)
+		return
+	}
+
+	// Show full output
+	fmt.Println(out)
+	fmt.Println(strings.Repeat("-", 50))
+
+	// Parse result
+	rate := pingRate(out)
+	if rate == 100 {
+		fmt.Printf("\n✓ VRF %s: PING SUCCESSFUL (100%%)\n", vrf)
+	} else if rate > 0 {
+		fmt.Printf("\n⚠ VRF %s: PARTIAL SUCCESS (%d%%)\n", vrf, rate)
+	} else {
+		fmt.Printf("\n✗ VRF %s: PING FAILED\n", vrf)
 	}
 }
 
@@ -1053,15 +1522,67 @@ func batchPing(r *bufio.Reader) {
 	if d == nil {
 		return
 	}
-	fmt.Println("\n--- Batch VRF Ping ---")
-	for _, v := range vrfs {
-		out, _ := execCmd(*d, fmt.Sprintf("ping vrf %s 127.0.0.1 repeat 3", v.Name))
-		if strings.Contains(out, "100 percent") {
-			fmt.Printf("%-20s: OK\n", v.Name)
-		} else {
-			fmt.Printf("%-20s: FAIL\n", v.Name)
-		}
+
+	// Get VRFs for this device
+	vrfList := getVRFsForDevice(d.Hostname)
+
+	if len(vrfList) == 0 {
+		fmt.Println("\nNo VRFs available. Using static VRF list.")
+		vrfList = vrfs
 	}
+
+	fmt.Printf("\n--- Batch Ping Test from %s ---\n", d.Hostname)
+	fmt.Printf("Testing %d VRFs (ping to loopback 127.0.0.1 or specify destination)\n", len(vrfList))
+
+	fmt.Print("Destination IP (blank=127.0.0.1): ")
+	dst := readLine(r)
+	if dst == "" {
+		dst = "127.0.0.1"
+	}
+
+	fmt.Println("\n╔══════════════════════════════╦══════════╦════════════════════════════════╗")
+	fmt.Println("║ VRF                          ║ Result   ║ Details                        ║")
+	fmt.Println("╠══════════════════════════════╬══════════╬════════════════════════════════╣")
+
+	passCount, failCount := 0, 0
+	for _, v := range vrfList {
+		var cmd string
+		if d.DeviceType == "ios-xr" {
+			cmd = fmt.Sprintf("ping vrf %s %s count 3", v.Name, dst)
+		} else {
+			cmd = fmt.Sprintf("ping vrf %s %s repeat 3", v.Name, dst)
+		}
+
+		out, err := execCmd(*d, cmd)
+		result := "FAIL"
+		details := "Error or timeout"
+
+		if err != nil {
+			details = fmt.Sprintf("Error: %v", err)
+		} else {
+			rate := pingRate(out)
+			if rate == 100 {
+				result = "OK"
+				details = "100% success"
+				passCount++
+			} else if rate > 0 {
+				result = "PARTIAL"
+				details = fmt.Sprintf("%d%% success", rate)
+			} else {
+				if strings.Contains(out, "Invalid") {
+					details = "VRF not found"
+				} else if strings.Contains(out, "0 percent") {
+					details = "0% - unreachable"
+				}
+				failCount++
+			}
+		}
+
+		fmt.Printf("║ %-28s ║ %-8s ║ %-30s ║\n", trunc(v.Name, 28), result, trunc(details, 30))
+	}
+
+	fmt.Println("╚══════════════════════════════╩══════════╩════════════════════════════════╝")
+	fmt.Printf("\nSummary: %d passed, %d failed out of %d VRFs\n", passCount, failCount, len(vrfList))
 }
 
 func traceroute(r *bufio.Reader) {
@@ -1427,11 +1948,53 @@ func parseRates(s string) (float64, float64) {
 }
 
 func pingRate(s string) int {
-	re := regexp.MustCompile(`Success rate is\s+(\d+)\s*percent`)
-	if m := re.FindStringSubmatch(s); len(m) > 1 {
+	// Try IOS-XR/IOS format: "Success rate is X percent"
+	re1 := regexp.MustCompile(`Success rate is\s+(\d+)\s*percent`)
+	if m := re1.FindStringSubmatch(s); len(m) > 1 {
 		n, _ := strconv.Atoi(m[1])
 		return n
 	}
+
+	// Try format: "X/Y" (X received out of Y sent)
+	re2 := regexp.MustCompile(`(\d+)/(\d+)`)
+	if m := re2.FindStringSubmatch(s); len(m) > 2 {
+		received, _ := strconv.Atoi(m[1])
+		sent, _ := strconv.Atoi(m[2])
+		if sent > 0 {
+			return (received * 100) / sent
+		}
+	}
+
+	// Try format: "X% packet loss" (Linux style)
+	re3 := regexp.MustCompile(`(\d+)%\s*packet loss`)
+	if m := re3.FindStringSubmatch(s); len(m) > 1 {
+		loss, _ := strconv.Atoi(m[1])
+		return 100 - loss
+	}
+
+	// Try format: "round-trip" or "rtt" (indicates at least some success)
+	if strings.Contains(s, "round-trip") || strings.Contains(s, "rtt min") {
+		// If we see round-trip stats, at least some pings succeeded
+		// Try to find the actual success count
+		re4 := regexp.MustCompile(`(\d+)\s+packets received`)
+		if m := re4.FindStringSubmatch(s); len(m) > 1 {
+			received, _ := strconv.Atoi(m[1])
+			if received > 0 {
+				return 100 // Assume success if we see packets received
+			}
+		}
+	}
+
+	// Check for explicit success indicators
+	if strings.Contains(s, "100 percent") || strings.Contains(s, "100%") {
+		return 100
+	}
+
+	// Check for complete failure
+	if strings.Contains(s, "0 percent") || strings.Contains(s, "100% packet loss") {
+		return 0
+	}
+
 	return 0
 }
 
