@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"os/exec"
@@ -167,47 +168,36 @@ func execCmd(d DeviceInfo, cmd string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("connection failed: %v", err)
 	}
+
+	// Use device-specific execution method
+	switch d.DeviceType {
+	case "ios-xr":
+		return execCmdIOSXR(c, d, cmd)
+	default:
+		return execCmdStandard(c, cmd)
+	}
+}
+
+// execCmdStandard for IOS/IOS-XE devices
+func execCmdStandard(c *ssh.Client, cmd string) (string, error) {
 	s, err := c.NewSession()
 	if err != nil {
 		return "", fmt.Errorf("session failed: %v", err)
 	}
 	defer s.Close()
 
-	// Request PTY for IOS-XR devices (they need it for proper output)
-	if d.DeviceType == "ios-xr" {
-		modes := ssh.TerminalModes{
-			ssh.ECHO:          0,
-			ssh.TTY_OP_ISPEED: 14400,
-			ssh.TTY_OP_OSPEED: 14400,
-		}
-		if err := s.RequestPty("xterm", 80, 400, modes); err != nil {
-			// Try without PTY if it fails
-			s.Close()
-			s, _ = c.NewSession()
-		}
-	}
-
 	var stdout, stderr bytes.Buffer
 	s.Stdout = &stdout
 	s.Stderr = &stderr
 
-	// Build full command with terminal length
-	var fullCmd string
-	if d.DeviceType == "ios-xr" {
-		fullCmd = fmt.Sprintf("terminal length 0\n%s", cmd)
-	} else {
-		fullCmd = fmt.Sprintf("terminal length 0\n%s", cmd)
-	}
-
+	fullCmd := fmt.Sprintf("terminal length 0\n%s", cmd)
 	err = s.Run(fullCmd)
 
-	// Combine stdout and stderr
 	output := stdout.String()
 	if stderr.Len() > 0 {
 		output += "\n" + stderr.String()
 	}
 
-	// Even if there's an error, return output if we got any
 	if output != "" {
 		return output, nil
 	}
@@ -217,6 +207,143 @@ func execCmd(d DeviceInfo, cmd string) (string, error) {
 	}
 
 	return output, nil
+}
+
+// execCmdIOSXR uses interactive shell method that works with IOS-XR
+// This matches the working method from the health_check tool
+func execCmdIOSXR(c *ssh.Client, d DeviceInfo, cmd string) (string, error) {
+	s, err := c.NewSession()
+	if err != nil {
+		return "", fmt.Errorf("session failed: %v", err)
+	}
+	defer s.Close()
+
+	// Request PTY - required for IOS-XR
+	modes := ssh.TerminalModes{
+		ssh.ECHO:          0,
+		ssh.TTY_OP_ISPEED: 14400,
+		ssh.TTY_OP_OSPEED: 14400,
+	}
+
+	if err := s.RequestPty("vt100", 80, 500, modes); err != nil {
+		return "", fmt.Errorf("PTY failed: %v", err)
+	}
+
+	// Set up pipes
+	stdin, err := s.StdinPipe()
+	if err != nil {
+		return "", fmt.Errorf("stdin pipe failed: %v", err)
+	}
+
+	var outputBuf bytes.Buffer
+	s.Stdout = &outputBuf
+	s.Stderr = &outputBuf
+
+	// Start shell
+	if err := s.Shell(); err != nil {
+		return "", fmt.Errorf("shell failed: %v", err)
+	}
+
+	// Wait for initial prompt
+	time.Sleep(1 * time.Second)
+
+	// Send terminal length 0
+	io.WriteString(stdin, "terminal length 0\n")
+	time.Sleep(500 * time.Millisecond)
+
+	// Send the command
+	io.WriteString(stdin, cmd+"\n")
+
+	// Wait time depends on command type
+	if strings.HasPrefix(cmd, "ping") {
+		// Ping needs more time based on count
+		time.Sleep(8 * time.Second)
+	} else if strings.HasPrefix(cmd, "show vrf") {
+		time.Sleep(3 * time.Second)
+	} else {
+		time.Sleep(2 * time.Second)
+	}
+
+	// Send exit
+	io.WriteString(stdin, "exit\n")
+	time.Sleep(500 * time.Millisecond)
+
+	// Close stdin to signal we're done
+	stdin.Close()
+
+	// Wait for session to complete
+	s.Wait()
+
+	// Get and clean output
+	output := outputBuf.String()
+	return cleanIOSXROutput(output, cmd), nil
+}
+
+// cleanIOSXROutput removes terminal artifacts from IOS-XR output
+func cleanIOSXROutput(output, cmd string) string {
+	// Remove ANSI escape codes
+	ansiRegex := regexp.MustCompile(`\x1b\[[0-9;]*[a-zA-Z]`)
+	output = ansiRegex.ReplaceAllString(output, "")
+
+	// Remove carriage returns
+	output = strings.ReplaceAll(output, "\r", "")
+
+	// Split into lines and filter
+	lines := strings.Split(output, "\n")
+	var result []string
+	skipNext := false
+
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+
+		// Skip empty lines
+		if trimmed == "" {
+			continue
+		}
+
+		// Skip terminal length command
+		if strings.Contains(trimmed, "terminal length") {
+			skipNext = true
+			continue
+		}
+
+		if skipNext {
+			skipNext = false
+			continue
+		}
+
+		// Skip command echo (but keep for ping to show what was executed)
+		if strings.HasPrefix(trimmed, cmd[:min(len(cmd), 10)]) {
+			continue
+		}
+
+		// Skip prompts (lines ending with # or >)
+		if strings.HasSuffix(trimmed, "#") || strings.HasSuffix(trimmed, ">") {
+			continue
+		}
+
+		// Skip "exit" command
+		if trimmed == "exit" {
+			continue
+		}
+
+		// Skip Building configuration...
+		if strings.Contains(trimmed, "Building configuration") {
+			continue
+		}
+
+		result = append(result, line)
+	}
+
+	return strings.Join(result, "\n")
+}
+
+// min returns the smaller of two integers
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
 
 func closeAll() {
