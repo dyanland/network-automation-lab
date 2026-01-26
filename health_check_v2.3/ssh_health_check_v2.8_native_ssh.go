@@ -429,13 +429,14 @@ func (c *SSHClient) executeIOSXRCommands(commands []string) (map[string]string, 
 	results := make(map[string]string)
 	var allOutput strings.Builder
 
-	// SSH client configuration
+	// SSH client configuration with timeout
 	config := &ssh.ClientConfig{
 		User: c.username,
 		Auth: []ssh.AuthMethod{
 			ssh.Password(c.password),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		Timeout:         30 * time.Second,
 	}
 
 	// Dial IOS XR
@@ -454,56 +455,70 @@ func (c *SSHClient) executeIOSXRCommands(commands []string) (map[string]string, 
 	defer session.Close()
 
 	// Request PTY (needed for IOS XR CLI)
-	if err := session.RequestPty("vt100", 80, 40, ssh.TerminalModes{}); err != nil {
+	modes := ssh.TerminalModes{
+		ssh.ECHO:          0,     // disable echo
+		ssh.TTY_OP_ISPEED: 14400, // input speed
+		ssh.TTY_OP_OSPEED: 14400, // output speed
+	}
+	if err := session.RequestPty("xterm", 80, 200, modes); err != nil {
 		return nil, fmt.Errorf("failed to request PTY: %w", err)
 	}
 
-	stdin, _ := session.StdinPipe()
-	stdout, _ := session.StdoutPipe()
+	stdin, err := session.StdinPipe()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get stdin pipe: %w", err)
+	}
+
+	stdout, err := session.StdoutPipe()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get stdout pipe: %w", err)
+	}
 
 	// Start shell
 	if err := session.Shell(); err != nil {
 		return nil, fmt.Errorf("failed to start shell: %w", err)
 	}
 
-	// Send commands
+	// Give shell time to initialize and show banner (3 seconds like test v4)
+	time.Sleep(3 * time.Second)
+
+	// Read initial banner/prompt
+	initialBuf := make([]byte, 65535)
+	stdout.Read(initialBuf)
+
+	// Send terminal length 0 to disable paging
+	fmt.Fprintf(stdin, "terminal length 0\n")
+	time.Sleep(1 * time.Second)
+
+	// Clear any output from terminal length command
+	stdout.Read(initialBuf)
+
+	// Execute each command and capture output
 	for _, cmdStr := range commands {
+		// Send command
 		fmt.Fprintf(stdin, "%s\n", cmdStr)
+		
+		// Wait for command to execute (2 seconds like test v4)
+		time.Sleep(2 * time.Second)
+
+		// Read output with timeout
+		outputBuf := make([]byte, 1048576) // 1MB buffer
+		n, _ := stdout.Read(outputBuf)
+		
+		cmdOutput := string(outputBuf[:n])
+		allOutput.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", cmdStr, cmdOutput))
+		
+		// Clean and store output
+		results[cmdStr] = cleanIOSXRCommandOutput(cmdOutput)
 	}
 
 	// Exit session cleanly
-	fmt.Fprintln(stdin, "exit")
-
-	// Capture output
-	scanner := bufio.NewScanner(stdout)
-	var currentCmd string
-	for scanner.Scan() {
-		line := scanner.Text()
-		allOutput.WriteString(line + "\n")
-
-		// crude detection: if line contains command string, switch context
-		for _, cmdStr := range commands {
-			if strings.Contains(line, cmdStr) {
-				currentCmd = cmdStr
-				results[currentCmd] = ""
-			}
-		}
-		if currentCmd != "" {
-			results[currentCmd] += line + "\n"
-		}
-	}
-	if err := scanner.Err(); err != nil {
-		return nil, fmt.Errorf("error reading output: %w", err)
-	}
+	fmt.Fprintf(stdin, "exit\n")
+	time.Sleep(500 * time.Millisecond)
 
 	// DEBUG: Save all raw output
 	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
 	_ = os.WriteFile(debugFile, []byte(allOutput.String()), 0644)
-
-	// Clean outputs
-	for cmdStr, out := range results {
-		results[cmdStr] = cleanIOSXRCommandOutput(out)
-	}
 
 	return results, nil
 }

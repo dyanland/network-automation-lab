@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Pre-Migration Audit Tool v2.1 - MERALCO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-bg { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 50%, #1e1b4b 100%); }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div id="root"></div>
+    <script type="text/babel">
+const { useState, useCallback } = React;
+
+const NetworkAuditTool = () => {
+    const [activeTab, setActiveTab] = useState('upload');
+    const [configText, setConfigText] = useState('');
+    const [auditResults, setAuditResults] = useState(null);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [expandedSections, setExpandedSections] = useState({});
+    const [filterStatus, setFilterStatus] = useState('all');
+    const [searchTerm, setSearchTerm] = useState('');
+
+    // Sample Configurations
+    const sampleConfigs = {
+        'PDLASR01': `hostname PDLASR01
+interface Loopback0
+ ipv4 address 10.228.0.3 255.255.255.255
+interface Bundle-Ether1
+ description Link to Plaridel Sector 9300
+ mtu 9216
+ service-policy input L2L3-Ingress-Marking-only
+ service-policy output Sector_Egress_Q
+ load-interval 30
+interface Bundle-Ether1.481
+ description Vlan 481 Gateway
+ vrf VPN_Data_Apps
+ ipv4 address 10.225.1.9 255.255.255.252
+ encapsulation dot1q 481
+interface Bundle-Ether1.482
+ description Vlan 482 Gateway
+ vrf VPN_IT_Mgt
+ ipv4 address 10.165.1.25 255.255.255.252
+ encapsulation dot1q 482
+interface GigabitEthernet0/0/0/10
+ description *** BLWGSUBPE01 GigabitEthernet0/3/0 ***
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ service-policy input Core_Ingress
+ service-policy output Core_Egress
+ ipv4 address 10.240.9.242 255.255.255.252
+ dampening
+interface GigabitEthernet0/0/0/11
+ description *** MLLSUBPE01 GigabitEthernet0/2/0 ***
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ ipv4 address 10.240.9.246 255.255.255.252
+interface GigabitEthernet0/0/0/12
+ description *** Spare Port ***
+ shutdown
+interface TenGigE0/0/0/0
+ description *** VLZASR01 TenGig0/0/0/1***
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ ipv4 address 10.229.0.5 255.255.255.252
+ dampening
+interface TenGigE0/0/0/1
+ description *** DHTASR01 TenGig0/0/0/0 ***
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ ipv4 address 10.229.0.9 255.255.255.252
+interface TenGigE0/0/0/2
+ description *** STAASR01 TenGig0/0/0/2 ***
+ mtu 1514
+ ipv4 address 10.229.0.13 255.255.255.252
+vrf VPN_Data_Apps
+ address-family ipv4 unicast
+  import route-target
+   65000:100
+  export route-target
+   65000:100
+vrf VPN_SCADA
+ address-family ipv4 unicast
+  import route-target
+   65000:600
+  export route-target
+   65000:600
+router ospf 250
+ nsr
+ router-id 10.228.0.3
+ bfd minimum-interval 100
+ bfd fast-detect
+ bfd multiplier 3
+ authentication message-digest keychain ospf-key
+ mpls ldp sync
+ mpls ldp auto-config
+ nsf cisco
+ timers throttle spf 50 100 5000
+ timers throttle lsa all 0 50 5000
+ timers lsa min-arrival 10
+ timers pacing flood 15
+ auto-cost reference-bandwidth 400000
+ redistribute connected metric-type 1 route-policy REDIST-LOOPBACK-MAP
+ area 0
+  interface Loopback0
+   passive enable
+  interface GigabitEthernet0/0/0/10
+   bfd minimum-interval 100
+   bfd fast-detect
+   bfd multiplier 3
+   network point-to-point
+   priority 100
+  interface TenGigE0/0/0/0
+   bfd minimum-interval 100
+   bfd fast-detect
+   bfd multiplier 3
+   network point-to-point
+   priority 200
+router ospf GRID170
+ nsr
+ router-id 10.228.0.3
+ authentication message-digest keychain grid-key
+ mpls ldp sync
+ mpls ldp auto-config
+ nsf cisco
+ timers throttle spf 50 100 5000
+ auto-cost reference-bandwidth 400000
+ area 0
+  interface Bundle-Ether1.170
+   network point-to-point
+   priority 50
+router bgp 65000
+ bgp router-id 10.228.0.3
+ timers bgp 10 30
+ bgp graceful-restart
+ bgp graceful-restart restart-time 120
+ nsr
+ address-family vpnv4 unicast
+ address-family ipv4 labeled-unicast
+ neighbor 10.228.201.1
+  remote-as 65000
+mpls ldp
+ nsr
+ graceful-restart
+ graceful-restart reconnect-timeout 120
+ graceful-restart forwarding-state-holdtime 180
+ router-id 10.228.0.3
+ session protection for LDP-PEERS duration 86400
+ neighbor
+  password encrypted 070C285F4D06
+ address-family ipv4
+  label
+   local
+    allocate for LOOPBACKS
+ interface GigabitEthernet0/0/0/10
+ interface GigabitEthernet0/0/0/11
+ interface TenGigE0/0/0/0
+ interface TenGigE0/0/0/1
+ interface Bundle-Ether1.170
+keychain ospf-key
+ key 1
+  accept-lifetime 00:00:00 january 01 2020 infinite
+  key-string password 070C285F4D06
+  send-lifetime 00:00:00 january 01 2020 infinite
+  cryptographic-algorithm MD5
+keychain grid-key
+ key 1
+  key-string password 14141B180F0B
+  cryptographic-algorithm MD5
+prefix-set LOOPBACKS
+ 10.228.0.0/16 ge 32
+end-set
+route-policy REDIST-LOOPBACK-MAP
+ if destination in LOOPBACKS then
+  pass
+ else
+  drop
+ endif
+end-policy
+class-map match-any Prec5
+ match precedence 5
+policy-map L2L3-Ingress-Marking-only
+ class Prec5
+  set mpls experimental imposition 5
+l2vpn
+ xconnect group GRID-PW
+  p2p BLWGSUB-TO-MLLSSUB
+   neighbor ipv4 10.240.8.7 pw-id 1001
+end`,
+        'PDLPASR9K': `hostname PDLPASR9K
+interface Loopback0
+ ipv4 address 10.228.201.9 255.255.255.255
+interface MgmtEth0/RSP0/CPU0/0
+ ipv4 address 10.100.1.9 255.255.255.0
+interface HundredGigE0/0/0/40
+ description connected to VLZPASR9K Hu0/0/0/40
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ service-policy input Core_Ingress
+ service-policy output Core_Egress
+ ipv4 address 10.228.202.22 255.255.255.252
+ dampening
+interface HundredGigE0/0/0/41
+ description connected to DHTPASR9K Hu0/1/0/40
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ service-policy input Core_Ingress
+ service-policy output Core_Egress
+ ipv4 address 10.228.202.66 255.255.255.252
+ dampening
+interface TenGigE0/0/0/0
+ description connected to PDLASR01 Te0/0/0/5
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ ipv4 address 10.228.202.2 255.255.255.252
+interface TenGigE0/0/0/1
+ description connected to DHTASR01 Te0/0/0/5
+ mtu 9216
+ carrier-delay up 2000 down 0
+ load-interval 30
+ ipv4 address 10.228.202.6 255.255.255.252
+interface GigabitEthernet0/0/0/0
+ description *** OOB Management ***
+ mtu 1514
+ ipv4 address 10.100.2.9 255.255.255.0
+interface GigabitEthernet0/0/0/1
+ description *** Spare ***
+ shutdown
+interface Bundle-Ether100
+ description Trunk to PDLP9300SW
+ mtu 9216
+ load-interval 30
+interface Bundle-Ether100.170
+ description Grid-170 to Sector
+ encapsulation dot1q 170
+ ipv4 address 10.228.203.1 255.255.255.252
+interface Bundle-Ether100.250
+ description Grid-250 to Sector
+ encapsulation dot1q 250
+ ipv4 address 10.228.203.5 255.255.255.252
+interface Bundle-Ether100.481
+ description VPN_Data_Apps Gateway
+ vrf VPN_Data_Apps
+ ipv4 address 10.225.2.1 255.255.255.252
+ encapsulation dot1q 481
+vrf VPN_Data_Apps
+ address-family ipv4 unicast
+  import route-target
+   65000:100
+  export route-target
+   65000:100
+vrf VPN_SCADA
+ address-family ipv4 unicast
+  import route-target
+   65000:600
+  export route-target
+   65000:600
+vrf VPN_Telepro
+ address-family ipv4 unicast
+  import route-target
+   65000:700
+  export route-target
+   65000:700
+segment-routing
+ global-block 16000 23999
+ local-block 15000 15999
+router ospf 100
+ nsr
+ router-id 10.228.201.9
+ segment-routing mpls
+ segment-routing forwarding mpls
+ bfd minimum-interval 100
+ bfd fast-detect
+ bfd multiplier 3
+ authentication message-digest keychain sr-core-key
+ nsf cisco
+ timers throttle spf 50 100 5000
+ timers throttle lsa all 0 50 5000
+ timers lsa min-arrival 10
+ timers pacing flood 15
+ auto-cost reference-bandwidth 400000
+ redistribute connected metric-type 1 route-policy REDIST-LOOPBACK-MAP
+ area 0
+  interface Loopback0
+   passive enable
+   prefix-sid index 9
+  interface HundredGigE0/0/0/40
+   bfd minimum-interval 100
+   bfd fast-detect
+   bfd multiplier 3
+   network point-to-point
+   priority 200
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa enable
+  interface HundredGigE0/0/0/41
+   bfd minimum-interval 100
+   bfd fast-detect
+   bfd multiplier 3
+   network point-to-point
+   priority 200
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa enable
+router ospf GRID170
+ nsr
+ router-id 10.228.201.9
+ bfd minimum-interval 100
+ bfd fast-detect
+ bfd multiplier 3
+ authentication message-digest keychain grid-key
+ mpls ldp sync
+ mpls ldp auto-config
+ nsf cisco
+ timers throttle spf 50 100 5000
+ timers throttle lsa all 0 50 5000
+ auto-cost reference-bandwidth 400000
+ redistribute connected metric-type 1 route-policy GRID-REDIST
+ area 0
+  interface Bundle-Ether100.170
+   bfd minimum-interval 100
+   bfd fast-detect
+   network point-to-point
+   priority 100
+router ospf GRID250
+ nsr
+ router-id 10.228.201.9
+ bfd minimum-interval 100
+ bfd fast-detect
+ bfd multiplier 3
+ authentication message-digest keychain grid-key
+ mpls ldp sync
+ mpls ldp auto-config
+ nsf cisco
+ timers throttle spf 50 100 5000
+ auto-cost reference-bandwidth 400000
+ area 0
+  interface Bundle-Ether100.250
+   bfd minimum-interval 100
+   bfd fast-detect
+   network point-to-point
+   priority 100
+router bgp 65000
+ bgp router-id 10.228.201.9
+ timers bgp 10 30
+ bgp graceful-restart
+ bgp graceful-restart restart-time 120
+ bgp graceful-restart stalepath-time 360
+ nsr
+ address-family vpnv4 unicast
+ address-family ipv4 labeled-unicast
+ neighbor-group ibgp-rr
+  remote-as 65000
+  bfd fast-detect
+  bfd multiplier 3
+  bfd minimum-interval 100
+ neighbor 10.228.201.1
+  use neighbor-group ibgp-rr
+mpls ldp
+ nsr
+ graceful-restart
+ graceful-restart reconnect-timeout 120
+ graceful-restart forwarding-state-holdtime 180
+ router-id 10.228.201.9
+ session protection for LDP-PEERS duration 86400
+ neighbor
+  password encrypted 070C285F4D06
+ address-family ipv4
+  label
+   local
+    allocate for LOOPBACKS
+ interface Bundle-Ether100.170
+ interface Bundle-Ether100.250
+mpls label range table 0 34000 340000
+keychain sr-core-key
+ key 1
+  accept-lifetime 00:00:00 january 01 2024 infinite
+  key-string password 0822455D0A16
+  send-lifetime 00:00:00 january 01 2024 infinite
+  cryptographic-algorithm MD5
+keychain grid-key
+ key 1
+  key-string password 14141B180F0B
+  cryptographic-algorithm MD5
+prefix-set LOOPBACKS
+ 10.228.0.0/16 ge 32
+end-set
+prefix-set LDP-PEERS
+ 10.228.0.0/24 ge 32,
+ 10.240.0.0/16 ge 32
+end-set
+route-policy REDIST-LOOPBACK-MAP
+ if destination in LOOPBACKS then
+  pass
+ else
+  drop
+ endif
+end-policy
+route-policy GRID-REDIST
+ if destination in LOOPBACKS then
+  set metric 100
+  pass
+ else
+  drop
+ endif
+end-policy
+class-map match-any Prec5
+ match precedence 5
+policy-map Core_Egress
+ class Prec5
+  priority level 1
+! ╔════════════════════════════════════════════════════════════════════╗
+! ║   SHOW COMMAND OUTPUTS FOR VALIDATION                              ║
+! ╚════════════════════════════════════════════════════════════════════╝
+! show mpls forwarding | i SR
+! 16001  Pop         SR Pfx (idx 1)     Hu0/0/0/40   10.228.202.21
+! 16002  16002       SR Pfx (idx 2)     Hu0/0/0/41   10.228.202.65
+! 16009  Unlabelled  SR Pfx (idx 9)     Hu0/0/0/40   10.228.202.21
+!        16009       SR Pfx (idx 9)     Hu0/0/0/41   10.228.202.65
+! show mpls label table detail | i SRGB
+!        SRGB (idx 0): 16000-23999
+! show mpls lsd private | i SRLB
+!        SRLB: 15000-15999
+! show mpls label table | include OSPF.*SR
+! 0     16001   OSPF(100):SR                    InUse  Yes
+! 0     16002   OSPF(100):SR                    InUse  Yes
+! 0     16009   OSPF(100):SR                    InUse  Yes
+! show ospf 100 routes 10.228.201.1/32 backup-path
+! O    10.228.201.1/32, metric 10, backup path available
+!      via 10.228.202.21, HundredGigE0/0/0/40
+!      Backup via 10.228.202.65, HundredGigE0/0/0/41, TI-LFA
+! show bfd neighbors
+! Hu0/0/0/40         10.228.202.21   300ms(100ms*3)            UP
+! Hu0/0/0/41         10.228.202.65   300ms(100ms*3)            UP
+! BE100.170          10.228.203.2    300ms(100ms*3)            UP
+! show mpls ldp neighbor brief
+! Peer               GR  NSR  Up Time     Discovery   Addresses   Labels
+! 10.240.9.241:0     Y   Y    10d05h      2           8           45
+! 10.240.9.245:0     Y   Y    10d05h      1           6           38
+end`
+    };
+
+    const toggleSection = (section) => {
+        setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+    };
+
+    const performAudit = useCallback((config) => {
+        const results = { nodeName: '', timestamp: new Date().toISOString(), summary: { pass: 0, warning: 0, fail: 0, info: 0 }, categories: {} };
+        const hostnameMatch = config.match(/hostname\s+(\S+)/);
+        results.nodeName = hostnameMatch ? hostnameMatch[1] : 'Unknown';
+
+        // ═══════════════════════════════════════════════════════════════
+        // 1. RUNNING CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════
+        const runningConfigChecks = [];
+        runningConfigChecks.push({ name: 'Hostname', status: hostnameMatch ? 'pass' : 'fail', details: hostnameMatch ? `Hostname: ${hostnameMatch[1]}` : 'Not configured', value: hostnameMatch ? hostnameMatch[1] : 'N/A', command: 'show running-config | i hostname' });
+        
+        const hasLoopback0 = /interface\s+Loopback0/.test(config);
+        const loopback0IP = config.match(/interface\s+Loopback0[\s\S]*?ipv4\s+address\s+(\d+\.\d+\.\d+\.\d+)/);
+        runningConfigChecks.push({ name: 'Loopback0', status: hasLoopback0 ? 'pass' : 'fail', details: loopback0IP ? `IP: ${loopback0IP[1]}` : 'Not configured', value: loopback0IP ? loopback0IP[1] : 'Missing', command: 'show run int Loopback0' });
+        
+        // Keychains
+        const keychains = config.match(/keychain\s+(\S+)/g) || [];
+        const keychainNames = keychains.map(k => k.replace('keychain ', ''));
+        runningConfigChecks.push({ name: 'Keychains', status: keychains.length > 0 ? 'pass' : 'info', details: keychains.length > 0 ? keychainNames.join(', ') : 'None configured', value: keychains.length.toString(), command: 'show running-config keychain' });
+        
+        // Prefix-sets
+        const prefixSets = config.match(/prefix-set\s+(\S+)/g) || [];
+        runningConfigChecks.push({ name: 'Prefix-Sets', status: prefixSets.length > 0 ? 'pass' : 'info', details: prefixSets.length > 0 ? prefixSets.map(p => p.replace('prefix-set ', '')).join(', ') : 'None', value: prefixSets.length.toString(), command: 'show running-config prefix-set' });
+        
+        // Route-policies
+        const routePolicies = config.match(/route-policy\s+(\S+)/g) || [];
+        runningConfigChecks.push({ name: 'Route-Policies', status: routePolicies.length > 0 ? 'pass' : 'info', details: routePolicies.length > 0 ? routePolicies.map(r => r.replace('route-policy ', '')).join(', ') : 'None', value: routePolicies.length.toString(), command: 'show running-config route-policy' });
+        
+        results.categories.runningConfig = { name: '📋 Running Configuration', checks: runningConfigChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 2. INTERFACES (Enhanced)
+        // ═══════════════════════════════════════════════════════════════
+        const interfaceChecks = [];
+        
+        // Count all interface types
+        const allInterfaces = config.match(/^interface\s+\S+/gm) || [];
+        interfaceChecks.push({ name: 'Total Interfaces', status: 'info', details: `${allInterfaces.length} interfaces configured`, value: allInterfaces.length.toString(), command: 'show interfaces summary' });
+        
+        // HundredGigE
+        const hundredGigInterfaces = allInterfaces.filter(i => /HundredGig/.test(i));
+        interfaceChecks.push({ name: 'HundredGigE (100G)', status: hundredGigInterfaces.length > 0 ? 'pass' : 'info', details: `${hundredGigInterfaces.length} 100G interface(s)`, value: hundredGigInterfaces.length.toString(), command: 'show interfaces HundredGigE* brief' });
+        
+        // TenGigE
+        const tenGigInterfaces = allInterfaces.filter(i => /TenGig/.test(i));
+        interfaceChecks.push({ name: 'TenGigE (10G)', status: tenGigInterfaces.length > 0 ? 'pass' : 'info', details: `${tenGigInterfaces.length} 10G interface(s)`, value: tenGigInterfaces.length.toString(), command: 'show interfaces TenGigE* brief' });
+        
+        // GigabitEthernet
+        const gigInterfaces = allInterfaces.filter(i => /GigabitEthernet/.test(i));
+        interfaceChecks.push({ name: 'GigabitEthernet (1G)', status: gigInterfaces.length > 0 ? 'pass' : 'info', details: `${gigInterfaces.length} 1G interface(s)`, value: gigInterfaces.length.toString(), command: 'show interfaces GigabitEthernet* brief' });
+        
+        // Bundle-Ether (main interfaces only)
+        const bundleMainInterfaces = allInterfaces.filter(i => /Bundle-Ether\d+$/.test(i));
+        interfaceChecks.push({ name: 'Bundle-Ether (LAG)', status: bundleMainInterfaces.length > 0 ? 'pass' : 'info', details: `${bundleMainInterfaces.length} LAG bundle(s)`, value: bundleMainInterfaces.length.toString(), command: 'show bundle' });
+        
+        // Sub-interfaces count
+        const subInterfaces = allInterfaces.filter(i => /\.\d+$/.test(i));
+        const bundleSubInterfaces = subInterfaces.filter(i => /Bundle-Ether/.test(i));
+        const gigSubInterfaces = subInterfaces.filter(i => /GigabitEthernet/.test(i));
+        const tenGigSubInterfaces = subInterfaces.filter(i => /TenGig/.test(i));
+        const hundredGigSubInterfaces = subInterfaces.filter(i => /HundredGig/.test(i));
+        
+        interfaceChecks.push({ name: 'Sub-Interfaces (Total)', status: 'info', details: `${subInterfaces.length} sub-interface(s)`, value: subInterfaces.length.toString(), command: 'show interfaces description | i \\.' });
+        interfaceChecks.push({ name: '  └─ Bundle-Ether Subs', status: 'info', details: `${bundleSubInterfaces.length} Bundle-Ether sub-int`, value: bundleSubInterfaces.length.toString(), command: 'show interfaces Bundle-Ether*.* brief' });
+        interfaceChecks.push({ name: '  └─ GigE Subs', status: 'info', details: `${gigSubInterfaces.length} GigE sub-int`, value: gigSubInterfaces.length.toString(), command: 'show interfaces Gi*.* brief' });
+        interfaceChecks.push({ name: '  └─ TenGigE Subs', status: 'info', details: `${tenGigSubInterfaces.length} TenGigE sub-int`, value: tenGigSubInterfaces.length.toString(), command: 'show interfaces Te*.* brief' });
+        interfaceChecks.push({ name: '  └─ 100GigE Subs', status: 'info', details: `${hundredGigSubInterfaces.length} 100GigE sub-int`, value: hundredGigSubInterfaces.length.toString(), command: 'show interfaces Hu*.* brief' });
+        
+        // Load-interval
+        const loadIntervalMatches = config.match(/load-interval\s+(\d+)/g) || [];
+        const loadIntervalValues = [...new Set(loadIntervalMatches.map(l => l.match(/\d+/)[0]))];
+        const hasLoadInterval = loadIntervalMatches.length > 0;
+        interfaceChecks.push({ name: 'Load-Interval', status: hasLoadInterval ? 'pass' : 'warning', details: hasLoadInterval ? `Configured: ${loadIntervalValues.join(', ')}s on ${loadIntervalMatches.length} int(s)` : 'Not configured (default 300s)', value: hasLoadInterval ? loadIntervalValues.join('/') + 's' : 'Default', command: 'show running-config | i load-interval' });
+        
+        // MTU Analysis
+        const mtuMatches = config.match(/^\s+mtu\s+(\d+)/gm) || [];
+        const mtuValues = mtuMatches.map(m => m.match(/\d+/)[0]);
+        const uniqueMTUs = [...new Set(mtuValues)];
+        const hasMTUConfig = mtuMatches.length > 0;
+        const mtuVariant = uniqueMTUs.length > 1;
+        interfaceChecks.push({ name: 'MTU Configuration', status: hasMTUConfig ? 'pass' : 'warning', details: hasMTUConfig ? `${mtuMatches.length} int(s) with explicit MTU` : 'Using system default', value: hasMTUConfig ? `${mtuMatches.length} int(s)` : 'Default', command: 'show interfaces | i MTU' });
+        interfaceChecks.push({ name: 'MTU Values', status: mtuVariant ? 'warning' : 'pass', details: uniqueMTUs.length > 0 ? `Values: ${uniqueMTUs.sort().join(', ')}` : 'System default', value: uniqueMTUs.length > 0 ? uniqueMTUs.join(', ') : 'Default', command: 'show running-config | i "^ mtu"' });
+        if (mtuVariant) {
+            interfaceChecks.push({ name: '  ⚠ MTU Mismatch Risk', status: 'warning', details: 'Multiple MTU values detected - verify consistency', value: 'CHECK', command: 'show interfaces | i MTU' });
+        }
+        
+        // Carrier-delay
+        const carrierDelayMatches = config.match(/carrier-delay\s+(up\s+\d+\s+down\s+\d+|\d+)/g) || [];
+        const hasCarrierDelay = carrierDelayMatches.length > 0;
+        let carrierDelayDetails = 'Not configured (instant failover)';
+        if (hasCarrierDelay) {
+            const upDownMatch = config.match(/carrier-delay\s+up\s+(\d+)\s+down\s+(\d+)/);
+            if (upDownMatch) {
+                carrierDelayDetails = `Up: ${upDownMatch[1]}ms, Down: ${upDownMatch[2]}ms on ${carrierDelayMatches.length} int(s)`;
+            } else {
+                carrierDelayDetails = `Configured on ${carrierDelayMatches.length} interface(s)`;
+            }
+        }
+        interfaceChecks.push({ name: 'Carrier-Delay', status: hasCarrierDelay ? 'pass' : 'info', details: carrierDelayDetails, value: hasCarrierDelay ? `${carrierDelayMatches.length} int(s)` : 'None', command: 'show running-config | i carrier-delay' });
+        
+        // Dampening
+        const hasDampening = /^\s+dampening/m.test(config);
+        const dampeningCount = (config.match(/^\s+dampening/gm) || []).length;
+        interfaceChecks.push({ name: 'Interface Dampening', status: hasDampening ? 'pass' : 'info', details: hasDampening ? `Enabled on ${dampeningCount} interface(s)` : 'Not configured', value: hasDampening ? `${dampeningCount} int(s)` : 'None', command: 'show interfaces dampening' });
+        
+        // Service-policy
+        const servicePolicyIn = (config.match(/service-policy\s+input/g) || []).length;
+        const servicePolicyOut = (config.match(/service-policy\s+output/g) || []).length;
+        interfaceChecks.push({ name: 'Service-Policy Applied', status: (servicePolicyIn > 0 || servicePolicyOut > 0) ? 'pass' : 'warning', details: `Input: ${servicePolicyIn}, Output: ${servicePolicyOut}`, value: `In:${servicePolicyIn}/Out:${servicePolicyOut}`, command: 'show policy-map interface' });
+        
+        results.categories.interfaces = { name: '🔌 Interfaces', checks: interfaceChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 3. OSPF (Enhanced - detect letters and numbers)
+        // ═══════════════════════════════════════════════════════════════
+        const ospfChecks = [];
+        
+        // Detect OSPF processes (numbers AND names like GRID170)
+        const ospfProcessMatches = config.match(/router\s+ospf\s+(\S+)/g) || [];
+        const ospfProcesses = ospfProcessMatches.map(m => m.replace('router ospf ', ''));
+        const hasOSPF = ospfProcesses.length > 0;
+        
+        ospfChecks.push({ name: 'OSPF Processes', status: hasOSPF ? 'pass' : 'fail', details: hasOSPF ? `Processes: ${ospfProcesses.join(', ')}` : 'Not configured', value: hasOSPF ? ospfProcesses.length.toString() : '0', command: 'show ospf' });
+        
+        if (hasOSPF) {
+            // List each process
+            ospfProcesses.forEach(proc => {
+                const isNumeric = /^\d+$/.test(proc);
+                ospfChecks.push({ name: `  └─ OSPF ${proc}`, status: 'info', details: isNumeric ? 'Numeric process ID' : 'Named process (alphanumeric)', value: proc, command: `show ospf ${proc}` });
+            });
+            
+            // NSR
+            const hasNSR = /router\s+ospf[\s\S]*?^\s+nsr/m.test(config);
+            const nsrCount = (config.match(/router\s+ospf[\s\S]*?^\s+nsr/gm) || []).length;
+            ospfChecks.push({ name: 'OSPF NSR', status: hasNSR ? 'pass' : 'warning', details: hasNSR ? `Enabled on ${nsrCount}/${ospfProcesses.length} process(es)` : 'Disabled', value: hasNSR ? `${nsrCount}/${ospfProcesses.length}` : 'No', command: 'show ospf nsr' });
+            
+            // NSF
+            const hasNSF = /nsf\s+cisco/.test(config);
+            ospfChecks.push({ name: 'OSPF NSF (Cisco)', status: hasNSF ? 'pass' : 'warning', details: hasNSF ? 'NSF Cisco enabled' : 'NSF not configured', value: hasNSF ? 'Yes' : 'No', command: 'show ospf nsf' });
+            
+            // Authentication Keychain
+            const authKeychainMatches = config.match(/authentication\s+message-digest\s+keychain\s+(\S+)/g) || [];
+            const authKeychains = authKeychainMatches.map(m => m.match(/keychain\s+(\S+)/)[1]);
+            const uniqueAuthKeychains = [...new Set(authKeychains)];
+            ospfChecks.push({ name: 'OSPF Authentication', status: authKeychainMatches.length > 0 ? 'pass' : 'warning', details: authKeychainMatches.length > 0 ? `Keychains: ${uniqueAuthKeychains.join(', ')}` : 'No authentication configured', value: authKeychainMatches.length > 0 ? uniqueAuthKeychains.join(', ') : 'None', command: 'show running-config router ospf | i authentication' });
+            
+            // BFD under OSPF
+            const ospfBFD = /router\s+ospf[\s\S]*?bfd\s+fast-detect/.test(config);
+            const bfdMinInterval = config.match(/router\s+ospf[\s\S]*?bfd\s+minimum-interval\s+(\d+)/);
+            const bfdMultiplier = config.match(/router\s+ospf[\s\S]*?bfd\s+multiplier\s+(\d+)/);
+            let bfdDetails = 'Not configured under OSPF';
+            if (ospfBFD) {
+                bfdDetails = 'BFD fast-detect enabled';
+                if (bfdMinInterval) bfdDetails += `, interval: ${bfdMinInterval[1]}ms`;
+                if (bfdMultiplier) bfdDetails += `, mult: ${bfdMultiplier[1]}`;
+            }
+            ospfChecks.push({ name: 'OSPF BFD', status: ospfBFD ? 'pass' : 'warning', details: bfdDetails, value: ospfBFD ? (bfdMinInterval ? `${bfdMinInterval[1]}ms` : 'Yes') : 'No', command: 'show ospf interface | i BFD' });
+            
+            // Interface-level BFD
+            const intBFDCount = (config.match(/interface[\s\S]*?bfd\s+fast-detect/g) || []).length;
+            ospfChecks.push({ name: '  └─ Interface BFD', status: intBFDCount > 0 ? 'pass' : 'warning', details: `BFD enabled on ${intBFDCount} OSPF interface(s)`, value: intBFDCount.toString(), command: 'show running-config router ospf | i bfd' });
+            
+            // SPF Timers
+            const spfTimers = config.match(/timers\s+throttle\s+spf\s+(\d+)\s+(\d+)\s+(\d+)/);
+            ospfChecks.push({ name: 'SPF Timers', status: spfTimers ? 'pass' : 'warning', details: spfTimers ? `Initial: ${spfTimers[1]}ms, Secondary: ${spfTimers[2]}ms, Max: ${spfTimers[3]}ms` : 'Using defaults', value: spfTimers ? `${spfTimers[1]}/${spfTimers[2]}/${spfTimers[3]}` : 'Default', command: 'show ospf | i SPF' });
+            
+            // LSA Timers
+            const lsaThrottle = config.match(/timers\s+throttle\s+lsa\s+all\s+(\d+)\s+(\d+)\s+(\d+)/);
+            ospfChecks.push({ name: 'LSA Throttle Timers', status: lsaThrottle ? 'pass' : 'info', details: lsaThrottle ? `Start: ${lsaThrottle[1]}ms, Hold: ${lsaThrottle[2]}ms, Max: ${lsaThrottle[3]}ms` : 'Using defaults', value: lsaThrottle ? `${lsaThrottle[1]}/${lsaThrottle[2]}/${lsaThrottle[3]}` : 'Default', command: 'show running-config router ospf | i throttle' });
+            
+            const lsaMinArrival = config.match(/timers\s+lsa\s+min-arrival\s+(\d+)/);
+            ospfChecks.push({ name: 'LSA Min-Arrival', status: lsaMinArrival ? 'pass' : 'info', details: lsaMinArrival ? `${lsaMinArrival[1]}ms` : 'Using default (1000ms)', value: lsaMinArrival ? `${lsaMinArrival[1]}ms` : 'Default', command: 'show running-config router ospf | i min-arrival' });
+            
+            const pacingFlood = config.match(/timers\s+pacing\s+flood\s+(\d+)/);
+            ospfChecks.push({ name: 'LSA Pacing Flood', status: pacingFlood ? 'pass' : 'info', details: pacingFlood ? `${pacingFlood[1]}ms` : 'Using default (33ms)', value: pacingFlood ? `${pacingFlood[1]}ms` : 'Default', command: 'show running-config router ospf | i pacing' });
+            
+            // Interface Priority (DR/BDR election)
+            const priorityMatches = config.match(/priority\s+(\d+)/g) || [];
+            const priorityValues = priorityMatches.map(p => p.match(/\d+/)[0]);
+            const uniquePriorities = [...new Set(priorityValues)];
+            ospfChecks.push({ name: 'Interface Priority', status: priorityMatches.length > 0 ? 'pass' : 'info', details: priorityMatches.length > 0 ? `Values: ${uniquePriorities.sort((a,b)=>b-a).join(', ')} on ${priorityMatches.length} int(s)` : 'Using default (1)', value: priorityMatches.length > 0 ? uniquePriorities.join(', ') : 'Default', command: 'show ospf interface | i Priority' });
+            
+            // Reference Bandwidth
+            const refBW = config.match(/auto-cost\s+reference-bandwidth\s+(\d+)/);
+            ospfChecks.push({ name: 'Reference Bandwidth', status: refBW ? 'pass' : 'warning', details: refBW ? `${parseInt(refBW[1]).toLocaleString()} Mbps` : 'Using default (100 Mbps) - incorrect for high-speed links!', value: refBW ? refBW[1] : 'Default', command: 'show ospf | i Reference' });
+            
+            // Redistribute with Route-Policy
+            const redistributeMatches = config.match(/redistribute\s+\S+.*route-policy\s+(\S+)/g) || [];
+            const redistributeNoPol = config.match(/redistribute\s+\S+(?!.*route-policy)/g) || [];
+            if (redistributeMatches.length > 0) {
+                const policies = redistributeMatches.map(r => {
+                    const match = r.match(/route-policy\s+(\S+)/);
+                    return match ? match[1] : '';
+                });
+                ospfChecks.push({ name: 'Redistribute (w/ Policy)', status: 'pass', details: `Policies: ${[...new Set(policies)].join(', ')}`, value: `${redistributeMatches.length} rule(s)`, command: 'show running-config router ospf | i redistribute' });
+            }
+            if (redistributeNoPol.length > 0) {
+                ospfChecks.push({ name: 'Redistribute (NO Policy)', status: 'warning', details: `${redistributeNoPol.length} redistribute without route-policy - RISK!`, value: redistributeNoPol.length.toString(), command: 'show running-config router ospf | i redistribute' });
+            }
+            if (redistributeMatches.length === 0 && redistributeNoPol.length === 0) {
+                ospfChecks.push({ name: 'Redistribute', status: 'info', details: 'No redistribution configured', value: 'None', command: 'show running-config router ospf | i redistribute' });
+            }
+            
+            // MPLS LDP Sync under OSPF
+            const hasLDPSync = /mpls\s+ldp\s+sync/.test(config);
+            const ldpAutoConfig = /mpls\s+ldp\s+auto-config/.test(config);
+            ospfChecks.push({ name: 'MPLS LDP Sync', status: hasLDPSync ? 'pass' : 'info', details: hasLDPSync ? 'LDP sync enabled' : 'Not configured', value: hasLDPSync ? 'Yes' : 'No', command: 'show mpls ldp discovery' });
+            ospfChecks.push({ name: 'MPLS LDP Auto-Config', status: ldpAutoConfig ? 'pass' : 'info', details: ldpAutoConfig ? 'Auto-config on OSPF interfaces' : 'Manual LDP interface config', value: ldpAutoConfig ? 'Yes' : 'No', command: 'show running-config router ospf | i ldp' });
+        }
+        
+        results.categories.ospf = { name: '🌐 OSPF', checks: ospfChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 4. BGP
+        // ═══════════════════════════════════════════════════════════════
+        const bgpChecks = [];
+        const hasBGP = /router\s+bgp\s+\d+/.test(config);
+        const bgpASN = config.match(/router\s+bgp\s+(\d+)/);
+        bgpChecks.push({ name: 'BGP Configuration', status: hasBGP ? 'pass' : 'fail', details: hasBGP ? `AS ${bgpASN[1]}` : 'Not configured', value: hasBGP ? bgpASN[1] : 'N/A', command: 'show bgp summary' });
+        
+        if (hasBGP) {
+            const timersMatch = config.match(/timers\s+bgp\s+(\d+)\s+(\d+)/);
+            const isOptimized = timersMatch && timersMatch[1] === '10' && timersMatch[2] === '30';
+            bgpChecks.push({ name: 'BGP Timers', status: isOptimized ? 'pass' : 'warning', details: timersMatch ? `Keep:${timersMatch[1]}s Hold:${timersMatch[2]}s` : 'Default 60/180', value: timersMatch ? `${timersMatch[1]}/${timersMatch[2]}` : '60/180', command: 'show bgp neighbors | i timer' });
+            
+            const hasGR = /bgp\s+graceful-restart/.test(config);
+            const grTime = config.match(/graceful-restart\s+restart-time\s+(\d+)/);
+            const grStale = config.match(/graceful-restart\s+stalepath-time\s+(\d+)/);
+            bgpChecks.push({ name: 'Graceful Restart', status: hasGR ? 'pass' : 'warning', details: hasGR ? `Enabled${grTime ? `, restart:${grTime[1]}s` : ''}${grStale ? `, stale:${grStale[1]}s` : ''}` : 'Disabled', value: hasGR ? 'Yes' : 'No', command: 'show bgp neighbors | i Graceful' });
+            
+            const hasBGPNSR = /router\s+bgp[\s\S]*?^\s+nsr/m.test(config);
+            bgpChecks.push({ name: 'BGP NSR', status: hasBGPNSR ? 'pass' : 'warning', details: hasBGPNSR ? 'Enabled' : 'Disabled', value: hasBGPNSR ? 'Yes' : 'No', command: 'show bgp process | i NSR' });
+            
+            const hasVPNv4 = /address-family\s+vpnv4/.test(config);
+            bgpChecks.push({ name: 'VPNv4 AF', status: hasVPNv4 ? 'pass' : 'warning', details: hasVPNv4 ? 'Configured for L3VPN' : 'Not configured', value: hasVPNv4 ? 'Yes' : 'No', command: 'show bgp vpnv4 unicast summary' });
+            
+            const hasLU = /address-family\s+ipv4\s+labeled-unicast/.test(config);
+            bgpChecks.push({ name: 'BGP-LU', status: hasLU ? 'pass' : 'info', details: hasLU ? 'Configured for SR/LDP interwork' : 'Not configured', value: hasLU ? 'Yes' : 'No', command: 'show bgp ipv4 labeled-unicast summary' });
+            
+            // BGP BFD
+            const bgpBFD = /neighbor.*bfd\s+fast-detect/.test(config) || /neighbor-group[\s\S]*?bfd\s+fast-detect/.test(config);
+            bgpChecks.push({ name: 'BGP BFD', status: bgpBFD ? 'pass' : 'warning', details: bgpBFD ? 'BFD enabled for BGP neighbors' : 'No BFD on BGP', value: bgpBFD ? 'Yes' : 'No', command: 'show bgp neighbors | i BFD' });
+        }
+        
+        results.categories.bgp = { name: '🔄 BGP', checks: bgpChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 5. MPLS-SR (OSPF Segment Routing)
+        // ═══════════════════════════════════════════════════════════════
+        const mplsSRChecks = [];
+        const hasSR = /segment-routing/.test(config);
+        const hasOSPFSR = /router\s+ospf[\s\S]*?segment-routing\s+mpls/.test(config);
+        
+        mplsSRChecks.push({ name: 'Segment Routing', status: hasSR ? 'pass' : 'info', details: hasSR ? 'SR configured' : 'Not configured (LDP only)', value: hasSR ? 'Yes' : 'No', command: 'show run segment-routing' });
+        mplsSRChecks.push({ name: 'OSPF-SR', status: hasOSPFSR ? 'pass' : hasSR ? 'warning' : 'info', details: hasOSPFSR ? 'OSPF-SR enabled' : 'Not enabled under OSPF', value: hasOSPFSR ? 'Yes' : 'No', command: 'show run router ospf | i segment' });
+        
+        if (hasSR) {
+            const srgbMatch = config.match(/global-block\s+(\d+)\s+(\d+)/);
+            if (srgbMatch) {
+                const srgbStart = parseInt(srgbMatch[1]), srgbEnd = parseInt(srgbMatch[2]), srgbSize = srgbEnd - srgbStart + 1;
+                mplsSRChecks.push({ name: 'SRGB (Global Block)', status: 'pass', details: `${srgbStart}-${srgbEnd} (${srgbSize} labels)`, value: `${srgbStart}-${srgbEnd}`, command: 'show mpls label table detail | i SRGB' });
+                mplsSRChecks.push({ name: 'SRGB Capacity', status: srgbSize >= 4000 ? 'pass' : 'warning', details: srgbSize >= 4000 ? 'Sufficient' : 'May limit scalability', value: srgbSize.toString(), command: 'show mpls label table summary' });
+            }
+            
+            const srlbMatch = config.match(/local-block\s+(\d+)\s+(\d+)/);
+            if (srlbMatch) {
+                mplsSRChecks.push({ name: 'SRLB (Local Block)', status: 'pass', details: `${srlbMatch[1]}-${srlbMatch[2]} (Adj-SIDs)`, value: `${srlbMatch[1]}-${srlbMatch[2]}`, command: 'show mpls lsd private | i SRLB' });
+                if (srgbMatch) {
+                    const noOverlap = parseInt(srlbMatch[2]) < parseInt(srgbMatch[1]) || parseInt(srlbMatch[1]) > parseInt(srgbMatch[2]);
+                    mplsSRChecks.push({ name: 'SRGB/SRLB Overlap', status: noOverlap ? 'pass' : 'fail', details: noOverlap ? 'No overlap ✓' : 'OVERLAP DETECTED!', value: noOverlap ? 'OK' : 'FAIL', command: 'show mpls label range' });
+                }
+            }
+            
+            const prefixSidMatches = config.match(/prefix-sid\s+index\s+(\d+)/g) || [];
+            if (prefixSidMatches.length > 0) {
+                const indices = prefixSidMatches.map(m => m.match(/index\s+(\d+)/)[1]);
+                mplsSRChecks.push({ name: 'Prefix-SID Index', status: 'pass', details: `Index: ${indices.join(', ')}`, value: indices.join(', '), command: 'show run router ospf | i prefix-sid' });
+                if (srgbMatch) {
+                    const labels = indices.map(i => parseInt(srgbMatch[1]) + parseInt(i));
+                    mplsSRChecks.push({ name: 'Calculated Labels', status: 'info', details: `Labels: ${labels.join(', ')}`, value: labels.join(', '), command: 'show mpls forwarding labels <label> detail' });
+                }
+            }
+            
+            const srFwdEntries = config.match(/\d+\s+(Pop|Unlabelled|\d+)\s+SR\s+Pfx/g) || [];
+            if (srFwdEntries.length > 0) {
+                mplsSRChecks.push({ name: 'SR Forwarding Entries', status: 'pass', details: `${srFwdEntries.length} SR entries in LFIB`, value: srFwdEntries.length.toString(), command: 'show mpls forwarding | i SR' });
+            }
+            
+            const hasTILFA = /ti-lfa\s+enable/.test(config);
+            mplsSRChecks.push({ name: 'TI-LFA Fast Reroute', status: hasTILFA ? 'pass' : 'warning', details: hasTILFA ? 'Enabled for sub-50ms failover' : 'NOT ENABLED - Critical!', value: hasTILFA ? 'Yes' : 'NO', command: 'show ospf <proc> routes <IP>/32 backup-path' });
+            
+            const hasBackupPath = /backup\s+path\s+available|Backup\s+via.*TI-LFA/i.test(config);
+            if (hasBackupPath) {
+                mplsSRChecks.push({ name: 'Backup Paths', status: 'pass', details: 'TI-LFA backup paths verified', value: 'Protected', command: 'show ospf <proc> routes <IP>/32 backup-path' });
+            }
+        }
+        
+        results.categories.mplsSR = { name: '🏷️ MPLS-SR (OSPF-Based)', checks: mplsSRChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 6. MPLS LDP (Enhanced)
+        // ═══════════════════════════════════════════════════════════════
+        const ldpChecks = [];
+        const hasLDP = /mpls\s+ldp/.test(config);
+        ldpChecks.push({ name: 'MPLS LDP', status: hasLDP ? 'pass' : 'warning', details: hasLDP ? 'Configured' : 'Not configured', value: hasLDP ? 'Yes' : 'No', command: 'show mpls ldp neighbor' });
+        
+        if (hasLDP) {
+            // Router-ID
+            const ldpRID = config.match(/mpls\s+ldp[\s\S]*?router-id\s+(\d+\.\d+\.\d+\.\d+)/);
+            ldpChecks.push({ name: 'LDP Router-ID', status: ldpRID ? 'pass' : 'warning', details: ldpRID ? ldpRID[1] : 'Auto-selected', value: ldpRID ? ldpRID[1] : 'Auto', command: 'show mpls ldp parameters' });
+            
+            // Graceful Restart
+            const ldpGR = /mpls\s+ldp[\s\S]*?graceful-restart(?!\s+\S)/.test(config);
+            ldpChecks.push({ name: 'LDP Graceful Restart', status: ldpGR ? 'pass' : 'warning', details: ldpGR ? 'Enabled' : 'Disabled - risk during restart', value: ldpGR ? 'Yes' : 'No', command: 'show mpls ldp graceful-restart' });
+            
+            // GR Reconnect Timeout
+            const grReconnect = config.match(/graceful-restart\s+reconnect-timeout\s+(\d+)/);
+            if (grReconnect) {
+                ldpChecks.push({ name: '  └─ GR Reconnect Timeout', status: 'info', details: `${grReconnect[1]} seconds`, value: `${grReconnect[1]}s`, command: 'show mpls ldp graceful-restart' });
+            }
+            
+            // GR Forwarding State Holdtime
+            const grFwdHold = config.match(/graceful-restart\s+forwarding-state-holdtime\s+(\d+)/);
+            if (grFwdHold) {
+                ldpChecks.push({ name: '  └─ GR Fwd-State Holdtime', status: 'info', details: `${grFwdHold[1]} seconds`, value: `${grFwdHold[1]}s`, command: 'show mpls ldp graceful-restart' });
+            }
+            
+            // NSR
+            const ldpNSR = /mpls\s+ldp[\s\S]*?^\s+nsr/m.test(config);
+            ldpChecks.push({ name: 'LDP NSR', status: ldpNSR ? 'pass' : 'warning', details: ldpNSR ? 'Enabled for HA' : 'Disabled', value: ldpNSR ? 'Yes' : 'No', command: 'show mpls ldp nsr' });
+            
+            // Session Protection
+            const sessionProtMatch = config.match(/session\s+protection\s+for\s+(\S+)(?:\s+duration\s+(\d+))?/);
+            const sessionProtGeneral = /session\s+protection(?!\s+for)/.test(config);
+            if (sessionProtMatch) {
+                ldpChecks.push({ name: 'Session Protection', status: 'pass', details: `For: ${sessionProtMatch[1]}${sessionProtMatch[2] ? `, Duration: ${sessionProtMatch[2]}s` : ''}`, value: sessionProtMatch[1], command: 'show mpls ldp neighbor detail | i Session' });
+            } else if (sessionProtGeneral) {
+                ldpChecks.push({ name: 'Session Protection', status: 'pass', details: 'Enabled (default)', value: 'Default', command: 'show mpls ldp neighbor detail | i Session' });
+            } else {
+                ldpChecks.push({ name: 'Session Protection', status: 'warning', details: 'Not configured - sessions may flap', value: 'No', command: 'show mpls ldp neighbor detail | i Session' });
+            }
+            
+            // Neighbor Password
+            const ldpPassword = /mpls\s+ldp[\s\S]*?neighbor[\s\S]*?password/.test(config);
+            ldpChecks.push({ name: 'LDP Neighbor Auth', status: ldpPassword ? 'pass' : 'warning', details: ldpPassword ? 'MD5 authentication configured' : 'No authentication', value: ldpPassword ? 'MD5' : 'None', command: 'show mpls ldp neighbor detail | i Password' });
+            
+            // Local Label Allocation
+            const labelAllocMatch = config.match(/label[\s\S]*?local[\s\S]*?allocate\s+for\s+(\S+)/);
+            if (labelAllocMatch) {
+                ldpChecks.push({ name: 'Local Label Allocation', status: 'pass', details: `Allocate for: ${labelAllocMatch[1]}`, value: labelAllocMatch[1], command: 'show mpls ldp bindings local' });
+            } else {
+                ldpChecks.push({ name: 'Local Label Allocation', status: 'warning', details: 'Default allocation (all prefixes) - potential scale issue', value: 'All', command: 'show mpls ldp bindings local' });
+            }
+            
+            // LDP Interfaces
+            const ldpInterfaceSection = config.match(/mpls\s+ldp[\s\S]*?(?=\n[!\w])/);
+            if (ldpInterfaceSection) {
+                const ldpInterfaces = ldpInterfaceSection[0].match(/^\s+interface\s+(\S+)/gm) || [];
+                const ldpIntNames = ldpInterfaces.map(i => i.trim().replace('interface ', ''));
+                ldpChecks.push({ name: 'LDP Interfaces (Explicit)', status: ldpInterfaces.length > 0 ? 'pass' : 'info', details: ldpInterfaces.length > 0 ? ldpIntNames.join(', ') : 'None (using auto-config)', value: ldpInterfaces.length.toString(), command: 'show mpls ldp discovery' });
+            }
+            
+            // LDP Neighbors from show output
+            const ldpNeighbors = config.match(/\d+\.\d+\.\d+\.\d+:\d+\s+Y\s+Y/g) || [];
+            if (ldpNeighbors.length > 0) {
+                ldpChecks.push({ name: 'LDP Neighbors (GR/NSR)', status: 'pass', details: `${ldpNeighbors.length} neighbor(s) with GR+NSR`, value: ldpNeighbors.length.toString(), command: 'show mpls ldp neighbor brief' });
+            }
+        }
+        
+        results.categories.mplsLDP = { name: '🔗 MPLS LDP', checks: ldpChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 7. VRF
+        // ═══════════════════════════════════════════════════════════════
+        const vrfChecks = [];
+        const vrfMatches = config.match(/^vrf\s+\S+/gm) || [];
+        vrfChecks.push({ name: 'VRF Count', status: vrfMatches.length > 0 ? 'pass' : 'info', details: `${vrfMatches.length} VRF(s)`, value: vrfMatches.length.toString(), command: 'show vrf all' });
+        
+        const criticalVRFs = ['VPN_SCADA', 'VPN_ADMS', 'VPN_Telepro', 'VPN_OT_Mgt'];
+        const foundCritical = criticalVRFs.filter(vrf => new RegExp(`vrf\\s+${vrf}`, 'i').test(config));
+        vrfChecks.push({ name: 'Critical VRFs', status: foundCritical.length > 0 ? 'pass' : 'info', details: foundCritical.length > 0 ? foundCritical.join(', ') : 'None', value: `${foundCritical.length}/${criticalVRFs.length}`, command: 'show vrf all detail' });
+        
+        results.categories.vrf = { name: '🗂️ VRF', checks: vrfChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 8. QoS
+        // ═══════════════════════════════════════════════════════════════
+        const qosChecks = [];
+        const hasClassMap = /class-map/.test(config);
+        const hasPolicyMap = /policy-map/.test(config);
+        const hasServicePolicy = /service-policy/.test(config);
+        qosChecks.push({ name: 'Class-Maps', status: hasClassMap ? 'pass' : 'info', details: hasClassMap ? 'Configured' : 'None', value: hasClassMap ? 'Yes' : 'No', command: 'show class-map' });
+        qosChecks.push({ name: 'Policy-Maps', status: hasPolicyMap ? 'pass' : 'info', details: hasPolicyMap ? 'Configured' : 'None', value: hasPolicyMap ? 'Yes' : 'No', command: 'show policy-map' });
+        qosChecks.push({ name: 'Service-Policy', status: hasServicePolicy ? 'pass' : 'warning', details: hasServicePolicy ? 'Applied' : 'Not applied', value: hasServicePolicy ? 'Yes' : 'No', command: 'show policy-map interface' });
+        results.categories.qos = { name: '📊 QoS', checks: qosChecks };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 9. BFD
+        // ═══════════════════════════════════════════════════════════════
+        const bfdChecks = [];
+        const hasBFDConfig = /bfd\s+fast-detect|bfd\s+minimum-interval/.test(config);
+        bfdChecks.push({ name: 'BFD Configuration', status: hasBFDConfig ? 'pass' : 'warning', details: hasBFDConfig ? 'Configured' : 'Not configured', value: hasBFDConfig ? 'Yes' : 'No', command: 'show bfd neighbors' });
+        
+        const bfdIntervalMatch = config.match(/bfd\s+minimum-interval\s+(\d+)/);
+        if (bfdIntervalMatch) {
+            bfdChecks.push({ name: 'BFD Interval', status: parseInt(bfdIntervalMatch[1]) <= 100 ? 'pass' : 'warning', details: `${bfdIntervalMatch[1]}ms`, value: bfdIntervalMatch[1] + 'ms', command: 'show bfd neighbors detail' });
+        }
+        
+        const bfdNeighbors = config.match(/\d+ms\(\d+ms\*\d+\)\s+UP/g) || [];
+        if (bfdNeighbors.length > 0) {
+            bfdChecks.push({ name: 'BFD Sessions (UP)', status: 'pass', details: `${bfdNeighbors.length} sessions UP`, value: bfdNeighbors.length.toString(), command: 'show bfd neighbors' });
+        }
+        results.categories.bfd = { name: '⚡ BFD', checks: bfdChecks };
+
+        // Calculate summary
+        Object.values(results.categories).forEach(cat => cat.checks.forEach(c => results.summary[c.status]++));
+        return results;
+    }, []);
+
+    const analyzeConfig = useCallback(() => {
+        if (!configText.trim()) return;
+        setIsAnalyzing(true);
+        setTimeout(() => {
+            const results = performAudit(configText);
+            setAuditResults(results);
+            setIsAnalyzing(false);
+            setActiveTab('results');
+            const sections = {};
+            Object.keys(results.categories).forEach(key => sections[key] = true);
+            setExpandedSections(sections);
+        }, 800);
+    }, [configText, performAudit]);
+
+    const loadSample = (name) => setConfigText(sampleConfigs[name]);
+
+    const exportReport = () => {
+        if (!auditResults) return;
+        let report = `NETWORK PRE-MIGRATION AUDIT REPORT v2.1\n${'='.repeat(50)}\nNode: ${auditResults.nodeName}\nDate: ${new Date().toLocaleString()}\n\nSUMMARY\n${'─'.repeat(30)}\nPASS:    ${auditResults.summary.pass}\nWARNING: ${auditResults.summary.warning}\nFAIL:    ${auditResults.summary.fail}\nINFO:    ${auditResults.summary.info}\n`;
+        Object.entries(auditResults.categories).forEach(([k, cat]) => {
+            report += `\n${'═'.repeat(50)}\n${cat.name}\n${'═'.repeat(50)}\n`;
+            cat.checks.forEach(c => report += `[${c.status.toUpperCase().padEnd(7)}] ${c.name.padEnd(30)} ${c.value}\n            ${c.details}\n            CMD: ${c.command}\n`);
+        });
+        const blob = new Blob([report], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `audit_${auditResults.nodeName}_${new Date().toISOString().split('T')[0]}.txt`;
+        a.click();
+    };
+
+    const filterChecks = (checks) => checks.filter(c => (filterStatus === 'all' || c.status === filterStatus) && (!searchTerm || c.name.toLowerCase().includes(searchTerm.toLowerCase()) || c.details.toLowerCase().includes(searchTerm.toLowerCase())));
+    const calcScore = () => auditResults ? Math.round((auditResults.summary.pass / (auditResults.summary.pass + auditResults.summary.warning + auditResults.summary.fail || 1)) * 100) : 0;
+
+    const StatusIcon = ({ status }) => {
+        const icons = { pass: '✓', fail: '✗', warning: '⚠', info: 'ℹ' };
+        const colors = { pass: 'text-green-400', fail: 'text-red-400', warning: 'text-yellow-400', info: 'text-blue-400' };
+        return <span className={`text-lg font-bold ${colors[status]}`}>{icons[status]}</span>;
+    };
+
+    return (
+        <div className="min-h-screen text-white">
+            <div className="border-b border-slate-700 bg-slate-900/80 sticky top-0 z-20 backdrop-blur">
+                <div className="container mx-auto px-4 py-4 flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <h1 className="text-xl font-bold text-blue-400">🔍 Network Pre-Migration Audit Tool v2.1</h1>
+                        <p className="text-slate-400 text-sm">MERALCO Core Migration - Enhanced OSPF/Interface/LDP Validation</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <button onClick={() => setActiveTab('upload')} className={`px-4 py-2 rounded-lg ${activeTab === 'upload' ? 'bg-blue-600' : 'bg-slate-700 hover:bg-slate-600'}`}>📤 Upload</button>
+                        <button onClick={() => setActiveTab('results')} disabled={!auditResults} className={`px-4 py-2 rounded-lg ${activeTab === 'results' ? 'bg-blue-600' : 'bg-slate-700 hover:bg-slate-600'} ${!auditResults ? 'opacity-50' : ''}`}>📊 Results</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container mx-auto px-4 py-6">
+                {activeTab === 'upload' && (
+                    <div className="max-w-4xl mx-auto space-y-6">
+                        <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h2 className="text-lg font-semibold mb-4">📁 Load Sample Configuration</h2>
+                            <div className="flex gap-3 flex-wrap">
+                                <button onClick={() => loadSample('PDLASR01')} className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg">PDLASR01 (Legacy + LDP)</button>
+                                <button onClick={() => loadSample('PDLPASR9K')} className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg">PDLPASR9K (New + OSPF-SR)</button>
+                            </div>
+                        </div>
+                        <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h2 className="text-lg font-semibold mb-4">📝 Paste Configuration</h2>
+                            <p className="text-slate-400 text-sm mb-4">Paste <code className="bg-slate-700 px-2 py-1 rounded">show running-config</code> and include show command outputs for validation.</p>
+                            <textarea value={configText} onChange={(e) => setConfigText(e.target.value)} placeholder="! Paste config here..." className="w-full h-80 bg-slate-900 border border-slate-600 rounded-lg p-4 font-mono text-sm text-emerald-400 focus:outline-none focus:border-blue-500" />
+                            <div className="mt-4 flex justify-between items-center">
+                                <span className="text-slate-400 text-sm">{configText.split('\n').length} lines</span>
+                                <button onClick={analyzeConfig} disabled={!configText.trim() || isAnalyzing} className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-lg font-semibold disabled:opacity-50">
+                                    {isAnalyzing ? '⏳ Analyzing...' : '🔍 Run Audit'}
+                                </button>
+                            </div>
+                        </div>
+                        <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h2 className="text-lg font-semibold mb-3">📋 Enhanced Checks in v2.1</h2>
+                            <div className="grid md:grid-cols-3 gap-4 text-sm">
+                                <div className="bg-slate-700/50 rounded-lg p-3">
+                                    <div className="font-medium text-blue-400 mb-2">🔌 Interfaces</div>
+                                    <ul className="text-slate-300 space-y-1">
+                                        <li>• 100G/10G/1G counts</li>
+                                        <li>• Sub-interface breakdown</li>
+                                        <li>• Load-interval</li>
+                                        <li>• MTU variance detection</li>
+                                        <li>• Carrier-delay</li>
+                                    </ul>
+                                </div>
+                                <div className="bg-slate-700/50 rounded-lg p-3">
+                                    <div className="font-medium text-green-400 mb-2">🌐 OSPF</div>
+                                    <ul className="text-slate-300 space-y-1">
+                                        <li>• Named + numeric processes</li>
+                                        <li>• Auth keychain</li>
+                                        <li>• SPF/LSA timers</li>
+                                        <li>• Interface priority</li>
+                                        <li>• Redistribute w/ policy</li>
+                                    </ul>
+                                </div>
+                                <div className="bg-slate-700/50 rounded-lg p-3">
+                                    <div className="font-medium text-amber-400 mb-2">🔗 MPLS LDP</div>
+                                    <ul className="text-slate-300 space-y-1">
+                                        <li>• GR + NSR</li>
+                                        <li>• Session protection</li>
+                                        <li>• Label allocation policy</li>
+                                        <li>• Explicit interfaces</li>
+                                        <li>• Neighbor auth</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'results' && auditResults && (
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            <div className="bg-slate-800 rounded-xl p-4 border border-slate-700"><div className="text-slate-400 text-sm">Node</div><div className="text-xl font-bold">{auditResults.nodeName}</div></div>
+                            <div className="bg-green-900/30 rounded-xl p-4 border border-green-700/50"><div className="text-green-400 text-sm">Pass</div><div className="text-2xl font-bold text-green-400">{auditResults.summary.pass}</div></div>
+                            <div className="bg-yellow-900/30 rounded-xl p-4 border border-yellow-700/50"><div className="text-yellow-400 text-sm">Warning</div><div className="text-2xl font-bold text-yellow-400">{auditResults.summary.warning}</div></div>
+                            <div className="bg-red-900/30 rounded-xl p-4 border border-red-700/50"><div className="text-red-400 text-sm">Fail</div><div className="text-2xl font-bold text-red-400">{auditResults.summary.fail}</div></div>
+                            <div className="bg-blue-900/30 rounded-xl p-4 border border-blue-700/50"><div className="text-blue-400 text-sm">Info</div><div className="text-2xl font-bold text-blue-400">{auditResults.summary.info}</div></div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-4 items-center justify-between">
+                            <div className="flex gap-2 flex-wrap">
+                                {['all', 'pass', 'warning', 'fail', 'info'].map(s => (
+                                    <button key={s} onClick={() => setFilterStatus(s)} className={`px-3 py-1.5 rounded-lg text-sm ${filterStatus === s ? (s === 'pass' ? 'bg-green-600' : s === 'fail' ? 'bg-red-600' : s === 'warning' ? 'bg-yellow-600' : s === 'info' ? 'bg-blue-600' : 'bg-slate-600') : 'bg-slate-700 hover:bg-slate-600'}`}>
+                                        {s.charAt(0).toUpperCase() + s.slice(1)}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="flex gap-3 items-center">
+                                <input type="text" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-sm w-48" />
+                                <button onClick={exportReport} className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg">📥 Export</button>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            {Object.entries(auditResults.categories).map(([key, cat]) => {
+                                const filtered = filterChecks(cat.checks);
+                                if (filtered.length === 0 && filterStatus !== 'all') return null;
+                                return (
+                                    <div key={key} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
+                                        <button onClick={() => toggleSection(key)} className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-700/50">
+                                            <span className="font-semibold">{cat.name} <span className="text-slate-400 font-normal">({filtered.length})</span></span>
+                                            <span>{expandedSections[key] ? '▼' : '▶'}</span>
+                                        </button>
+                                        {expandedSections[key] && (
+                                            <div className="border-t border-slate-700 overflow-x-auto">
+                                                <table className="w-full text-sm">
+                                                    <thead className="bg-slate-900/50"><tr className="text-left text-slate-400"><th className="px-4 py-2 w-10"></th><th className="px-4 py-2">Check</th><th className="px-4 py-2">Value</th><th className="px-4 py-2 hidden lg:table-cell">Details</th><th className="px-4 py-2 hidden xl:table-cell">Command</th></tr></thead>
+                                                    <tbody>
+                                                        {filtered.map((c, i) => (
+                                                            <tr key={i} className="border-t border-slate-700/50 hover:bg-slate-700/30">
+                                                                <td className="px-4 py-2"><StatusIcon status={c.status} /></td>
+                                                                <td className="px-4 py-2"><div className="font-medium">{c.name}</div></td>
+                                                                <td className="px-4 py-2"><span className={`px-2 py-1 rounded text-xs ${c.status === 'pass' ? 'bg-green-900/30 text-green-400' : c.status === 'fail' ? 'bg-red-900/30 text-red-400' : c.status === 'warning' ? 'bg-yellow-900/30 text-yellow-400' : 'bg-blue-900/30 text-blue-400'}`}>{c.value}</span></td>
+                                                                <td className="px-4 py-2 hidden lg:table-cell text-slate-400">{c.details}</td>
+                                                                <td className="px-4 py-2 hidden xl:table-cell text-slate-500 mono text-xs">{c.command}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h2 className="text-lg font-semibold mb-4">🎯 Migration Readiness</h2>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <div className="flex items-center gap-4 mb-4">
+                                        <div className="text-4xl font-bold">{calcScore()}%</div>
+                                        <div className="flex-1 h-4 bg-slate-700 rounded-full overflow-hidden">
+                                            <div className={`h-full transition-all ${calcScore() >= 80 ? 'bg-green-500' : calcScore() >= 60 ? 'bg-yellow-500' : 'bg-red-500'}`} style={{ width: `${calcScore()}%` }} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={`p-4 rounded-lg ${auditResults.summary.fail > 0 ? 'bg-red-500/20 border border-red-500/30' : auditResults.summary.warning > 5 ? 'bg-yellow-500/20 border border-yellow-500/30' : 'bg-green-500/20 border border-green-500/30'}`}>
+                                    <p className={`font-semibold ${auditResults.summary.fail > 0 ? 'text-red-400' : auditResults.summary.warning > 5 ? 'text-yellow-400' : 'text-green-400'}`}>
+                                        {auditResults.summary.fail > 0 ? '⛔ DO NOT PROCEED - Fix failures' : auditResults.summary.warning > 5 ? '⚠️ PROCEED WITH CAUTION' : '✅ READY FOR MIGRATION'}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <div className="border-t border-slate-700 mt-8 py-6 text-center text-slate-400 text-sm">MERALCO Core Migration - Network Audit Tool v2.1 | Enhanced Interface/OSPF/LDP Validation</div>
+        </div>
+    );
+};
+
+ReactDOM.render(<NetworkAuditTool />, document.getElementById('root'));
+    </script>
+</body>
+</html>
