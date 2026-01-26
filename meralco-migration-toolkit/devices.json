@@ -1,0 +1,56 @@
+[
+  {
+    "hostname": "PDLPASR9K",
+    "ip_address": "10.228.201.9",
+    "device_type": "ios-xr",
+    "role": "core",
+    "username": "admin",
+    "password": "your_password",
+    "ssh_port": 22
+  },
+  {
+    "hostname": "SDCASR9K",
+    "ip_address": "10.228.201.10",
+    "device_type": "ios-xr",
+    "role": "core",
+    "username": "admin",
+    "password": "your_password",
+    "ssh_port": 22
+  },
+  {
+    "hostname": "BLGTRPTPE1",
+    "ip_address": "10.228.100.1",
+    "device_type": "ios-xr",
+    "role": "aggregation",
+    "username": "admin",
+    "password": "your_password",
+    "ssh_port": 22
+  },
+  {
+    "hostname": "MLLSUBPE01",
+    "ip_address": "10.228.100.2",
+    "device_type": "ios-xr",
+    "role": "aggregation",
+    "username": "admin",
+    "password": "your_password",
+    "ssh_port": 22
+  },
+  {
+    "hostname": "ALBASR01",
+    "ip_address": "10.228.0.13",
+    "device_type": "ios-xr",
+    "role": "aggregation",
+    "username": "admin",
+    "password": "your_password",
+    "ssh_port": 22
+  },
+  {
+    "hostname": "CVTASR01",
+    "ip_address": "10.228.0.11",
+    "device_type": "ios-xr",
+    "role": "aggregation",
+    "username": "admin",
+    "password": "your_password",
+    "ssh_port": 22
+  }
+]

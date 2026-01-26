@@ -1,0 +1,162 @@
+[
+  {
+    "name": "VPN_ADMS",
+    "rd": "65000:100",
+    "rt_import": "RT:65000:100",
+    "rt_export": "RT:65000:101",
+    "description": "MERALCO ADMS VRF - Distribution Automation",
+    "priority": "critical"
+  },
+  {
+    "name": "VPN_SCADA",
+    "rd": "65100:50",
+    "rt_import": "RT:65100:50",
+    "rt_export": "RT:65100:50",
+    "description": "EXMUX TDM and SCADA RTU",
+    "priority": "critical"
+  },
+  {
+    "name": "VPN_Telepro",
+    "rd": "65000:240",
+    "rt_import": "RT:65000:240",
+    "rt_export": "RT:65000:240",
+    "description": "Teleprotection VRF - Grid Protection",
+    "priority": "critical"
+  },
+  {
+    "name": "VPN_Tetra",
+    "rd": "65100:90",
+    "rt_import": "RT:65100:90",
+    "rt_export": "RT:65100:90",
+    "description": "Terrestrial Trunked Radio Backhaul",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_CCTV",
+    "rd": "65000:200",
+    "rt_import": "RT:65000:200",
+    "rt_export": "RT:65000:200",
+    "description": "CCTV Video Surveillance",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_Metering",
+    "rd": "65000:270",
+    "rt_import": "RT:65000:270",
+    "rt_export": "RT:65000:270",
+    "description": "AMI Metering Infrastructure",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_SCADA_SIP",
+    "rd": "65000:220",
+    "rt_import": "RT:65000:220",
+    "rt_export": "RT:65000:220",
+    "description": "SCADA SIP Communications",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_SCADA_A",
+    "rd": "65000:250",
+    "rt_import": "RT:65000:250",
+    "rt_export": "RT:65000:250",
+    "description": "TDM Path A for EXMUX",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_SCADA_B",
+    "rd": "65000:260",
+    "rt_import": "RT:65000:260",
+    "rt_export": "RT:65000:260",
+    "description": "TDM Path B for EXMUX",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_Transport_Mgt",
+    "rd": "65000:210",
+    "rt_import": "RT:65000:210",
+    "rt_export": "RT:65000:210",
+    "description": "Transport Equipment Management",
+    "priority": "medium"
+  },
+  {
+    "name": "VPN_OT_Mgt",
+    "rd": "65000:280",
+    "rt_import": "RT:65000:280",
+    "rt_export": "RT:65000:280",
+    "description": "OT Infrastructure Management",
+    "priority": "medium"
+  },
+  {
+    "name": "VPN_Data_Apps",
+    "rd": "65000:300",
+    "rt_import": "RT:65000:300",
+    "rt_export": "RT:65000:300",
+    "description": "Data Applications VRF",
+    "priority": "medium"
+  },
+  {
+    "name": "VPN_IT_Mgt",
+    "rd": "65000:310",
+    "rt_import": "RT:65000:310",
+    "rt_export": "RT:65000:310",
+    "description": "IT Management VRF",
+    "priority": "medium"
+  },
+  {
+    "name": "VPN_Substation",
+    "rd": "65000:320",
+    "rt_import": "RT:65000:320",
+    "rt_export": "RT:65000:320",
+    "description": "Substation Automation",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_Video",
+    "rd": "65000:330",
+    "rt_import": "RT:65000:330",
+    "rt_export": "RT:65000:330",
+    "description": "Video Services VRF",
+    "priority": "low"
+  },
+  {
+    "name": "VPN_VoIP",
+    "rd": "65000:340",
+    "rt_import": "RT:65000:340",
+    "rt_export": "RT:65000:340",
+    "description": "VoIP Communications",
+    "priority": "medium"
+  },
+  {
+    "name": "VPN_POC",
+    "rd": "65000:290",
+    "rt_import": "RT:65000:290",
+    "rt_export": "RT:65000:290",
+    "description": "POC/POS and Testing",
+    "priority": "low"
+  },
+  {
+    "name": "VPN_SDC_GW",
+    "rd": "65100:10",
+    "rt_import": "RT:65100:10",
+    "rt_export": "RT:65100:10",
+    "description": "SDC Gateway Peering",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_PDC_GW",
+    "rd": "65100:20",
+    "rt_import": "RT:65100:20",
+    "rt_export": "RT:65100:20",
+    "description": "PDC Gateway Peering",
+    "priority": "high"
+  },
+  {
+    "name": "VPN_GREU",
+    "rd": "65100:100",
+    "rt_import": "RT:65100:100",
+    "rt_export": "RT:65100:100",
+    "description": "Meralco GREU Extranet",
+    "priority": "medium"
+  }
+]

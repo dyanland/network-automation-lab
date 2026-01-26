@@ -1,0 +1,342 @@
+================================================================================
+ MERALCO Network Health Check Logger v2.3.0
+ Phase: test
+================================================================================
+ Hostname:     Switch1
+ IP Address:   172.10.1.50
+ Device Type:  Cat9300
+ Detected OS:  L2-SWITCH
+ Command File: command_l2switch.txt
+ Timestamp:    2026-01-23 15:42:37
+================================================================================
+
+--------------------------------------------------------------------------------
+ Command: show version
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Cisco IOS Software [IOSXE], Linux Software (X86_64BI_LINUX_L2-ADVENTERPRISEK9-M), Version 17.16.1a, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2024 by Cisco Systems, Inc.
+Compiled Thu 19-Dec-24 17:53 by mcpre
+ROM: Bootstrap program is Linux
+Switch1 uptime is 1 week, 1 day, 10 hours, 57 minutes
+System returned to ROM by unknown reload cause - suspect boot_data[BOOT_COUNT] 0x9, BOOT_COUNT 0, BOOTDATA 19
+System image file is "unix:/x86_64_crb_linux_l2-adventerprisek9-ms.iol"
+Last reload reason: Unknown reason
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+Linux Unix (i686) processor with 794975K bytes of memory.
+Processor board ID 131184641
+4 Ethernet interfaces
+1 Virtual Ethernet interface
+256K bytes of NVRAM.
+Configuration register is 0x0
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show inventory
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show ip interface brief
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Interface              IP-Address      OK? Method Status                Protocol
+Ethernet0/0            unassigned      YES unset  up                    up      
+Ethernet0/1            unassigned      YES unset  up                    up      
+Ethernet0/2            unassigned      YES unset  up                    up      
+Ethernet0/3            unassigned      YES unset  up                    up      
+Loopback10             172.10.1.50     YES manual up                    up      
+Vlan10                 10.240.10.14    YES manual up                    up      
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show interfaces description
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Interface                      Status         Protocol Description
+Et0/0                          up             up       to_UPE9
+Et0/1                          up             up       To_SR201
+Et0/2                          up             up       
+Et0/3                          up             up       
+Lo10                           up             up       
+Vl10                           up             up       
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show interfaces status
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Port         Name               Status       Vlan       Duplex  Speed Type
+Et0/0        to_UPE9            connected    trunk        full   auto 10/100/1000BaseTX
+Et0/1        To_SR201           connected    trunk        full   auto 10/100/1000BaseTX
+Et0/2                           connected    201          full   auto 10/100/1000BaseTX
+Et0/3                           connected    1            full   auto 10/100/1000BaseTX
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show interfaces trunk
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Port           Mode             Encapsulation  Status        Native vlan  
+Et0/0          on               802.1q         trunking      1
+Et0/1          on               802.1q         trunking      1
+Port           Vlans allowed on trunk
+Et0/0          10,201
+Et0/1          1-4094
+Port           Vlans allowed and active in management domain
+Et0/0          10,201
+Et0/1          1,10,201
+Port           Vlans in spanning tree forwarding state and not pruned
+Et0/0          10,201
+Et0/1          1,10,201
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show vlan brief
+--------------------------------------------------------------------------------
+it on this terminal by typing
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et0/3
+10   Management                       active    
+201  VLAN0201                         active    Et0/2
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show spanning-tree summary
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Switch is in rapid-pvst mode
+Root bridge for: VLAN0001, VLAN0010, VLAN0201
+EtherChannel misconfig guard            is enabled
+Extended system ID                      is enabled
+Portfast Default                        is disabled
+PortFast BPDU Guard Default            is disabled
+Portfast BPDU Filter Default           is disabled
+Loopguard Default                      is disabled
+UplinkFast                              is disabled
+BackboneFast                            is disabled
+Configured Pathcost method used is short
+Name                   Blocking Listening Learning Forwarding STP Active
+---------------------- -------- --------- -------- ---------- ----------
+VLAN0001                     0         0        0          2          2
+VLAN0010                     0         0        0          2          2
+VLAN0201                     0         0        0          3          3
+---------------------- -------- --------- -------- ---------- ----------
+3 vlans                      0         0        0          7          7
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show spanning-tree root
+--------------------------------------------------------------------------------
+it on this terminal by typing
+                                        Root    Hello Max Fwd
+Vlan                   Root ID          Cost    Time  Age Dly  Root Port
+---------------- -------------------- --------- ----- --- ---  ------------
+VLAN0001         32769 aabb.cc00.0100         0    2   20  15                  
+VLAN0010         32778 aabb.cc00.0100         0    2   20  15                  
+VLAN0201         32969 aabb.cc00.0100         0    2   20  15                  
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show etherchannel summary
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+        A - formed by Auto LAG
+Number of channel-groups in use: 0
+Number of aggregators:           0
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show mac address-table count
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Mac Entries for Vlan 201:
+---------------------------
+Dynamic Address Count  : 1
+Static  Address Count  : 0
+Total Mac Addresses    : 1
+Mac Entries for Vlan 10:
+---------------------------
+Dynamic Address Count  : 1
+Static  Address Count  : 0
+Total Mac Addresses    : 1
+Total Dynamic Address Count  : 2
+Total Static  Address Count  : 0
+Total Mac Address In Use     : 2
+Total Mac Address Space Available: 0
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show lldp neighbors
+--------------------------------------------------------------------------------
+it on this terminal by typing
+% LLDP is not enabled
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show cdp neighbors
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+Total cdp entries displayed : 0
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show logging | tail 50
+--------------------------------------------------------------------------------
+it on this terminal by typing
+                        ^
+% Invalid input detected at '^' marker.
+Switch1#echo
+
+--------------------------------------------------------------------------------
+ Command: show running-config
+--------------------------------------------------------------------------------
+it on this terminal by typing
+Building configuration...
+Current configuration : 1497 bytes
+!
+! Last configuration change at 21:31:54 UTC Thu Jan 22 2026
+!
+version 17.16
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname Switch1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+ip domain name meralco.com.ph
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+memory free low-watermark processor 79497
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+username ame
+username meralco privilege 15 secret 9 $9$gGLLx3mEouoRcE$x6INNlpD/XCPSIKTaEqzcGkZSgG7/BIY4rB1mI.9O36
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+interface Loopback10
+ ip address 172.10.1.50 255.255.255.255
+!
+interface Ethernet0/0
+ description to_UPE9
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,201
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Ethernet0/1
+ description To_SR201
+ switchport access vlan 201
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Ethernet0/2
+ switchport access vlan 201
+!
+interface Ethernet0/3
+!
+interface Vlan10
+ ip address 10.240.10.14 255.255.255.252
+!
+ip forward-protocol nd
+ip forward-protocol udp
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+ip route 172.0.0.0 255.0.0.0 10.240.10.13
+!
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+end
+Switch1#echo
+
+================================================================================
