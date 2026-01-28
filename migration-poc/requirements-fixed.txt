@@ -1,0 +1,14 @@
+# Python Requirements for Network Migration POC
+# Install with: pip3 install -r requirements.txt
+
+# Core testing framework
+robotframework==7.0
+
+# YAML parsing (required for devices.yaml)
+pyyaml==6.0.1
+
+# Optional but recommended for better reporting
+robotframework-metrics==3.3.3
+
+# Note: NO SSH libraries needed!
+# The Go remote library handles all SSH connections
