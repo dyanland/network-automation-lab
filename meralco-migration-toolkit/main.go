@@ -280,7 +280,6 @@ func execCmdIOSXR(c *ssh.Client, d DeviceInfo, cmd string) (string, error) {
 }
 
 // cleanIOSXROutput removes terminal artifacts from IOS-XR output
-// but preserves important content like ping results
 func cleanIOSXROutput(output, cmd string) string {
 	// Remove ANSI escape codes
 	ansiRegex := regexp.MustCompile(`\x1b\[[0-9;]*[a-zA-Z]`)
@@ -292,6 +291,7 @@ func cleanIOSXROutput(output, cmd string) string {
 	// Split into lines and filter
 	lines := strings.Split(output, "\n")
 	var result []string
+	skipNext := false
 
 	for _, line := range lines {
 		trimmed := strings.TrimSpace(line)
@@ -301,20 +301,24 @@ func cleanIOSXROutput(output, cmd string) string {
 			continue
 		}
 
-		// Skip terminal length command and its echo
+		// Skip terminal length command
 		if strings.Contains(trimmed, "terminal length") {
+			skipNext = true
 			continue
 		}
 
-		// Skip prompts (lines that are ONLY a prompt - ending with # or >)
-		// But keep lines that have content before the prompt
-		if (strings.HasSuffix(trimmed, "#") || strings.HasSuffix(trimmed, ">")) &&
-			!strings.Contains(trimmed, " ") {
+		if skipNext {
+			skipNext = false
 			continue
 		}
 
-		// Skip prompt-only lines like "RP/0/0/CPU0:UPE9#"
-		if strings.HasPrefix(trimmed, "RP/") && strings.HasSuffix(trimmed, "#") {
+		// Skip command echo (but keep for ping to show what was executed)
+		if strings.HasPrefix(trimmed, cmd[:min(len(cmd), 10)]) {
+			continue
+		}
+
+		// Skip prompts (lines ending with # or >)
+		if strings.HasSuffix(trimmed, "#") || strings.HasSuffix(trimmed, ">") {
 			continue
 		}
 
@@ -327,13 +331,6 @@ func cleanIOSXROutput(output, cmd string) string {
 		if strings.Contains(trimmed, "Building configuration") {
 			continue
 		}
-
-		// KEEP important lines - don't filter these out:
-		// - Success rate lines
-		// - Ping statistics
-		// - VRF information
-		// - Route information
-		// - Any line with actual data
 
 		result = append(result, line)
 	}
@@ -827,108 +824,66 @@ func parseVRFOutput(output, deviceType string) []VRFInfo {
 	var vrfList []VRFInfo
 	lines := strings.Split(output, "\n")
 
-	// IOS-XR "show vrf all" format:
-	// VRF                  RD                  RT                      AFI   SAFI
-	// VPN_ADMS             1.1.1.9:0
-	//                                          import  65000:100       IPV4  Unicast
-	//                                          export  65000:101       IPV4  Unicast
-	// VPN_Data_Apps        1.1.1.9:1
-	//                                          import  65000:10        IPV4  Unicast
-
-	var currentVRF *VRFInfo
-
+	// Skip header lines
+	startParsing := false
 	for _, line := range lines {
+		line = strings.TrimSpace(line)
+
 		// Skip empty lines
-		if strings.TrimSpace(line) == "" {
+		if line == "" {
 			continue
 		}
 
-		// Skip header lines
-		if strings.Contains(line, "VRF") && strings.Contains(line, "RD") {
-			continue
-		}
-		if strings.Contains(line, "AFI") && strings.Contains(line, "SAFI") {
+		// Look for header line to start parsing
+		if strings.Contains(line, "VRF") && (strings.Contains(line, "RD") || strings.Contains(line, "Name")) {
+			startParsing = true
 			continue
 		}
 
 		// Skip separator lines
-		if strings.HasPrefix(strings.TrimSpace(line), "-") {
+		if strings.HasPrefix(line, "-") || strings.HasPrefix(line, "=") {
 			continue
 		}
 
-		// Skip timestamp lines
-		if strings.Contains(line, "UTC") || strings.Contains(line, "GMT") {
+		if !startParsing {
 			continue
 		}
 
-		// Skip prompt lines
-		if strings.Contains(line, "RP/") || strings.Contains(line, "#") {
-			continue
-		}
+		// Parse VRF line - format varies by device
+		fields := strings.Fields(line)
+		if len(fields) >= 1 {
+			vrfName := fields[0]
 
-		// Skip lines that start with "import" or "export" (these are RT lines, not VRF names)
-		trimmed := strings.TrimSpace(line)
-		if strings.HasPrefix(trimmed, "import") || strings.HasPrefix(trimmed, "export") {
-			// This is an RT line for the current VRF
-			if currentVRF != nil {
-				fields := strings.Fields(trimmed)
-				if len(fields) >= 2 {
-					if fields[0] == "import" {
-						currentVRF.RTImport = fields[1]
-					} else if fields[0] == "export" {
-						currentVRF.RTExport = fields[1]
-					}
-				}
-			}
-			continue
-		}
-
-		// Check if this line starts with a VRF name (non-whitespace at beginning)
-		if len(line) > 0 && line[0] != ' ' && line[0] != '\t' {
-			// Save previous VRF if exists
-			if currentVRF != nil && currentVRF.Name != "" {
-				vrfList = append(vrfList, *currentVRF)
+			// Skip management VRFs and default
+			if vrfName == "default" || vrfName == "management" || vrfName == "__bgp_vrf__" {
+				continue
 			}
 
-			// Parse new VRF line
-			fields := strings.Fields(line)
-			if len(fields) >= 1 {
-				vrfName := fields[0]
+			vrf := VRFInfo{
+				Name:     vrfName,
+				Priority: "medium", // Default priority
+				Source:   "device",
+			}
 
-				// Skip non-VRF entries
-				if vrfName == "default" || vrfName == "management" ||
-					vrfName == "__bgp_vrf__" || vrfName == "VRF" ||
-					strings.HasPrefix(vrfName, "RP/") {
-					currentVRF = nil
-					continue
-				}
-
-				currentVRF = &VRFInfo{
-					Name:     vrfName,
-					Priority: "medium",
-					Source:   "device",
-				}
-
-				// Extract RD if present (second field with : in it)
-				if len(fields) >= 2 && strings.Contains(fields[1], ":") {
-					currentVRF.RD = fields[1]
-				}
-
-				// Check static list for priority
-				for _, staticVRF := range vrfs {
-					if strings.EqualFold(staticVRF.Name, vrfName) {
-						currentVRF.Priority = staticVRF.Priority
-						currentVRF.Description = staticVRF.Description
-						break
-					}
+			// Try to extract RD if present
+			if len(fields) >= 2 {
+				// Check if second field looks like an RD (contains :)
+				if strings.Contains(fields[1], ":") {
+					vrf.RD = fields[1]
 				}
 			}
-		}
-	}
 
-	// Don't forget the last VRF
-	if currentVRF != nil && currentVRF.Name != "" {
-		vrfList = append(vrfList, *currentVRF)
+			// Check if this VRF is in our static list for priority
+			for _, staticVRF := range vrfs {
+				if strings.EqualFold(staticVRF.Name, vrfName) {
+					vrf.Priority = staticVRF.Priority
+					vrf.Description = staticVRF.Description
+					break
+				}
+			}
+
+			vrfList = append(vrfList, vrf)
+		}
 	}
 
 	return vrfList
@@ -1666,7 +1621,7 @@ func doPingTest(r *bufio.Reader, d *DeviceInfo, vrf string) {
 	fmt.Printf("\n--- Executing on %s ---\n", d.Hostname)
 	fmt.Printf("VRF: %s\n", vrf)
 	fmt.Printf("Command: %s\n", cmd)
-	fmt.Println(strings.Repeat("-", 60))
+	fmt.Println(strings.Repeat("-", 50))
 
 	out, err := execCmd(*d, cmd)
 	if err != nil {
@@ -1676,29 +1631,16 @@ func doPingTest(r *bufio.Reader, d *DeviceInfo, vrf string) {
 
 	// Show full output
 	fmt.Println(out)
-	fmt.Println(strings.Repeat("-", 60))
+	fmt.Println(strings.Repeat("-", 50))
 
-	// Parse result - look for success indicators
+	// Parse result
 	rate := pingRate(out)
-
-	// Debug: show what we found
-	if strings.Contains(out, "Success rate") {
-		fmt.Printf("\n[Detected: Success rate line found]\n")
-	}
-
 	if rate == 100 {
 		fmt.Printf("\n✓ VRF %s: PING SUCCESSFUL (100%%)\n", vrf)
 	} else if rate > 0 {
 		fmt.Printf("\n⚠ VRF %s: PARTIAL SUCCESS (%d%%)\n", vrf, rate)
 	} else {
-		// Check if the output actually shows success but we couldn't parse it
-		if strings.Contains(out, "100 percent") || strings.Contains(out, "(5/5)") {
-			fmt.Printf("\n✓ VRF %s: PING SUCCESSFUL (detected in output)\n", vrf)
-		} else if strings.Contains(out, "!!!!!") {
-			fmt.Printf("\n✓ VRF %s: PING SUCCESSFUL (replies received)\n", vrf)
-		} else {
-			fmt.Printf("\n✗ VRF %s: PING FAILED\n", vrf)
-		}
+		fmt.Printf("\n✗ VRF %s: PING FAILED\n", vrf)
 	}
 }
 
@@ -2140,19 +2082,12 @@ func pingRate(s string) int {
 		return n
 	}
 
-	// Try format with parentheses: "100 percent (5/5)"
-	re1b := regexp.MustCompile(`(\d+)\s*percent`)
-	if m := re1b.FindStringSubmatch(s); len(m) > 1 {
-		n, _ := strconv.Atoi(m[1])
-		return n
-	}
-
-	// Try format: "(X/Y)" where X=received, Y=sent - be more specific
-	re2 := regexp.MustCompile(`\((\d+)/(\d+)\)`)
+	// Try format: "X/Y" (X received out of Y sent)
+	re2 := regexp.MustCompile(`(\d+)/(\d+)`)
 	if m := re2.FindStringSubmatch(s); len(m) > 2 {
 		received, _ := strconv.Atoi(m[1])
 		sent, _ := strconv.Atoi(m[2])
-		if sent > 0 && received <= sent {
+		if sent > 0 {
 			return (received * 100) / sent
 		}
 	}
@@ -2164,27 +2099,21 @@ func pingRate(s string) int {
 		return 100 - loss
 	}
 
-	// Check for !!!!! pattern (successful pings in Cisco output)
-	// Count consecutive ! marks
-	if strings.Contains(s, "!!") {
-		exclamationCount := strings.Count(s, "!")
-		dotCount := strings.Count(s, ".")
-		// Only count if it looks like ping output (has reasonable number)
-		if exclamationCount > 0 && exclamationCount <= 100 {
-			total := exclamationCount + dotCount
-			if total > 0 {
-				return (exclamationCount * 100) / total
+	// Try format: "round-trip" or "rtt" (indicates at least some success)
+	if strings.Contains(s, "round-trip") || strings.Contains(s, "rtt min") {
+		// If we see round-trip stats, at least some pings succeeded
+		// Try to find the actual success count
+		re4 := regexp.MustCompile(`(\d+)\s+packets received`)
+		if m := re4.FindStringSubmatch(s); len(m) > 1 {
+			received, _ := strconv.Atoi(m[1])
+			if received > 0 {
+				return 100 // Assume success if we see packets received
 			}
 		}
 	}
 
-	// Check for round-trip stats (indicates success)
-	if strings.Contains(s, "round-trip") || strings.Contains(s, "min/avg/max") {
-		return 100 // If we see round-trip stats, pings succeeded
-	}
-
 	// Check for explicit success indicators
-	if strings.Contains(s, "100 percent") {
+	if strings.Contains(s, "100 percent") || strings.Contains(s, "100%") {
 		return 100
 	}
 
