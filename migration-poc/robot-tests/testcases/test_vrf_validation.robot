@@ -12,7 +12,7 @@ Documentation    VRF-Specific Service Validation - MERALCO Core Network
 ...              - > 2 HIGH VRFs fail validation
 ...              - > 50% of all VRFs fail validation
 
-Library          GoNetworkLibrary.py
+Library          ../GoNetworkLibrary.py
 Library          Collections
 Library          OperatingSystem
 Library          String
@@ -23,8 +23,8 @@ Suite Setup      Initialize VRF Validation
 Suite Teardown   Generate VRF Validation Report
 
 *** Variables ***
-${USERNAME}         admin
-${PASSWORD}         admin
+${USERNAME}         meralco
+${PASSWORD}         meralco
 ${VALIDATION_MODE}  pre    # pre, post, or continuous
 
 # Statistics

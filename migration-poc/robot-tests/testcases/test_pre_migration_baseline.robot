@@ -16,7 +16,7 @@ Documentation    Pre-Migration Baseline Capture - MERALCO Core Network Migration
 ...              - 100% ping success for critical VRFs
 ...              - Zero CRC errors on interfaces
 
-Library          GoNetworkLibrary.py
+Library          ../GoNetworkLibrary.py
 Library          Collections
 Library          DateTime
 Library          String
@@ -27,8 +27,8 @@ Suite Setup      Initialize Baseline Capture
 Suite Teardown   Generate Baseline Report
 
 *** Variables ***
-${USERNAME}             admin
-${PASSWORD}             admin
+${USERNAME}             meralco
+${PASSWORD}             meralco
 ${BASELINE_FILE}        baseline_${TIMESTAMP}.json
 ${EXCEL_REPORT}         baseline_report_${TIMESTAMP}.xlsx
 
@@ -395,21 +395,21 @@ Extract IOS Version
     # Extract IOS version from show version output
     ${lines}=    Split String    ${version_output}    \n
     FOR    ${line}    IN    @{lines}
-        ${contains}=    Run Keyword And Return Status
+        ${contains}=    Run Keyword And RETURN Status
         ...    Should Contain    ${line}    IOS XR Software
-        Run Keyword If    ${contains}    Return From Keyword    ${line}
+        Run Keyword If    ${contains}    RETURN From Keyword    ${line}
     END
-    [Return]    Unknown
+    [RETURN]    Unknown
 
 Extract Uptime
     [Arguments]    ${version_output}
     # Extract uptime
-    [Return]    2 weeks, 6 days
+    [RETURN]    2 weeks, 6 days
 
 Extract Hardware
     [Arguments]    ${version_output}
     # Extract hardware platform
-    [Return]    ASR9906
+    [RETURN]    ASR9906
 
 Extract Interface Errors
     [Arguments]    ${interface_detail}
@@ -418,17 +418,17 @@ Extract Interface Errors
     ...    input_errors=0
     ...    output_errors=0
     ...    crc_errors=0
-    [Return]    ${errors}
+    [RETURN]    ${errors}
 
 Count MPLS Labels
     [Arguments]    ${mpls_output}
     # Count MPLS labels
-    [Return]    150
+    [RETURN]    150
 
 Extract Route Count
     [Arguments]    ${route_output}
     # Extract route count from summary
-    [Return]    500
+    [RETURN]    500
 
 Extract Latency Stats
     [Arguments]    ${ping_output}
@@ -437,11 +437,11 @@ Extract Latency Stats
     ...    min=1
     ...    avg=5
     ...    max=15
-    [Return]    ${stats}
+    [RETURN]    ${stats}
 
 Evaluate Baseline Quality
     # Check if baseline meets quality criteria
-    [Return]    GO
+    [RETURN]    GO
 
 Generate Baseline Report
     Log    Generating Excel baseline report...    console=yes

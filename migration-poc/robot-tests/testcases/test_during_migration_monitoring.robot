@@ -20,7 +20,7 @@ Documentation    During-Migration Real-Time Monitoring - MERALCO Core Network
 ...              T+45: Link 2 validation
 ...              T+60: Final validation complete
 
-Library          GoNetworkLibrary.py
+Library          ../GoNetworkLibrary.py
 Library          Collections
 Library          DateTime
 Library          OperatingSystem
@@ -30,8 +30,8 @@ Suite Setup      Initialize Monitoring
 Suite Teardown   Finalize Monitoring
 
 *** Variables ***
-${USERNAME}                 admin
-${PASSWORD}                 admin
+${USERNAME}                 meralco
+${PASSWORD}                 meralco
 ${MONITORING_INTERVAL}      5    # seconds
 ${MAX_MONITORING_TIME}      3600 # 1 hour maximum
 ${ROLLBACK_TRIGGERED}       ${FALSE}
