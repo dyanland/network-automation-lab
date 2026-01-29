@@ -25,6 +25,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"golang.org/x/crypto/ssh"
 )
 
 const (
@@ -84,28 +86,28 @@ type Config struct {
 
 func detectDeviceOS(deviceType string) string {
 	dt := strings.ToUpper(strings.TrimSpace(deviceType))
-	
+
 	// =====================================================
 	// CHECK SPECIFIC PATTERNS FIRST (before generic ones!)
 	// =====================================================
-	
+
 	// IOS-XE: ASR903, ASR920 (must check BEFORE ASR9 pattern!)
 	if strings.Contains(dt, "ASR903") || strings.Contains(dt, "ASR-903") ||
 		strings.Contains(dt, "ASR920") || strings.Contains(dt, "ASR-920") {
 		return "IOS-XE"
 	}
-	
+
 	// IOS-XR: ASR9000 series (ASR9K, ASR9006, ASR9010, ASR9906, etc.)
 	// Only match ASR9 followed by 0 or K (not ASR903/ASR920)
 	if strings.Contains(dt, "ASR9K") || strings.Contains(dt, "ASR-9K") ||
-		strings.Contains(dt, "ASR90") || strings.Contains(dt, "ASR91") || 
+		strings.Contains(dt, "ASR90") || strings.Contains(dt, "ASR91") ||
 		strings.Contains(dt, "ASR99") || // ASR9006, ASR9010, ASR9901, ASR9906, etc.
 		strings.Contains(dt, "XRV") || strings.Contains(dt, "IOS-XR") ||
 		strings.Contains(dt, "IOSXR") || strings.Contains(dt, "NCS") ||
 		strings.Contains(dt, "CRS") {
 		return "IOS-XR"
 	}
-	
+
 	// IOS-XE: Other patterns
 	if strings.Contains(dt, "ASR1") || strings.Contains(dt, "ASR-1") ||
 		strings.Contains(dt, "ISR") || strings.Contains(dt, "CSR") ||
@@ -115,7 +117,7 @@ func detectDeviceOS(deviceType string) string {
 		strings.Contains(dt, "C11") || strings.Contains(dt, "C12") {
 		return "IOS-XE"
 	}
-	
+
 	// L2 Switch patterns
 	if strings.Contains(dt, "SWITCH") || strings.Contains(dt, "SW") ||
 		strings.Contains(dt, "CAT") || strings.Contains(dt, "CATALYST") ||
@@ -129,7 +131,7 @@ func detectDeviceOS(deviceType string) string {
 		strings.Contains(dt, "I86BI") {
 		return "L2-SWITCH"
 	}
-	
+
 	// Default
 	return "IOS-XE"
 }
@@ -329,7 +331,7 @@ func readLines(filename string) ([]string, error) {
 }
 
 // ============================================================================
-// SSH CLIENT
+// SSH CLIENT - Fixed for IOS-XR (no echo command available)
 // ============================================================================
 
 type SSHClient struct {
@@ -338,11 +340,19 @@ type SSHClient struct {
 	username   string
 	password   string
 	cmdTimeout time.Duration
+	deviceOS   string
 }
 
 func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error) {
 	results := make(map[string]string)
 
+	// For IOS-XR: Execute each command separately using SSH command mode
+	// This is because IOS-XR closes stdin-based sessions
+	if c.deviceOS == "IOS-XR" {
+		return c.executeIOSXRCommands(commands)
+	}
+
+	// For IOS-XE/L2: Use stdin with echo markers
 	var script strings.Builder
 	script.WriteString("terminal length 0\n")
 	script.WriteString("terminal width 512\n")
@@ -386,6 +396,12 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 	}
 
 	fullOutput := output.String()
+
+	// DEBUG: Save raw output to file for troubleshooting
+	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
+	os.WriteFile(debugFile, []byte(fullOutput), 0644)
+
+	// Parse using echo markers
 	for i, cmdStr := range commands {
 		start := fmt.Sprintf("===START_%d===", i)
 		end := fmt.Sprintf("===END_%d===", i)
@@ -408,6 +424,181 @@ func (c *SSHClient) ExecuteCommands(commands []string) (map[string]string, error
 	return results, nil
 }
 
+// executeIOSXRCommands runs commands on IOS-XR using native Go SSH
+func (c *SSHClient) executeIOSXRCommands(commands []string) (map[string]string, error) {
+	results := make(map[string]string)
+	var allOutput strings.Builder
+
+	// SSH client configuration
+	config := &ssh.ClientConfig{
+		User: c.username,
+		Auth: []ssh.AuthMethod{
+			ssh.Password(c.password),
+		},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+	}
+
+	// Dial IOS XR
+	addr := fmt.Sprintf("%s:%d", c.host, c.port)
+	client, err := ssh.Dial("tcp", addr, config)
+	if err != nil {
+		return nil, fmt.Errorf("failed to dial: %w", err)
+	}
+	defer client.Close()
+
+	// Start interactive session
+	session, err := client.NewSession()
+	if err != nil {
+		return nil, fmt.Errorf("failed to create session: %w", err)
+	}
+	defer session.Close()
+
+	// Request PTY (needed for IOS XR CLI)
+	if err := session.RequestPty("vt100", 80, 40, ssh.TerminalModes{}); err != nil {
+		return nil, fmt.Errorf("failed to request PTY: %w", err)
+	}
+
+	stdin, _ := session.StdinPipe()
+	stdout, _ := session.StdoutPipe()
+
+	// Start shell
+	if err := session.Shell(); err != nil {
+		return nil, fmt.Errorf("failed to start shell: %w", err)
+	}
+
+	// Send commands
+	for _, cmdStr := range commands {
+		fmt.Fprintf(stdin, "%s\n", cmdStr)
+	}
+
+	// Exit session cleanly
+	fmt.Fprintln(stdin, "exit")
+
+	// Capture output
+	scanner := bufio.NewScanner(stdout)
+	var currentCmd string
+	for scanner.Scan() {
+		line := scanner.Text()
+		allOutput.WriteString(line + "\n")
+
+		// crude detection: if line contains command string, switch context
+		for _, cmdStr := range commands {
+			if strings.Contains(line, cmdStr) {
+				currentCmd = cmdStr
+				results[currentCmd] = ""
+			}
+		}
+		if currentCmd != "" {
+			results[currentCmd] += line + "\n"
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("error reading output: %w", err)
+	}
+
+	// DEBUG: Save all raw output
+	debugFile := fmt.Sprintf("/tmp/debug_%s_%s.txt", c.deviceOS, c.host)
+	_ = os.WriteFile(debugFile, []byte(allOutput.String()), 0644)
+
+	// Clean outputs
+	for cmdStr, out := range results {
+		results[cmdStr] = cleanIOSXRCommandOutput(out)
+	}
+
+	return results, nil
+}
+
+// cleanIOSXRCommandOutput cleans output from IOS-XR SSH command execution
+func cleanIOSXRCommandOutput(output string) string {
+	lines := strings.Split(output, "\n")
+	var clean []string
+
+	// Compile prompt pattern once
+	promptPattern := regexp.MustCompile(`^(RP/\d+/(RSP)?\d+/CPU\d+:)?[A-Za-z0-9_-]+#`)
+
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+
+		// Skip empty lines at start
+		if len(clean) == 0 && trimmed == "" {
+			continue
+		}
+
+		// Skip markers
+		if strings.Contains(trimmed, "__MARKER_START_") || strings.Contains(trimmed, "__MARKER_END_") {
+			continue
+		}
+
+		// Skip echo commands
+		if strings.HasPrefix(trimmed, "echo __MARKER") {
+			continue
+		}
+
+		// Skip IOS-XR prompts
+		if promptPattern.MatchString(trimmed) {
+			continue
+		}
+
+		// Skip terminal settings
+		if strings.HasPrefix(trimmed, "terminal length") || strings.HasPrefix(trimmed, "terminal width") {
+			continue
+		}
+
+		// Skip SSH warnings
+		if strings.Contains(trimmed, "Warning:") && strings.Contains(trimmed, "known hosts") {
+			continue
+		}
+		if strings.Contains(trimmed, "Pseudo-terminal") {
+			continue
+		}
+		if strings.Contains(trimmed, "Connection to") && strings.Contains(trimmed, "closed") {
+			continue
+		}
+
+		// Skip the IMPORTANT license banner (common on XRv)
+		if strings.Contains(trimmed, "IMPORTANT:") && strings.Contains(trimmed, "READ CAREFULLY") {
+			continue
+		}
+		if strings.Contains(trimmed, "Demo Version") || strings.Contains(trimmed, "XRv") && strings.Contains(trimmed, "Software") {
+			continue
+		}
+		if strings.Contains(trimmed, "End User License") || strings.Contains(trimmed, "License Agreement") {
+			continue
+		}
+		if strings.Contains(trimmed, "cisco.com/go/terms") {
+			continue
+		}
+		if strings.Contains(trimmed, "demonstration and evaluation") {
+			continue
+		}
+		if strings.Contains(trimmed, "non-production environment") {
+			continue
+		}
+		if strings.Contains(trimmed, "Downloading, installing") {
+			continue
+		}
+		if strings.Contains(trimmed, "binding yourself") {
+			continue
+		}
+		if strings.Contains(trimmed, "unwilling to license") {
+			continue
+		}
+		if strings.Contains(trimmed, "return the Software") {
+			continue
+		}
+		if strings.Contains(trimmed, "Please login with") {
+			continue
+		}
+		if strings.Contains(trimmed, "configured user/password") {
+			continue
+		}
+
+		clean = append(clean, line)
+	}
+
+	return strings.TrimSpace(strings.Join(clean, "\n"))
+}
+
 func cleanOutput(s string) string {
 	lines := strings.Split(s, "\n")
 	var clean []string
@@ -420,18 +611,18 @@ func cleanOutput(s string) string {
 			continue
 		}
 		// Skip IOS.sh shell warning messages
-		if strings.Contains(t, "IOS.sh") || 
-		   strings.Contains(t, "shell is currently disabled") ||
-		   strings.Contains(t, "term shell") ||
-		   strings.Contains(t, "shell processing full") ||
-		   strings.Contains(t, "man command") ||
-		   strings.Contains(t, "man IOS.sh") ||
-		   strings.Contains(t, "The command you have entered") ||
-		   strings.Contains(t, "You can enable") ||
-		   strings.Contains(t, "You can also enable") ||
-		   strings.Contains(t, "For more information") ||
-		   strings.Contains(t, "However, the shell") ||
-		   strings.Contains(t, "There is additional information") {
+		if strings.Contains(t, "IOS.sh") ||
+			strings.Contains(t, "shell is currently disabled") ||
+			strings.Contains(t, "term shell") ||
+			strings.Contains(t, "shell processing full") ||
+			strings.Contains(t, "man command") ||
+			strings.Contains(t, "man IOS.sh") ||
+			strings.Contains(t, "The command you have entered") ||
+			strings.Contains(t, "You can enable") ||
+			strings.Contains(t, "You can also enable") ||
+			strings.Contains(t, "For more information") ||
+			strings.Contains(t, "However, the shell") ||
+			strings.Contains(t, "There is additional information") {
 			continue
 		}
 		// Skip prompts with commands echoed (e.g., "Switch1#show ip interface brief")
@@ -558,6 +749,7 @@ func processDevice(device DeviceInfo, config *Config, commands *CommandSet) *Dev
 		username:   config.Username,
 		password:   config.Password,
 		cmdTimeout: config.CmdTimeout,
+		deviceOS:   osType,
 	}
 
 	startTime := time.Now()

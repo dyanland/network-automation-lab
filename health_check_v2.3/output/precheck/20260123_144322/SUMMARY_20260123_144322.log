@@ -1,0 +1,22 @@
+================================================================================
+ MERALCO Health Check Summary v2.3.0
+ Phase: precheck | Time: 2026-01-23 14:43:42
+================================================================================
+
+ Total: 9 | Success: 9 | Failed: 0 | Rate: 100.0%
+
+HOSTNAME     IP              TYPE       OS         STATUS     CMD_FILE
+--------------------------------------------------------------------------------
+UPE21        172.10.1.21     ASR9906    IOS-XR     SUCCESS    command_iosxr.txt
+SR202        172.10.1.202    ASR903     IOS-XE     SUCCESS    command_iosxe.txt
+UPE24        172.10.1.24     ASR9906    IOS-XR     SUCCESS    command_iosxr.txt
+UPE1         172.10.1.1      ASR9906    IOS-XR     SUCCESS    command_iosxr.txt
+UPE9         172.10.1.9      ASR9906    IOS-XR     SUCCESS    command_iosxr.txt
+Switch1      172.10.1.50     Cat9300    L2-SWITCH  SUCCESS    command_l2switch.txt
+SR201        172.10.1.201    ASR903     IOS-XE     SUCCESS    command_iosxe.txt
+SR203        172.10.1.203    ASR903     IOS-XE     SUCCESS    command_iosxe.txt
+SR204        172.10.1.204    ASR903     IOS-XE     SUCCESS    command_iosxe.txt
+--------------------------------------------------------------------------------
+
+Output: output/precheck/20260123_144322
+CSV Summary: SUMMARY_20260123_144322.csv

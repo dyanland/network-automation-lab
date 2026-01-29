@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IOS XR Config Comparator (NCS5500 vs ASR9900)</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f5f7;
+      color: #222;
+    }
+    header {
+      background: #1b3a57;
+      color: #fff;
+      padding: 16px 24px;
+    }
+    header h1 {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+    header p {
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    main {
+      padding: 16px 24px 32px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 240px;
+      box-sizing: border-box;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccd1d9;
+      resize: vertical;
+      background: #fff;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    textarea.drop-target {
+      border-color: #1b72e8;
+      background-color: #eef3ff;
+    }
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .file-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .file-row small {
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .file-input-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .file-input-wrapper input[type="file"] {
+      font-size: 11px;
+    }
+    .controls {
+      margin: 12px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      background: #1b72e8;
+      color: #fff;
+      font-weight: 600;
+    }
+    button:hover {
+      background: #155ac0;
+    }
+    .pill {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #e1ecff;
+      color: #1b3a57;
+    }
+    section {
+      margin-top: 24px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px 16px 16px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    details {
+      border-radius: 6px;
+    }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 4px 0;
+    }
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    summary::before {
+      content: "▸";
+      font-size: 11px;
+      color: #4b5563;
+      margin-right: 4px;
+      transition: transform 0.15s ease;
+    }
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+    .section-body {
+      margin-top: 8px;
+    }
+    h3 {
+      margin: 12px 0 6px;
+      font-size: 13px;
+    }
+    .small {
+      font-size: 12px;
+      color: #555;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid #e1e4ea;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+    th {
+      background: #f5f7fb;
+      font-weight: 600;
+      text-align: left;
+    }
+    tr:nth-child(even) td {
+      background: #fafbff;
+    }
+    .match {
+      background: #e5f7e7;
+    }
+    .mismatch {
+      background: #fff7e6;
+    }
+    .missing {
+      background: #ffefef;
+    }
+    .mono {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+    .pill-green {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .pill-red {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+    .anchor-nav {
+      font-size: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .anchor-nav a {
+      text-decoration: none;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: #374151;
+    }
+    .anchor-nav a:hover {
+      background: #d1d5db;
+    }
+    .notice {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    .badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0f172a;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+    }
+    .summary-card {
+      background: #f9fafb;
+      border-radius: 6px;
+      padding: 6px 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 12px;
+    }
+    .summary-card strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>IOS XR Config Comparator</h1>
+  <p>Compare Cisco NCS5500 vs ASR9900 configs: VRFs, policies, ACLs, L2VPN, interface descriptions, routing, DHCP, static routes, and IP overlaps.</p>
+</header>
+
+<main>
+  <div class="anchor-nav">
+    <a href="#summary">Summary</a>
+    <a href="#named">Named Objects</a>
+    <a href="#descriptions">Interface Descriptions</a>
+    <a href="#ipconflicts">IP Address Comparison</a>
+    <a href="#l2vpn">L2VPN</a>
+    <a href="#routing">Routing</a>
+    <a href="#dhcp">DHCP</a>
+    <a href="#staticroutes">Static Routes</a>
+    <a href="#etheracl">Ethernet-Services ACL</a>
+  </div>
+
+  <section>
+    <div class="grid">
+      <div>
+        <div class="file-row">
+          <label for="cfgLeft">Left Config (NCS5500)</label>
+          <div class="file-input-wrapper">
+            <input type="file" id="fileLeft" accept=".txt,.log,.cfg,.config,.out">
+          </div>
+        </div>
+        <small>Paste config here or drag &amp; drop a .txt/.cfg file.</small>
+        <textarea id="cfgLeft" placeholder="Paste IOS XR config from NCS5500 here..."></textarea>
+      </div>
+      <div>
+        <div class="file-row">
+          <label for="cfgRight">Right Config (ASR9900)</label>
+          <div class="file-input-wrapper">
+            <input type="file" id="fileRight" accept=".txt,.log,.cfg,.config,.out">
+          </div>
+        </div>
+        <small>Paste config here or drag &amp; drop a .txt/.cfg file.</small>
+        <textarea id="cfgRight" placeholder="Paste IOS XR config from ASR9900 here..."></textarea>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="btnCompare" type="button">Compare</button>
+      <span class="pill">copy - paste show running config - click compare</span>
+    </div>
+  </section>
+
+  <section id="summary">
+    <details open>
+      <summary>Summary <span class="badge">high level</span></summary>
+      <div id="summaryContent" class="small section-body">
+        Paste configs or load files and click <strong>Compare</strong>.
+      </div>
+    </details>
+  </section>
+
+  <section id="named">
+    <details open>
+      <summary>Named Objects <span class="badge">VRF / ACL / policy / profile / RPL / prefix-set</span></summary>
+      <div id="namedContent" class="small section-body"></div>
+    </details>
+  </section>
+
+  <section id="descriptions">
+    <details>
+      <summary>Interface Descriptions <span class="badge">grouped by NCS parent/bundle</span></summary>
+      <div id="descriptionsContent" class="small section-body"></div>
+    </details>
+  </section>
+
+  <section id="ipconflicts">
+    <details>
+      <summary>IP Address Comparison <span class="badge">same IP, different subnet?</span></summary>
+      <div id="ipConflictsContent" class="small section-body"></div>
+    </details>
+  </section>
+
+  <section id="l2vpn">
+    <details>
+      <summary>L2VPN / Xconnect / Bridge-Domain <span class="badge">xconnect groups / p2p / vfi / BD</span></summary>
+      <div id="l2vpnContent" class="small section-body"></div>
+    </details>
+  </section>
+
+  <section id="routing">
+    <details>
+      <summary>Routing <span class="badge">BGP / OSPF overview</span></summary>
+      <div id="routingContent" class="small section-body"></div>
+    </details>
+  </section>
+
+  <section id="dhcp">
+    <details>
+      <summary>DHCP Configuration <span class="badge">pools / profiles / interfaces</span></summary>
+      <div id="dhcpContent" class="small section-body"></div>
+    </details>
+  </section>
+
+  <section id="staticroutes">
+    <details>
+      <summary>Static Routes <span class="badge">router static / AF ipv4</span></summary>
+      <div id="staticRoutesContent" class="small section-body"></div>
+    </details>
+  </section>
+
+  <section id="etheracl">
+    <details>
+      <summary>Ethernet-Services Access-List <span class="badge">L2 MAC ACL</span></summary>
+      <div id="etherAclContent" class="small section-body"></div>
+    </details>
+  </section>
+</main>
+
+<script>
+  // ---------- Generic helpers ----------
+  function normalizeConfig(text) {
+    return String(text || "")
+      .replace(/\r\n/g, "\n")
+      .replace(/\r/g, "\n")
+      .trim();
+  }
+
+  function splitLines(text) {
+    const norm = normalizeConfig(text);
+    if (!norm) return [];
+    return norm.split("\n").map(l => l.replace(/\s+$/, ""));
+  }
+
+  function toSet(arr) {
+    const s = new Set();
+    arr.forEach(v => {
+      if (v && v.trim()) s.add(v);
+    });
+    return s;
+  }
+
+  function setToSortedArray(set) {
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
+  }
+
+  function diffLines(linesLeft, linesRight) {
+    const setL = toSet(linesLeft);
+    const setR = toSet(linesRight);
+
+    const common = [];
+    const onlyL = [];
+    const onlyR = [];
+
+    setL.forEach(line => {
+      if (setR.has(line)) common.push(line);
+      else onlyL.push(line);
+    });
+    setR.forEach(line => {
+      if (!setL.has(line)) onlyR.push(line);
+    });
+
+    return {
+      common: common.sort((a, b) => a.localeCompare(b)),
+      onlyL: onlyL.sort((a, b) => a.localeCompare(b)),
+      onlyR: onlyR.sort((a, b) => a.localeCompare(b))
+    };
+  }
+
+  function escapeHtml(s) {
+    return String(s || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  // ---------- Interface parsing ----------
+  function parseInterfaces(text) {
+    const lines = splitLines(text);
+    const interfaces = {};
+    let current = null;
+    let currentName = null;
+
+    function startInterface(line) {
+      const m = line.match(/^interface\s+(\S+)/);
+      if (!m) return;
+      currentName = m[1];
+      current = {
+        name: currentName,
+        description: "",
+        vrf: "",
+        ips: [],
+        spIn: "",
+        spOut: "",
+        l2transport: false,
+        raw: []
+      };
+      current.raw.push(line);
+    }
+
+    function closeInterface() {
+      if (current && currentName) {
+        interfaces[currentName] = current;
+      }
+      current = null;
+      currentName = null;
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      if (/^interface\s+\S+/.test(line)) {
+        closeInterface();
+        startInterface(line);
+        continue;
+      }
+
+      if (!current) continue;
+
+      if (/^!/.test(line) || /^interface\s+\S+/.test(line)) {
+        closeInterface();
+        if (/^interface\s+\S+/.test(line)) {
+          i--;
+        }
+        continue;
+      }
+
+      current.raw.push(line);
+
+      const descMatch = line.match(/^\s*description\s+(.+)/i);
+      if (descMatch) {
+        current.description = descMatch[1].trim();
+      }
+
+      const vrfMatch = line.match(/^\s*vrf\s+(\S+)/i);
+      if (vrfMatch) {
+        current.vrf = vrfMatch[1].trim();
+      }
+
+      const ipMatch = line.match(/^\s*ipv4\s+address\s+(.+)/i) ||
+                      line.match(/^\s*ip\s+address\s+(.+)/i);
+      if (ipMatch) {
+        current.ips.push(ipMatch[1].trim());
+      }
+
+      const spIn = line.match(/^\s*service-policy\s+input\s+(\S+)/i);
+      if (spIn) current.spIn = spIn[1].trim();
+
+      const spOut = line.match(/^\s*service-policy\s+output\s+(\S+)/i);
+      if (spOut) current.spOut = spOut[1].trim();
+
+      if (/\bl2transport\b/i.test(line)) {
+        current.l2transport = true;
+      }
+    }
+    closeInterface();
+    return interfaces;
+  }
+
+  // ---------- Named objects ----------
+  function collectNames(text) {
+    const lines = splitLines(text);
+    const vrfs = new Set();
+    const acls = new Set();
+    const policies = new Set();
+    const profiles = new Set();
+    const routePolicies = new Set();
+    const prefixSets = new Set();
+    const classMaps = new Set();
+
+    for (const lineRaw of lines) {
+      const line = lineRaw.trim();
+      let m;
+
+      if ((m = line.match(/^vrf\s+definition\s+(\S+)/i)) ||
+          (m = line.match(/^vrf\s+(\S+)/i))) {
+        vrfs.add(m[1]);
+      }
+
+      if ((m = line.match(/^ipv[46]\s+access-list\s+(\S+)/i)) ||
+          (m = line.match(/^mac\s+access-list\s+(\S+)/i))) {
+        acls.add(m[1]);
+      }
+
+      if ((m = line.match(/^policy-map(?:\s+\S+)?\s+(\S+)/i))) {
+        policies.add(m[1]);
+      }
+
+      if ((m = line.match(/^\s*profile\s+(\S+)/i))) {
+        profiles.add(m[1]);
+      }
+
+      if ((m = line.match(/^route-policy\s+(\S+)/i))) {
+        routePolicies.add(m[1]);
+      }
+
+      if ((m = line.match(/^prefix-set\s+(\S+)/i))) {
+        prefixSets.add(m[1]);
+      }
+
+      if ((m = line.match(/^class-map(?:\s+\S+)?\s+(\S+)/i))) {
+        classMaps.add(m[1]);
+      }
+    }
+
+    return {
+      vrfs,
+      acls,
+      policies,
+      profiles,
+      routePolicies,
+      prefixSets,
+      classMaps
+    };
+  }
+
+  // ---------- L2VPN ----------
+  function parseL2vpn(text) {
+    const lines = splitLines(text);
+    const groups = new Set();
+    const p2ps = new Set();
+    const vfis = new Set();
+    const bridgeDomains = new Set();
+
+    for (const lineRaw of lines) {
+      const line = lineRaw.trim();
+      let m;
+      if ((m = line.match(/^xconnect\s+group\s+(\S+)/i))) {
+        groups.add(m[1]);
+      }
+      if ((m = line.match(/^\s*p2p\s+(\S+)/i))) {
+        p2ps.add(m[1]);
+      }
+      if ((m = line.match(/^\s*vfi\s+(\S+)/i))) {
+        vfis.add(m[1]);
+      }
+      if ((m = line.match(/^bridge-domain\s+(\S+)/i))) {
+        bridgeDomains.add(m[1]);
+      }
+    }
+    return { groups, p2ps, vfis, bridgeDomains };
+  }
+
+  // ---------- Routing (BGP / OSPF) ----------
+  function parseRouting(text) {
+    const lines = splitLines(text);
+    const bgp = { asn: null, neighbors: new Set(), vrfNeighbors: {} };
+    const ospf = { processes: new Set() };
+
+    let inBgp = false;
+    let currentVrf = null;
+
+    for (const lineRaw of lines) {
+      const line = lineRaw.trim();
+      let m;
+
+      if ((m = line.match(/^router\s+bgp\s+(\d+)/i))) {
+        inBgp = true;
+        currentVrf = null;
+        bgp.asn = m[1];
+        continue;
+      }
+      if (/^router\s+(ospf|isis|rip|ldp)/i.test(line)) {
+        inBgp = false;
+        currentVrf = null;
+      }
+
+      if ((m = line.match(/^router\s+ospf\s+(\S+)/i))) {
+        ospf.processes.add(m[1]);
+      }
+
+      if (inBgp) {
+        if ((m = line.match(/^\s*vrf\s+(\S+)/i))) {
+          currentVrf = m[1];
+          continue;
+        }
+        if ((m = line.match(/^\s*neighbor\s+(\S+)/i))) {
+          const n = m[1];
+          bgp.neighbors.add(n);
+          if (currentVrf) {
+            if (!bgp.vrfNeighbors[currentVrf]) {
+              bgp.vrfNeighbors[currentVrf] = new Set();
+            }
+            bgp.vrfNeighbors[currentVrf].add(n);
+          }
+        }
+      }
+    }
+
+    return { bgp, ospf };
+  }
+
+  // ---------- DHCP (handles "dhcp ipv4" block AND | i dhcp) ----------
+  function parseDhcp(text) {
+    const raw = String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    const lines = raw.split("\n");
+
+    const dhcpLines = [];
+    const pools = new Set();
+    const profiles = new Set();
+    const profileLines = {};
+    const interfaces = new Set();
+    const interfaceLines = {};
+
+    let inDhcpBlock = false;
+    let currentProfile = null;
+
+    for (const lineRaw of lines) {
+      const line = lineRaw.replace(/\s+$/, "");
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      if (trimmed.toLowerCase().includes("dhcp")) {
+        dhcpLines.push(trimmed);
+      }
+
+      let m;
+
+      if (/^dhcp\s+ipv4(\s|$)/i.test(trimmed)) {
+        inDhcpBlock = true;
+        currentProfile = null;
+        continue;
+      }
+
+      if (
+        inDhcpBlock &&
+        !/^\s/.test(lineRaw) &&
+        !/^!/.test(trimmed) &&
+        !/^dhcp\s+ipv4(\s|$)/i.test(trimmed)
+      ) {
+        inDhcpBlock = false;
+        currentProfile = null;
+      }
+
+      m = trimmed.match(/^(?:dhcp\s+ipv4\s+pool|ipv4\s+dhcp\s+pool|dhcp\s+pool)\s+(\S+)/i);
+      if (m) {
+        pools.add(m[1]);
+      }
+
+      m = trimmed.match(/^dhcp\s+ipv4\s+profile\s+(\S+)/i);
+      if (m) {
+        const prof = m[1];
+        profiles.add(prof);
+        if (!profileLines[prof]) profileLines[prof] = [];
+        profileLines[prof].push(trimmed);
+        currentProfile = null;
+        continue;
+      }
+
+      m = trimmed.match(/^dhcp\s+ipv4\s+interface\s+(\S+)/i);
+      if (m) {
+        const intf = m[1];
+        interfaces.add(intf);
+        if (!interfaceLines[intf]) interfaceLines[intf] = [];
+        interfaceLines[intf].push(trimmed);
+        continue;
+      }
+
+      if (inDhcpBlock) {
+        if (/^!/.test(trimmed)) {
+          currentProfile = null;
+          continue;
+        }
+
+        m = trimmed.match(/^profile\s+(\S+)/i);
+        if (m) {
+          const prof = m[1];
+          profiles.add(prof);
+          currentProfile = prof;
+          if (!profileLines[prof]) profileLines[prof] = [];
+          profileLines[prof].push(trimmed);
+          continue;
+        }
+
+        m = trimmed.match(/^interface\s+(\S+)/i);
+        if (m) {
+          const intf = m[1];
+          interfaces.add(intf);
+          if (!interfaceLines[intf]) interfaceLines[intf] = [];
+          interfaceLines[intf].push(trimmed);
+          continue;
+        }
+
+        if (currentProfile) {
+          profileLines[currentProfile].push(trimmed);
+          continue;
+        }
+      }
+    }
+
+    return { dhcpLines, pools, profiles, profileLines, interfaces, interfaceLines };
+  }
+
+  // ---------- Static routes ----------
+  function parseStaticRoutes(text) {
+    const raw = String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    const lines = raw.split("\n");
+
+    const routes = {};
+    const keys = new Set();
+
+    let inRouterStatic = false;
+    let currentAf = null;
+    let currentVrf = "global";
+
+    for (const lineRaw of lines) {
+      const line = lineRaw.replace(/\s+$/, "");
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      let m;
+
+      if (/^router\s+static\b/i.test(trimmed)) {
+        inRouterStatic = true;
+        currentAf = null;
+        currentVrf = "global";
+        continue;
+      }
+
+      if (inRouterStatic) {
+        m = trimmed.match(/^address-family\s+(ipv4|ipv6)\s+unicast(?:\s+vrf\s+(\S+))?/i);
+        if (m) {
+          currentAf = m[1].toLowerCase();
+          currentVrf = m[2] || "global";
+          continue;
+        }
+
+        if (/^!/.test(trimmed)) {
+          continue;
+        }
+
+        m = trimmed.match(/^(\d{1,3}(?:\.\d{1,3}){3}\/\d+)\s+(.+)/);
+        if (m && currentAf === "ipv4") {
+          const prefix = m[1];
+          const vrf = currentVrf || "global";
+          const key = vrf + "|" + prefix;
+          if (!routes[key]) {
+            routes[key] = { vrf, af: currentAf, prefix, lines: [] };
+          }
+          routes[key].lines.push(trimmed);
+          keys.add(key);
+          continue;
+        }
+      }
+    }
+
+    return { routes, keys };
+  }
+
+  // ---------- Ethernet-Services ACL ----------
+  function parseEthernetAcl(text) {
+    const raw = String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    const lines = raw.split("\n");
+
+    const names = new Set();
+    const acls = {};
+    let currentName = null;
+
+    for (const lineRaw of lines) {
+      const line = lineRaw.replace(/\s+$/, "");
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      let m = trimmed.match(/^ethernet-services\s+access-list\s+(\S+)/i);
+      if (m) {
+        currentName = m[1];
+        names.add(currentName);
+        if (!acls[currentName]) acls[currentName] = [];
+        acls[currentName].push(trimmed);
+        continue;
+      }
+
+      if (/^!/.test(trimmed)) {
+        currentName = null;
+        continue;
+      }
+
+      if (currentName) {
+        acls[currentName].push(trimmed);
+      }
+    }
+
+    return { names, acls };
+  }
+
+  // ---------- Interface descriptions ----------
+  function getParentInterfaceName(intfName) {
+    if (!intfName) return "";
+    const m = intfName.match(/^Bundle-Ether(\d+)/i);
+    if (m) {
+      return "Bundle-Ether" + m[1];
+    }
+    const dotIdx = intfName.indexOf(".");
+    if (dotIdx > 0) {
+      return intfName.slice(0, dotIdx);
+    }
+    return intfName;
+  }
+
+  function buildParentDescIndexNcs(ifs) {
+    const idx = {};
+    Object.values(ifs).forEach(intf => {
+      const descRaw = (intf.description || "").trim();
+      if (!descRaw) return;
+      const norm = descRaw.toLowerCase().replace(/\s+/g, " ").trim();
+      const parent = getParentInterfaceName(intf.name);
+      if (!idx[parent]) idx[parent] = {};
+      if (!idx[parent][norm]) {
+        idx[parent][norm] = { originals: new Set(), ifNames: [] };
+      }
+      idx[parent][norm].originals.add(descRaw);
+      idx[parent][norm].ifNames.push(intf.name);
+    });
+    return idx;
+  }
+
+  function buildDescIndexAsr(ifs) {
+    const idx = {};
+    Object.values(ifs).forEach(intf => {
+      const descRaw = (intf.description || "").trim();
+      if (!descRaw) return;
+      const norm = descRaw.toLowerCase().replace(/\s+/g, " ").trim();
+      if (!idx[norm]) idx[norm] = { originals: new Set(), ifNames: [] };
+      idx[norm].originals.add(descRaw);
+      idx[norm].ifNames.push(intf.name);
+    });
+    return idx;
+  }
+
+  // ---------- IP overlaps ----------
+  function parseIpMask(raw) {
+    if (!raw) return null;
+    const r = raw.trim();
+    let m = r.match(/^(\d{1,3}(?:\.\d{1,3}){3})\/(\d{1,2})/);
+    if (m) {
+      return { ip: m[1], mask: "/" + m[2] };
+    }
+    m = r.match(/^(\d{1,3}(?:\.\d{1,3}){3})\s+(\d{1,3}(?:\.\d{1,3}){3})/);
+    if (m) {
+      return { ip: m[1], mask: m[2] };
+    }
+    return null;
+  }
+
+  function buildIpMapFromInterfaces(ifs) {
+    const map = {};
+    Object.values(ifs).forEach(intf => {
+      intf.ips.forEach(raw => {
+        const parsed = parseIpMask(raw);
+        if (!parsed) return;
+        const key = parsed.ip;
+        if (!map[key]) {
+          map[key] = {
+            masks: new Set(),
+            entries: []
+          };
+        }
+        map[key].masks.add(parsed.mask);
+        map[key].entries.push({
+          interface: intf.name,
+          raw: raw,
+          mask: parsed.mask
+        });
+      });
+    });
+    return map;
+  }
+
+  // ---------- Rendering ----------
+  function renderSummary(linesLeft, linesRight, parsedLeft, parsedRight, routingLeft, routingRight, staticLeft, staticRight) {
+    const totalL = linesLeft.length;
+    const totalR = linesRight.length;
+    const ifaceL = Object.keys(parsedLeft.interfaces).length;
+    const ifaceR = Object.keys(parsedRight.interfaces).length;
+
+    const vrfL = parsedLeft.names.vrfs.size;
+    const vrfR = parsedRight.names.vrfs.size;
+
+    const bgpL = routingLeft.bgp.asn || "-";
+    const bgpR = routingRight.bgp.asn || "-";
+
+    const ospfL = setToSortedArray(routingLeft.ospf.processes).join(", ") || "-";
+    const ospfR = setToSortedArray(routingRight.ospf.processes).join(", ") || "-";
+
+    const xconL = parsedLeft.l2.groups.size;
+    const xconR = parsedRight.l2.groups.size;
+    const bdL = parsedLeft.l2.bridgeDomains.size;
+    const bdR = parsedRight.l2.bridgeDomains.size;
+
+    const staticCountL = staticLeft.keys ? staticLeft.keys.size : 0;
+    const staticCountR = staticRight.keys ? staticRight.keys.size : 0;
+
+    const ts = new Date().toLocaleString();
+
+    return `
+      <div style="margin-bottom:4px;font-size:11px;color:#6b7280;">
+        Comparison run at <b>${escapeHtml(ts)}</b>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <strong>Lines</strong>
+          <div>NCS5500: <b>${totalL}</b></div>
+          <div>ASR9900: <b>${totalR}</b></div>
+        </div>
+        <div class="summary-card">
+          <strong>Interfaces</strong>
+          <div>NCS5500: <b>${ifaceL}</b></div>
+          <div>ASR9900: <b>${ifaceR}</b></div>
+        </div>
+        <div class="summary-card">
+          <strong>VRFs</strong>
+          <div>NCS5500: <b>${vrfL}</b></div>
+          <div>ASR9900: <b>${vrfR}</b></div>
+        </div>
+        <div class="summary-card">
+          <strong>BGP ASN</strong>
+          <div>NCS5500: <b>${escapeHtml(bgpL)}</b></div>
+          <div>ASR9900: <b>${escapeHtml(bgpR)}</b></div>
+        </div>
+        <div class="summary-card">
+          <strong>OSPF Processes</strong>
+          <div>NCS5500: <b>${escapeHtml(ospfL)}</b></div>
+          <div>ASR9900: <b>${escapeHtml(ospfR)}</b></div>
+        </div>
+        <div class="summary-card">
+          <strong>Xconnect Groups</strong>
+          <div>NCS5500: <b>${xconL}</b></div>
+          <div>ASR9900: <b>${xconR}</b></div>
+        </div>
+        <div class="summary-card">
+          <strong>Bridge Domains</strong>
+          <div>NCS5500: <b>${bdL}</b></div>
+          <div>ASR9900: <b>${bdR}</b></div>
+        </div>
+        <div class="summary-card">
+          <strong>Static IPv4 Routes</strong>
+          <div>NCS5500: <b>${staticCountL}</b></div>
+          <div>ASR9900: <b>${staticCountR}</b></div>
+        </div>
+      </div>
+      <div class="notice">
+        Counts are derived from parsed blocks: interfaces, VRFs, BGP/OSPF, L2VPN, and <strong>router static</strong>.
+        Use detailed sections below for granular diff.
+      </div>
+    `;
+  }
+
+  function renderNamedComparison(title, setL, setR) {
+    const common = [];
+    const onlyL = [];
+    const onlyR = [];
+
+    const sL = setToSortedArray(setL);
+    const sR = setToSortedArray(setR);
+    const sCommon = new Set();
+    sL.forEach(v => { if (setR.has(v)) sCommon.add(v); });
+    sR.forEach(v => { if (setL.has(v)) sCommon.add(v); });
+
+    sCommon.forEach(v => common.push(v));
+    sL.forEach(v => { if (!setR.has(v)) onlyL.push(v); });
+    sR.forEach(v => { if (!setL.has(v)) onlyR.push(v); });
+
+    if (!common.length && !onlyL.length && !onlyR.length) {
+      return `<h3>${title}</h3><div class="notice">No objects detected.</div>`;
+    }
+
+    const rows = [];
+    const maxLen = Math.max(common.length, onlyL.length, onlyR.length);
+    for (let i = 0; i < maxLen; i++) {
+      const c = common[i] || "";
+      const l = onlyL[i] || "";
+      const r = onlyR[i] || "";
+      rows.push(`
+        <tr>
+          <td class="${c ? "match" : ""} mono">${escapeHtml(c)}</td>
+          <td class="${l ? "missing" : ""} mono">${escapeHtml(l)}</td>
+          <td class="${r ? "missing" : ""} mono">${escapeHtml(r)}</td>
+        </tr>
+      `);
+    }
+
+    return `
+      <h3>${title}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Common (same name)</th>
+            <th>Only NCS5500</th>
+            <th>Only ASR9900</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function compareInterfaceConfig(l, r) {
+    if (!l && !r) return "";
+    if (!l || !r) {
+      return '<span class="pill-red">missing side</span>';
+    }
+    const tags = [];
+
+    const vrfMatch = (l.vrf || "") === (r.vrf || "");
+    const ipSetL = setToSortedArray(toSet(l.ips || []));
+    const ipSetR = setToSortedArray(toSet(r.ips || []));
+    const ipMatch = ipSetL.length === ipSetR.length && ipSetL.every((v, i) => v === ipSetR[i]);
+    const spInMatch = (l.spIn || "") === (r.spIn || "");
+    const spOutMatch = (l.spOut || "") === (r.spOut || "");
+    const l2Match = !!l.l2transport === !!r.l2transport;
+
+    tags.push(vrfMatch ? '<span class="pill-green">vrf</span>' : '<span class="pill-red">vrf</span>');
+    tags.push(ipMatch ? '<span class="pill-green">ip</span>' : '<span class="pill-red">ip</span>');
+    tags.push(spInMatch ? '<span class="pill-green">sp-in</span>' : '<span class="pill-red">sp-in</span>');
+    tags.push(spOutMatch ? '<span class="pill-green">sp-out</span>' : '<span class="pill-red">sp-out</span>');
+    tags.push(l2Match ? '<span class="pill-green">l2</span>' : '<span class="pill-red">l2</span>');
+
+    return tags.join(" ");
+  }
+
+  function renderDescriptionsParentPivot(parentIdxNcs, descIdxAsr, ifsNcs, ifsAsr) {
+    const parents = Object.keys(parentIdxNcs);
+    if (!parents.length) {
+      return '<div class="notice">No interface descriptions found on NCS5500.</div>';
+    }
+
+    const rows = [];
+
+    parents.sort().forEach(parent => {
+      const descMap = parentIdxNcs[parent];
+      const descNorms = Object.keys(descMap).sort();
+
+      descNorms.forEach(norm => {
+        const entryL = descMap[norm];
+        const entryR = descIdxAsr[norm] || { originals: new Set(), ifNames: [] };
+
+        const originals = new Set();
+        entryL.originals.forEach(o => originals.add(o));
+        entryR.originals.forEach(o => originals.add(o));
+        const displayDesc = Array.from(originals).sort((a, b) =>
+          a.toLowerCase().localeCompare(b.toLowerCase())
+        )[0] || norm;
+
+        const ncsIfs = [...entryL.ifNames].sort();
+        const asrIfs = [...(entryR.ifNames || [])].sort();
+        const maxLen = Math.max(ncsIfs.length, asrIfs.length);
+
+        for (let i = 0; i < maxLen; i++) {
+          const lName = ncsIfs[i] || "";
+          const rName = asrIfs[i] || "";
+          const lIf = lName ? ifsNcs[lName] : null;
+          const rIf = rName ? ifsAsr[rName] : null;
+          const cmp = compareInterfaceConfig(lIf, rIf);
+
+          rows.push(`
+            <tr>
+              <td class="mono">${escapeHtml(parent)}</td>
+              <td class="mono">${escapeHtml(displayDesc)}</td>
+              <td class="mono">${escapeHtml(lName)}</td>
+              <td class="mono">${escapeHtml(rName)}</td>
+              <td>${cmp}</td>
+            </tr>
+          `);
+        }
+      });
+    });
+
+    return `
+      <table>
+        <thead>
+          <tr>
+            <th>NCS Parent / Bundle</th>
+            <th>Description (case-insensitive)</th>
+            <th>NCS5500 Interface</th>
+            <th>ASR9900 Interface</th>
+            <th>Config comparison (this interface pair)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.join("")}
+        </tbody>
+      </table>
+      <div class="notice">
+        Descriptions are compared case-insensitively. Grouping is done by <strong>NCS5500 parent/bundle</strong>.
+        For each NCS parent+description, any ASR9900 interfaces with the same description are paired on the same row.
+      </div>
+    `;
+  }
+
+  function renderL2vpn(l2L, l2R) {
+    let html = "";
+    html += renderNamedComparison("Xconnect Groups", l2L.groups, l2R.groups);
+    html += renderNamedComparison("P2P Services", l2L.p2ps, l2R.p2ps);
+    html += renderNamedComparison("VFIs", l2L.vfis, l2R.vfis);
+    html += renderNamedComparison("Bridge Domains", l2L.bridgeDomains, l2R.bridgeDomains);
+    return html;
+  }
+
+  function renderRouting(rL, rR) {
+    const bgpL = rL.bgp;
+    const bgpR = rR.bgp;
+    const ospfL = rL.ospf;
+    const ospfR = rR.ospf;
+
+    const asnL = bgpL.asn || "-";
+    const asnR = bgpR.asn || "-";
+
+    const neighL = bgpL.neighbors;
+    const neighR = bgpR.neighbors;
+
+    const neighCommon = new Set();
+    neighL.forEach(n => { if (neighR.has(n)) neighCommon.add(n); });
+
+    const onlyNeighL = new Set();
+    neighL.forEach(n => { if (!neighR.has(n)) onlyNeighL.add(n); });
+    const onlyNeighR = new Set();
+    neighR.forEach(n => { if (!neighL.has(n)) onlyNeighR.add(n); });
+
+    const ospfCommon = new Set();
+    ospfL.processes.forEach(p => { if (ospfR.processes.has(p)) ospfCommon.add(p); });
+
+    const ospfOnlyL = new Set();
+    ospfL.processes.forEach(p => { if (!ospfR.processes.has(p)) ospfOnlyL.add(p); });
+    const ospfOnlyR = new Set();
+    ospfR.processes.forEach(p => { if (!ospfL.processes.has(p)) ospfOnlyR.add(p); });
+
+    const bgpRows = [];
+    const arrCommon = setToSortedArray(neighCommon);
+    const arrOnlyL = setToSortedArray(onlyNeighL);
+    const arrOnlyR = setToSortedArray(onlyNeighR);
+    const maxBgpLen = Math.max(arrCommon.length, arrOnlyL.length, arrOnlyR.length);
+
+    for (let i = 0; i < maxBgpLen; i++) {
+      bgpRows.push(`
+        <tr>
+          <td class="mono ${arrCommon[i] ? "match" : ""}">${escapeHtml(arrCommon[i] || "")}</td>
+          <td class="mono ${arrOnlyL[i] ? "missing" : ""}">${escapeHtml(arrOnlyL[i] || "")}</td>
+          <td class="mono ${arrOnlyR[i] ? "missing" : ""}">${escapeHtml(arrOnlyR[i] || "")}</td>
+        </tr>
+      `);
+    }
+
+    const ospfRows = [];
+    const arrOspfCommon = setToSortedArray(ospfCommon);
+    const arrOspfOnlyL = setToSortedArray(ospfOnlyL);
+    const arrOspfOnlyR = setToSortedArray(ospfOnlyR);
+    const maxOspfLen = Math.max(arrOspfCommon.length, arrOspfOnlyL.length, arrOspfOnlyR.length);
+
+    for (let i = 0; i < maxOspfLen; i++) {
+      ospfRows.push(`
+        <tr>
+          <td class="mono ${arrOspfCommon[i] ? "match" : ""}">${escapeHtml(arrOspfCommon[i] || "")}</td>
+          <td class="mono ${arrOspfOnlyL[i] ? "missing" : ""}">${escapeHtml(arrOspfOnlyL[i] || "")}</td>
+          <td class="mono ${arrOspfOnlyR[i] ? "missing" : ""}">${escapeHtml(arrOspfOnlyR[i] || "")}</td>
+        </tr>
+      `);
+    }
+
+    return `
+      <h3>BGP Overview</h3>
+      <div class="small">
+        ASN – NCS5500: <b>${escapeHtml(asnL)}</b>,
+        ASR9900: <b>${escapeHtml(asnR)}</b>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Common neighbors</th>
+            <th>Neighbors only on NCS5500</th>
+            <th>Neighbors only on ASR9900</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${bgpRows.join("")}
+        </tbody>
+      </table>
+
+      <h3>OSPF Overview</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Common process-ids</th>
+            <th>Only NCS5500</th>
+            <th>Only ASR9900</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${ospfRows.join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function renderDhcp(dhcpL, dhcpR, ifsL, ifsR) {
+    let html = "";
+    html += renderNamedComparison("DHCP Pools", dhcpL.pools, dhcpR.pools);
+    html += renderNamedComparison("DHCP IPv4 Profiles", dhcpL.profiles, dhcpR.profiles);
+    html += renderNamedComparison("DHCP IPv4 Interfaces", dhcpL.interfaces, dhcpR.interfaces);
+
+    const allProfiles = new Set([...dhcpL.profiles, ...dhcpR.profiles]);
+    if (allProfiles.size) {
+      const rows = [];
+      Array.from(allProfiles).sort().forEach(p => {
+        const lLines = dhcpL.profileLines[p] || [];
+        const rLines = dhcpR.profileLines[p] || [];
+        const diff = diffLines(lLines, rLines);
+
+        const leftCell = diff.onlyL.concat(diff.common).map(escapeHtml).join("<br>");
+        const rightCell = diff.onlyR.concat(diff.common).map(escapeHtml).join("<br>");
+
+        rows.push(`
+          <tr>
+            <td class="mono">${escapeHtml(p)}</td>
+            <td class="mono">${leftCell || "&nbsp;"}</td>
+            <td class="mono">${rightCell || "&nbsp;"}</td>
+          </tr>
+        `);
+      });
+
+      html += `
+        <h3>DHCP IPv4 Profile Lines</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Profile</th>
+              <th>NCS5500 (lines)</th>
+              <th>ASR9900 (lines)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    const allIfs = new Set([...dhcpL.interfaces, ...dhcpR.interfaces]);
+    if (allIfs.size) {
+      const rows = [];
+      Array.from(allIfs).sort().forEach(iName => {
+        const lLines = dhcpL.interfaceLines[iName] || [];
+        const rLines = dhcpR.interfaceLines[iName] || [];
+        const diff = diffLines(lLines, rLines);
+
+        const leftCell = diff.onlyL.concat(diff.common).map(escapeHtml).join("<br>");
+        const rightCell = diff.onlyR.concat(diff.common).map(escapeHtml).join("<br>");
+
+        const ifL = ifsL[iName];
+        const ifR = ifsR[iName];
+        const ipsL = ifL && ifL.ips && ifL.ips.length
+          ? ifL.ips.map(escapeHtml).join("<br>")
+          : "&nbsp;";
+        const ipsR = ifR && ifR.ips && ifR.ips.length
+          ? ifR.ips.map(escapeHtml).join("<br>")
+          : "&nbsp;";
+
+        rows.push(`
+          <tr>
+            <td class="mono">${escapeHtml(iName)}</td>
+            <td class="mono">${ipsL}</td>
+            <td class="mono">${ipsR}</td>
+            <td class="mono">${leftCell || "&nbsp;"}</td>
+            <td class="mono">${rightCell || "&nbsp;"}</td>
+          </tr>
+        `);
+      });
+
+      html += `
+        <h3>DHCP IPv4 Interface Lines</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Interface</th>
+              <th>NCS5500 IPv4 address(es)</th>
+              <th>ASR9900 IPv4 address(es)</th>
+              <th>NCS5500 (lines)</th>
+              <th>ASR9900 (lines)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    if (!html.trim()) {
+      return '<div class="notice">No DHCP-related configuration found.</div>';
+    }
+
+    return html;
+  }
+
+  function renderStaticRoutes(staticL, staticR) {
+    const keysL = staticL.keys || new Set();
+    const keysR = staticR.keys || new Set();
+    const allKeys = new Set([...keysL, ...keysR]);
+
+    if (!allKeys.size) {
+      return '<div class="notice">No static IPv4 routes (router static) found.</div>';
+    }
+
+    const rows = [];
+    Array.from(allKeys).sort().forEach(key => {
+      const rL = staticL.routes[key];
+      const rR = staticR.routes[key];
+      const vrf = rL ? rL.vrf : (rR ? rR.vrf : "global");
+      const prefix = rL ? rL.prefix : (rR ? rR.prefix : key.split("|")[1] || "");
+
+      const leftLines = rL ? rL.lines.map(escapeHtml).join("<br>") : "";
+      const rightLines = rR ? rR.lines.map(escapeHtml).join("<br>") : "";
+      const leftClass = rL ? "" : "missing";
+      const rightClass = rR ? "" : "missing";
+
+      rows.push(`
+        <tr>
+          <td class="mono">${escapeHtml(vrf + " / " + prefix)}</td>
+          <td class="mono ${leftClass}">${leftLines || "&nbsp;"}</td>
+          <td class="mono ${rightClass}">${rightLines || "&nbsp;"}</td>
+        </tr>
+      `);
+    });
+
+    return `
+      <h3>Static IPv4 Routes (router static)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>VRF / Prefix</th>
+            <th>NCS5500</th>
+            <th>ASR9900</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.join("")}
+        </tbody>
+      </table>
+      <div class="notice">
+        Parsed from <code>router static</code> &rarr; <code>address-family ipv4 unicast [vrf NAME]</code> blocks.
+      </div>
+    `;
+  }
+
+  function renderEthernetAcl(ethL, ethR) {
+    const namesL = ethL.names || new Set();
+    const namesR = ethR.names || new Set();
+    const allNames = new Set([...namesL, ...namesR]);
+
+    if (!allNames.size) {
+      return '<div class="notice">No ethernet-services access-list configuration found.</div>';
+    }
+
+    const rows = [];
+    Array.from(allNames).sort().forEach(name => {
+      const linesL = ethL.acls[name] || [];
+      const linesR = ethR.acls[name] || [];
+      const diff = diffLines(linesL, linesR);
+
+      const leftCell = diff.onlyL.concat(diff.common).map(escapeHtml).join("<br>");
+      const rightCell = diff.onlyR.concat(diff.common).map(escapeHtml).join("<br>");
+      const leftClass = linesL.length && linesR.length ? "" : (linesL.length ? "" : "missing");
+      const rightClass = linesL.length && linesR.length ? "" : (linesR.length ? "" : "missing");
+
+      rows.push(`
+        <tr>
+          <td class="mono">${escapeHtml(name)}</td>
+          <td class="mono ${leftClass}">${leftCell || "&nbsp;"}</td>
+          <td class="mono ${rightClass}">${rightCell || "&nbsp;"}</td>
+        </tr>
+      `);
+    });
+
+    return `
+      <h3>Ethernet-Services Access-Lists</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ACL Name</th>
+            <th>NCS5500 (lines)</th>
+            <th>ASR9900 (lines)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.join("")}
+        </tbody>
+      </table>
+      <div class="notice">
+        Parsed from <code>ethernet-services access-list NAME</code> blocks (L2 MAC ACLs).
+      </div>
+    `;
+  }
+
+  function renderIpConflicts(ipMapL, ipMapR) {
+    const ipsL = new Set(Object.keys(ipMapL));
+    const ipsR = new Set(Object.keys(ipMapR));
+    const commonIps = Array.from(ipsL).filter(ip => ipsR.has(ip)).sort();
+
+    if (!commonIps.length) {
+      return '<div class="notice">No overlapping IP addresses found between NCS5500 and ASR9900.</div>';
+    }
+
+    const rows = [];
+    commonIps.forEach(ip => {
+      const eL = ipMapL[ip];
+      const eR = ipMapR[ip];
+
+      const masksL = setToSortedArray(eL.masks);
+      const masksR = setToSortedArray(eR.masks);
+      const equal = masksL.length === masksR.length && masksL.every((v, i) => v === masksR[i]);
+      const rowClass = equal ? "match" : "mismatch";
+
+      const leftCell = eL.entries.map(en =>
+        `${escapeHtml(en.interface)} (${escapeHtml(en.raw)})`
+      ).join("<br>");
+
+      const rightCell = eR.entries.map(en =>
+        `${escapeHtml(en.interface)} (${escapeHtml(en.raw)})`
+      ).join("<br>");
+
+      rows.push(`
+        <tr class="${rowClass}">
+          <td class="mono">${escapeHtml(ip)}</td>
+          <td class="mono">${leftCell}</td>
+          <td class="mono">${rightCell}</td>
+          <td>${equal
+            ? '<span class="pill-green">same mask/subnet</span>'
+            : '<span class="pill-red">different mask/subnet</span>'}
+          </td>
+        </tr>
+      `);
+    });
+
+    return `
+      <table>
+        <thead>
+          <tr>
+            <th>IP Address</th>
+            <th>NCS5500 (interface + config)</th>
+            <th>ASR9900 (interface + config)</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.join("")}
+        </tbody>
+      </table>
+      <div class="notice">
+        Only IPs present in <strong>both</strong> configs are shown. Yellow rows = same IP, different mask/subnet.
+      </div>
+    `;
+  }
+
+  // ---------- File upload & drag/drop ----------
+  function attachFileLoader(fileInputId, textareaId) {
+    const fileInput = document.getElementById(fileInputId);
+    const textarea = document.getElementById(textareaId);
+    if (!fileInput || !textarea) return;
+
+    fileInput.addEventListener("change", function () {
+      const file = this.files && this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        textarea.value = e.target.result || "";
+      };
+      reader.readAsText(file);
+    });
+
+    textarea.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      textarea.classList.add("drop-target");
+    });
+
+    textarea.addEventListener("dragleave", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      textarea.classList.remove("drop-target");
+    });
+
+    textarea.addEventListener("drop", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      textarea.classList.remove("drop-target");
+      const file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        textarea.value = ev.target.result || "";
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  // ---------- Main ----------
+  document.addEventListener("DOMContentLoaded", function () {
+    attachFileLoader("fileLeft", "cfgLeft");
+    attachFileLoader("fileRight", "cfgRight");
+
+    const btn = document.getElementById("btnCompare");
+    if (!btn) {
+      console.error("Compare button not found in DOM");
+      return;
+    }
+
+    btn.addEventListener("click", function () {
+      const cfgLeft = document.getElementById("cfgLeft").value;
+      const cfgRight = document.getElementById("cfgRight").value;
+
+      if (!cfgLeft.trim() && !cfgRight.trim()) {
+        alert("Both configs are empty. Paste configs or load files, then click Compare.");
+        return;
+      }
+
+      const linesL = splitLines(cfgLeft);
+      const linesR = splitLines(cfgRight);
+
+      const parsedLeft = {
+        interfaces: parseInterfaces(cfgLeft),
+        names: collectNames(cfgLeft),
+        l2: parseL2vpn(cfgLeft)
+      };
+      const parsedRight = {
+        interfaces: parseInterfaces(cfgRight),
+        names: collectNames(cfgRight),
+        l2: parseL2vpn(cfgRight)
+      };
+
+      const routingLeft = parseRouting(cfgLeft);
+      const routingRight = parseRouting(cfgRight);
+
+      const dhcpLeft = parseDhcp(cfgLeft);
+      const dhcpRight = parseDhcp(cfgRight);
+
+      const staticLeft = parseStaticRoutes(cfgLeft);
+      const staticRight = parseStaticRoutes(cfgRight);
+
+      const ethLeft = parseEthernetAcl(cfgLeft);
+      const ethRight = parseEthernetAcl(cfgRight);
+
+      document.getElementById("summaryContent").innerHTML =
+        renderSummary(linesL, linesR, parsedLeft, parsedRight, routingLeft, routingRight, staticLeft, staticRight);
+
+      const nL = parsedLeft.names;
+      const nR = parsedRight.names;
+
+      let namedHtml = "";
+      namedHtml += renderNamedComparison("VRF Names", nL.vrfs, nR.vrfs);
+      namedHtml += renderNamedComparison("Access-Lists", nL.acls, nR.acls);
+      namedHtml += renderNamedComparison("Policy-Maps", nL.policies, nR.policies);
+      namedHtml += renderNamedComparison("Profiles", nL.profiles, nR.profiles);
+      namedHtml += renderNamedComparison("Route-Policies (RPL)", nL.routePolicies, nR.routePolicies);
+      namedHtml += renderNamedComparison("Prefix-Sets", nL.prefixSets, nR.prefixSets);
+      namedHtml += renderNamedComparison("Class-Maps", nL.classMaps, nR.classMaps);
+      document.getElementById("namedContent").innerHTML = namedHtml;
+
+      const parentIdxNcs = buildParentDescIndexNcs(parsedLeft.interfaces);
+      const descIdxAsr = buildDescIndexAsr(parsedRight.interfaces);
+      document.getElementById("descriptionsContent").innerHTML =
+        renderDescriptionsParentPivot(parentIdxNcs, descIdxAsr, parsedLeft.interfaces, parsedRight.interfaces);
+
+      document.getElementById("l2vpnContent").innerHTML =
+        renderL2vpn(parsedLeft.l2, parsedRight.l2);
+
+      document.getElementById("routingContent").innerHTML =
+        renderRouting(routingLeft, routingRight);
+
+      document.getElementById("dhcpContent").innerHTML =
+        renderDhcp(dhcpLeft, dhcpRight, parsedLeft.interfaces, parsedRight.interfaces);
+
+      const ipMapL = buildIpMapFromInterfaces(parsedLeft.interfaces);
+      const ipMapR = buildIpMapFromInterfaces(parsedRight.interfaces);
+      document.getElementById("ipConflictsContent").innerHTML =
+        renderIpConflicts(ipMapL, ipMapR);
+
+      document.getElementById("staticRoutesContent").innerHTML =
+        renderStaticRoutes(staticLeft, staticRight);
+
+      document.getElementById("etherAclContent").innerHTML =
+        renderEthernetAcl(ethLeft, ethRight);
+    });
+  });
+</script>
+</body>
+</html>
