@@ -1,67 +1,386 @@
-# Device Inventory for Lab Testing
-# Automatically generated from host_info.csv
+# MERALCO Core Network Migration - Device Inventory
+# ASR9010 → ASR9906 Migration
+# Grid: Plaridel-Duhat Pilot
 
-# Core P Routers (ASR9906)
-core_routers:
-  - hostname: "UPE1"
-    ip: "172.10.1.1"
-    device_type: "ASR9906"
-    role: "Core P Router"
-    site: "Lab"
-    
-  - hostname: "UPE9"
-    ip: "172.10.1.9"
-    device_type: "ASR9906"
-    role: "Core P Router"
-    site: "Lab"
-    
-  - hostname: "UPE21"
-    ip: "172.10.1.21"
-    device_type: "ASR9906"
-    role: "Core P Router"
-    site: "Lab"
-    
-  - hostname: "UPE24"
-    ip: "172.10.1.24"
-    device_type: "ASR9906"
-    role: "Core P Router"
-    site: "Lab"
-
-# PE Aggregation Routers (ASR903)
-aggregation_routers:
-  - hostname: "SR201"
-    ip: "172.10.1.201"
-    device_type: "ASR903"
-    role: "PE Aggregation"
-    site: "Lab"
-    
-  - hostname: "SR202"
-    ip: "172.10.1.202"
-    device_type: "ASR903"
-    role: "PE Aggregation"
-    site: "Lab"
-    
-  - hostname: "SR203"
-    ip: "172.10.1.203"
-    device_type: "ASR903"
-    role: "PE Aggregation"
-    site: "Lab"
-    
-  - hostname: "SR204"
-    ip: "172.10.1.204"
-    device_type: "ASR903"
-    role: "PE Aggregation"
-    site: "Lab"
-
-# L2 Switches
-switches:
-  - hostname: "Switch1"
-    ip: "172.10.1.50"
-    device_type: "Cat9300"
-    role: "L2 Switch"
-    site: "Lab"
-
-# Test credentials (update with your actual credentials)
+---
+# ============================================
+# CREDENTIALS (Change these!)
+# ============================================
 credentials:
-  username: "meralco"
-  password: "meralco"
+  # Production credentials
+  production:
+    username: admin
+    password: admin
+    enable_password: admin
+    tacacs_key: your_tacacs_key
+  
+  # Lab/Test credentials
+  lab:
+    username: labuser
+    password: labpass
+    enable_password: labpass
+  
+  # Read-only credentials (for monitoring only)
+  readonly:
+    username: monitor
+    password: monitorpass
+
+# Active credential set (change to 'production' or 'lab')
+active_credentials: lab
+
+# ============================================
+# CORE ROUTERS (New ASR9906)
+# ============================================
+# These are your NEW core routers with MPLS Segment Routing
+# Function: Core backbone with SR-MPLS transport
+# When needed: All pre/during/post migration tests
+core_devices:
+  - hostname: UPE1
+    ip: 172.10.1.1              # Management IP - CHANGE THIS!
+    device_type: ASR9906
+    role: core
+    location: Duhat
+    loopback0: 10.228.201.9     # Routing loopback
+    management_ip: 172.10.1.1
+    grid: Plaridel-Duhat
+    redundancy: active          # Active router
+    credentials: production     # Which credential set to use
+    
+  - hostname: UPE2
+    ip: 172.10.1.2              # Management IP - CHANGE THIS!
+    device_type: ASR9906
+    role: core
+    location: Plaridel
+    loopback0: 10.228.201.10
+    management_ip: 172.10.1.2
+    grid: Plaridel-Duhat
+    redundancy: standby         # Standby/backup router
+    credentials: production
+
+# ============================================
+# AGGREGATION ROUTERS (ASR903)
+# ============================================
+# These connect substations/sites to core
+# Function: PE routers with VRF termination
+# When needed: 
+#   - Pre-migration: Baseline OSPF/BGP from aggregation perspective
+#   - During: Monitor dual-homing during cutover
+#   - Post: Validate aggregation sees new core correctly
+aggregation_devices:
+  - hostname: SR201
+    ip: 172.10.1.201            # Management IP - CHANGE THIS!
+    device_type: ASR903
+    role: aggregation
+    location: Baliwag Substation
+    loopback0: 10.240.1.201
+    credentials: production
+    connects_to:
+      - UPE1                    # Connects to new core
+      - Legacy_ASR9010          # Also connected to old core during migration
+    services:
+      - SCADA
+      - Telepro
+      - ADMS
+      - Metering
+    
+  - hostname: SR202
+    ip: 172.10.1.202            # Management IP - CHANGE THIS!
+    device_type: ASR903
+    role: aggregation
+    location: Malolos Substation
+    loopback0: 10.240.1.202
+    credentials: production
+    connects_to:
+      - UPE1
+      - Legacy_ASR9010
+    services:
+      - SCADA
+      - OT_Management
+      - Substation_Automation
+
+# ============================================
+# LEGACY CORE (Being Replaced)
+# ============================================
+# These are OLD ASR9010 routers being decommissioned
+# Function: Legacy core with MPLS-LDP
+# When needed:
+#   - Pre-migration: Document current state for comparison
+#   - During: Monitor during cutover (Inter-AS link validation)
+#   - Rollback: Target for rollback if migration fails
+legacy_devices:
+  - hostname: OLD_ASR9K_DUHAT
+    ip: 172.10.1.10             # Management IP - CHANGE THIS!
+    device_type: ASR9010
+    role: core_legacy
+    location: Duhat
+    loopback0: 10.228.201.1
+    status: to_be_decommissioned
+    credentials: production
+    inter_as_link:              # Link to new core for migration
+      - interface: GigabitEthernet0/0/0/10
+        connects_to: UPE1
+        description: "Inter-AS link for migration"
+        status: up
+
+# ============================================
+# CRITICAL LINKS
+# ============================================
+# These are the physical links being migrated
+# Function: Main connectivity between aggregation and core
+# When needed:
+#   - Pre-migration: Validate baseline state
+#   - During: THE LINKS BEING PHYSICALLY MOVED
+#   - Post: Validate new connectivity
+critical_links:
+  # Link 1: Baliwag Grid Aggregation to Core
+  # This is the FIRST link to be migrated (T+0 to T+15)
+  - name: BLGTRPTPE1-DHTPASR9K
+    source:
+      device: SR201
+      interface: GigabitEthernet0/0/0/0
+      description: "Uplink to Core UPE1"
+    destination:
+      device: UPE1
+      interface: GigabitEthernet0/0/0/0
+      description: "Downlink from SR201"
+    bandwidth: 10G
+    ospf_area: 0.0.0.0
+    mpls_enabled: true
+    priority: critical
+    migration_order: 1          # First link to migrate
+    cutover_time_minutes: 15
+    
+  # Link 2: Malolos Aggregation to Core
+  # This is the SECOND link to be migrated (T+30 to T+45)
+  - name: MLLSUBPE01-PDLPASR9K
+    source:
+      device: SR202
+      interface: GigabitEthernet0/0/0/1
+      description: "Uplink to Core UPE1"
+    destination:
+      device: UPE1
+      interface: GigabitEthernet0/0/0/1
+      description: "Downlink from SR202"
+    bandwidth: 10G
+    ospf_area: 0.0.0.0
+    mpls_enabled: true
+    priority: critical
+    migration_order: 2          # Second link to migrate
+    cutover_time_minutes: 15
+
+# ============================================
+# ROLLBACK LINKS
+# ============================================
+# Pre-configured backup links to OLD core
+# Function: Emergency fallback if migration fails
+# When needed:
+#   - Pre-migration: Verify configured and shutdown
+#   - During: ACTIVATE IF ROLLBACK NEEDED
+#   - Post: Can be removed after successful migration
+# 
+# CRITICAL: These MUST be:
+#   1. Pre-configured with same settings as active links
+#   2. Administratively shutdown
+#   3. Tested in lab before production
+rollback_links:
+  - name: ROLLBACK_LINK_SR201
+    source:
+      device: SR201
+      interface: GigabitEthernet0/0/0/10
+      description: "ROLLBACK to OLD_ASR9K"
+    destination:
+      device: OLD_ASR9K_DUHAT
+      interface: GigabitEthernet0/0/0/20
+      description: "ROLLBACK from SR201"
+    status: shutdown            # MUST be shutdown before migration
+    bandwidth: 10G
+    ospf_area: 0.0.0.0          # Same as active link
+    mpls_enabled: true          # Same as active link
+    purpose: rollback_only
+    activation_procedure:
+      - "Remove fiber from new core"
+      - "Insert fiber to old core"
+      - "no shutdown on both ends"
+      - "Verify OSPF adjacency"
+      - "Verify BGP sessions"
+    estimated_activation_time: 5  # minutes
+    
+  - name: ROLLBACK_LINK_SR202
+    source:
+      device: SR202
+      interface: GigabitEthernet0/0/0/10
+      description: "ROLLBACK to OLD_ASR9K"
+    destination:
+      device: OLD_ASR9K_DUHAT
+      interface: GigabitEthernet0/0/0/21
+      description: "ROLLBACK from SR202"
+    status: shutdown
+    bandwidth: 10G
+    ospf_area: 0.0.0.0
+    mpls_enabled: true
+    purpose: rollback_only
+    activation_procedure:
+      - "Remove fiber from new core"
+      - "Insert fiber to old core"  
+      - "no shutdown on both ends"
+      - "Verify OSPF adjacency"
+      - "Verify BGP sessions"
+    estimated_activation_time: 5
+
+# ============================================
+# ROUTING PROTOCOLS
+# ============================================
+# Configuration standards for the migration
+# Function: Ensures consistency across all devices
+# When needed: Reference for validation commands
+routing_protocols:
+  ospf:
+    process_id: 1
+    area: 0.0.0.0
+    network_type: point-to-point
+    hello_interval: 10          # seconds
+    dead_interval: 40           # seconds
+    authentication: md5         # Optional
+    
+  bgp:
+    asn: 65000                  # Your BGP AS number
+    router_id: auto             # Uses loopback0
+    address_families:
+      - vpnv4_unicast           # For L3VPN
+      - ipv4_labeled_unicast    # For SR-MPLS transport
+    timers:
+      keepalive: 10             # seconds
+      holdtime: 30              # seconds
+    
+  mpls:
+    legacy_protocol: LDP        # On aggregation routers
+    new_protocol: Segment-Routing  # On new core
+    sr_global_block: 16000-23999
+    sr_local_block: 15000-15999
+    ldp_enabled: true           # For SR-to-LDP interop
+
+# ============================================
+# MANAGEMENT ACCESS
+# ============================================
+# How to access devices for management
+# Function: Centralized services for all devices
+# When needed: 
+#   - Pre-migration: Verify all devices reachable
+#   - During: NOC monitoring and alerts
+management:
+  tacacs_servers:
+    - ip: 10.240.100.1
+      description: "Primary TACACS"
+    - ip: 10.240.100.2
+      description: "Secondary TACACS"
+  
+  ntp_servers:
+    - ip: 10.240.100.10
+      description: "Primary NTP"
+      stratum: 1
+    - ip: 10.240.100.11
+      description: "Secondary NTP"
+      stratum: 2
+  
+  syslog_servers:
+    - ip: 10.240.100.20
+      description: "Primary Syslog/NOC"
+      port: 514
+  
+  snmp:
+    community_ro: meralco_ro    # SNMP read-only
+    community_rw: meralco_rw    # SNMP read-write
+    trap_destinations:
+      - 10.240.100.20
+
+# ============================================
+# MONITORING ENDPOINTS
+# ============================================
+# Where to send monitoring data
+# Function: NOC systems for real-time monitoring
+# When needed:
+#   - During migration: CRITICAL for real-time visibility
+#   - Post migration: Ongoing monitoring
+monitoring:
+  noc_systems:
+    - name: Primary NOC
+      ip: 10.240.200.1
+      services: 
+        - syslog
+        - snmp
+        - netflow
+      contact: noc@meralco.com
+      
+    - name: Backup NOC
+      ip: 10.240.200.2
+      services: 
+        - syslog
+        - snmp
+  
+  # Performance thresholds for alerts
+  performance_targets:
+    latency_max_ms: 50          # General threshold
+    jitter_max_ms: 5
+    packet_loss_max_pct: 0.1
+    
+  # CRITICAL SERVICE SLAs
+  # These trigger immediate alerts if violated
+  critical_service_slas:
+    scada:
+      latency_max_ms: 200
+      packet_loss_max_pct: 0
+      availability_pct: 99.999  # Five nines
+      alert_priority: P1        # Page on call
+      
+    teleprotection:
+      latency_max_ms: 10        # HARD LIMIT
+      packet_loss_max_pct: 0
+      availability_pct: 99.999
+      alert_priority: P1        # Immediate page
+      
+    adms:
+      latency_max_ms: 100
+      packet_loss_max_pct: 0.1
+      availability_pct: 99.99   # Four nines
+      alert_priority: P2
+
+# ============================================
+# MIGRATION TIMELINE
+# ============================================
+# Step-by-step migration sequence
+# Function: Defines exact order of operations
+# When needed: During migration execution
+migration_timeline:
+  pre_migration:
+    - time: "T-24h"
+      action: "Run baseline capture"
+      test_suite: test_pre_migration_baseline.robot
+      
+    - time: "T-1h"
+      action: "Final Go/No-Go decision"
+      
+  migration_execution:
+    - time: "T+0"
+      action: "Begin Link 1 cutover"
+      link: BLGTRPTPE1-DHTPASR9K
+      
+    - time: "T+15"
+      action: "Link 1 validation complete"
+      
+    - time: "T+30"
+      action: "Begin Link 2 cutover"
+      link: MLLSUBPE01-PDLPASR9K
+      
+    - time: "T+45"
+      action: "Link 2 validation complete"
+      
+    - time: "T+60"
+      action: "Final validation and MW close"
+      
+  post_migration:
+    - time: "T+1h"
+      action: "Run VRF validation suite"
+      test_suite: test_vrf_validation.robot
+      
+    - time: "T+24h"
+      action: "Generate final migration report"
