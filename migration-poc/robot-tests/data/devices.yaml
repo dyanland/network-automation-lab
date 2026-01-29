@@ -12,13 +12,13 @@ credentials:
     username: admin
     password: admin
     enable_password: admin
-    tacacs_key: your_tacacs_key
+#    tacacs_key: your_tacacs_key
   
   # Lab/Test credentials
   lab:
-    username: labuser
-    password: labpass
-    enable_password: labpass
+    username: meralco
+    password: meralco
+#    enable_password: 
   
   # Read-only credentials (for monitoring only)
   readonly:
@@ -35,27 +35,27 @@ active_credentials: lab
 # Function: Core backbone with SR-MPLS transport
 # When needed: All pre/during/post migration tests
 core_devices:
-  - hostname: UPE1
-    ip: 172.10.1.1              # Management IP - CHANGE THIS!
+  - hostname: UPE9
+    ip: 172.10.1.9              # Management IP - CHANGE THIS!
     device_type: ASR9906
     role: core
     location: Duhat
-    loopback0: 10.228.201.9     # Routing loopback
-    management_ip: 172.10.1.1
+    loopback0: 1.1.1.9    # Routing loopback
+    management_ip: 172.10.1.9
     grid: Plaridel-Duhat
     redundancy: active          # Active router
-    credentials: production     # Which credential set to use
+    credentials: lab     # Which credential set to use
     
-  - hostname: UPE2
-    ip: 172.10.1.2              # Management IP - CHANGE THIS!
+  - hostname: UPE10
+    ip: 172.10.1.10              # Management IP - CHANGE THIS!
     device_type: ASR9906
     role: core
     location: Plaridel
-    loopback0: 10.228.201.10
-    management_ip: 172.10.1.2
+    loopback0: 1.1.1.10
+    management_ip: 172.10.1.10
     grid: Plaridel-Duhat
     redundancy: standby         # Standby/backup router
-    credentials: production
+    credentials: lab
 
 # ============================================
 # AGGREGATION ROUTERS (ASR903)
@@ -72,10 +72,10 @@ aggregation_devices:
     device_type: ASR903
     role: aggregation
     location: Baliwag Substation
-    loopback0: 10.240.1.201
-    credentials: production
+    loopback0: 1.1.200.201
+    credentials: lab
     connects_to:
-      - UPE1                    # Connects to new core
+      - UPE9                    # Connects to new core
       - Legacy_ASR9010          # Also connected to old core during migration
     services:
       - SCADA
@@ -83,15 +83,15 @@ aggregation_devices:
       - ADMS
       - Metering
     
-  - hostname: SR202
-    ip: 172.10.1.202            # Management IP - CHANGE THIS!
+  - hostname: SR204
+    ip: 172.10.1.204            # Management IP - CHANGE THIS!
     device_type: ASR903
     role: aggregation
     location: Malolos Substation
-    loopback0: 10.240.1.202
-    credentials: production
+    loopback0: 1.1.200.204
+    credentials: lab
     connects_to:
-      - UPE1
+      - UPE10
       - Legacy_ASR9010
     services:
       - SCADA
@@ -108,20 +108,32 @@ aggregation_devices:
 #   - During: Monitor during cutover (Inter-AS link validation)
 #   - Rollback: Target for rollback if migration fails
 legacy_devices:
-  - hostname: OLD_ASR9K_DUHAT
-    ip: 172.10.1.10             # Management IP - CHANGE THIS!
+  - hostname: UPE23
+    ip: 172.10.1.23             # Management IP - CHANGE THIS!
     device_type: ASR9010
     role: core_legacy
     location: Duhat
-    loopback0: 10.228.201.1
+    loopback0: 1.2.2.23
     status: to_be_decommissioned
-    credentials: production
+    credentials: lab
     inter_as_link:              # Link to new core for migration
       - interface: GigabitEthernet0/0/0/10
-        connects_to: UPE1
-        description: "Inter-AS link for migration"
+        connects_to: SR201
+        description: "link for migration"
         status: up
-
+  - hostname: UPE24
+    ip: 172.10.1.24             # Management IP - CHANGE THIS!
+    device_type: ASR9010
+    role: core_legacy
+    location: Plaridel
+    loopback0: 1.2.2.24
+    status: to_be_decommissioned
+    credentials: lab
+    inter_as_link:              # Link to new core for migration
+      - interface: GigabitEthernet0/0/0/10
+        connects_to: SR204
+        description: "link for migration"
+        status: up
 # ============================================
 # CRITICAL LINKS
 # ============================================
@@ -140,7 +152,7 @@ critical_links:
       interface: GigabitEthernet0/0/0/0
       description: "Uplink to Core UPE1"
     destination:
-      device: UPE1
+      device: UPE23
       interface: GigabitEthernet0/0/0/0
       description: "Downlink from SR201"
     bandwidth: 10G
@@ -154,13 +166,13 @@ critical_links:
   # This is the SECOND link to be migrated (T+30 to T+45)
   - name: MLLSUBPE01-PDLPASR9K
     source:
-      device: SR202
+      device: SR204
       interface: GigabitEthernet0/0/0/1
       description: "Uplink to Core UPE1"
     destination:
-      device: UPE1
+      device: UPE24
       interface: GigabitEthernet0/0/0/1
-      description: "Downlink from SR202"
+      description: "Downlink from SR204"
     bandwidth: 10G
     ospf_area: 0.0.0.0
     mpls_enabled: true
@@ -186,11 +198,11 @@ rollback_links:
   - name: ROLLBACK_LINK_SR201
     source:
       device: SR201
-      interface: GigabitEthernet0/0/0/10
-      description: "ROLLBACK to OLD_ASR9K"
+      interface: GigabitEthernet0/3
+      description: "ROLLBACK to OLD_ASR9K_UPE23"
     destination:
-      device: OLD_ASR9K_DUHAT
-      interface: GigabitEthernet0/0/0/20
+      device: UPE23
+      interface: GigabitEthernet0/0/0/3
       description: "ROLLBACK from SR201"
     status: shutdown            # MUST be shutdown before migration
     bandwidth: 10G
@@ -205,15 +217,15 @@ rollback_links:
       - "Verify BGP sessions"
     estimated_activation_time: 5  # minutes
     
-  - name: ROLLBACK_LINK_SR202
+  - name: ROLLBACK_LINK_SR204
     source:
-      device: SR202
-      interface: GigabitEthernet0/0/0/10
-      description: "ROLLBACK to OLD_ASR9K"
+      device: SR204
+      interface: GigabitEthernet0/4
+      description: "ROLLBACK to OLD_ASR9K_UPE24"
     destination:
-      device: OLD_ASR9K_DUHAT
-      interface: GigabitEthernet0/0/0/21
-      description: "ROLLBACK from SR202"
+      device: UPE24
+      interface: GigabitEthernet0/0/0/4
+      description: "ROLLBACK from SR204"
     status: shutdown
     bandwidth: 10G
     ospf_area: 0.0.0.0
@@ -235,7 +247,7 @@ rollback_links:
 # When needed: Reference for validation commands
 routing_protocols:
   ospf:
-    process_id: 1
+    process_id: IGP
     area: 0.0.0.0
     network_type: point-to-point
     hello_interval: 10          # seconds
