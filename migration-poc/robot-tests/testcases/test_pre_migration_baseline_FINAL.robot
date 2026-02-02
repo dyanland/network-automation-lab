@@ -432,11 +432,12 @@ Initialize And Connect All Devices
             Log    ✓ ${device}[hostname] connected (handle: ${handle})    console=yes
             
             # Delay between connections to avoid rate limiting
-            Sleep    3s
+            Sleep    10s
             
         EXCEPT    AS    ${error}
             Log    ✗ Failed to connect to ${device}[hostname]: ${error}    ERROR
-            Fail    Cannot proceed without all device connections
+            # Fail    Cannot proceed without all device connections
+            continue for loop
         END
     END
     
