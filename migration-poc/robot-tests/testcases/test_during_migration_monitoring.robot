@@ -396,7 +396,7 @@ Initialize Monitoring
 Check Migration Status
     # In production, this would check external flag file or API
     # For now, return False to continue monitoring
-    [Return]    ${FALSE}
+    RETURN    ${FALSE}
 
 Validate All Neighbors Full
     [Arguments]    ${neighbors}
@@ -405,7 +405,7 @@ Validate All Neighbors Full
         Return From Keyword If    '${neighbor}[state]' != 'FULL'    ${FALSE}
     END
     
-    [Return]    ${TRUE}
+    RETURN    ${TRUE}
 
 Trigger Rollback
     [Arguments]    ${reason}
@@ -434,12 +434,12 @@ Extract Latency Stats
     ...    min=2.0
     ...    avg=5.5
     ...    max=15.0
-    [Return]    ${stats}
+    RETURN    ${stats}
 
 Count MPLS Labels
     [Arguments]    ${mpls_output}
     # Count MPLS labels
-    [Return]    155
+    RETURN    155
 
 Finalize Monitoring
     Log    

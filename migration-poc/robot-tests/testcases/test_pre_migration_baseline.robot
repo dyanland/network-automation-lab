@@ -29,8 +29,8 @@ Suite Teardown   Generate Baseline Report
 *** Variables ***
 ${USERNAME}             meralco
 ${PASSWORD}             meralco
-${BASELINE_FILE}        baseline_${TIMESTAMP}.json
-${EXCEL_REPORT}         baseline_report_${TIMESTAMP}.xlsx
+${BASELINE_FILE}        baseline.json
+${EXCEL_REPORT}         baseline_report.xlsx
 
 # Thresholds
 ${OSPF_CONVERGENCE_MAX}        5    # seconds
@@ -399,17 +399,17 @@ Extract IOS Version
         ...    Should Contain    ${line}    IOS XR Software
         Run Keyword If    ${contains}    RETURN From Keyword    ${line}
     END
-    [RETURN]    Unknown
+    RETURN    Unknown
 
 Extract Uptime
     [Arguments]    ${version_output}
     # Extract uptime
-    [RETURN]    2 weeks, 6 days
+    RETURN    2 weeks, 6 days
 
 Extract Hardware
     [Arguments]    ${version_output}
     # Extract hardware platform
-    [RETURN]    ASR9906
+    RETURN    ASR9906
 
 Extract Interface Errors
     [Arguments]    ${interface_detail}
@@ -418,17 +418,17 @@ Extract Interface Errors
     ...    input_errors=0
     ...    output_errors=0
     ...    crc_errors=0
-    [RETURN]    ${errors}
+    RETURN    ${errors}
 
 Count MPLS Labels
     [Arguments]    ${mpls_output}
     # Count MPLS labels
-    [RETURN]    150
+    RETURN    150
 
 Extract Route Count
     [Arguments]    ${route_output}
     # Extract route count from summary
-    [RETURN]    500
+    RETURN    500
 
 Extract Latency Stats
     [Arguments]    ${ping_output}
@@ -437,11 +437,11 @@ Extract Latency Stats
     ...    min=1
     ...    avg=5
     ...    max=15
-    [RETURN]    ${stats}
+    RETURN    ${stats}
 
 Evaluate Baseline Quality
     # Check if baseline meets quality criteria
-    [RETURN]    GO
+    RETURN    GO
 
 Generate Baseline Report
     Log    Generating Excel baseline report...    console=yes

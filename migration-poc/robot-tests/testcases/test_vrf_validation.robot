@@ -343,20 +343,20 @@ Get VRFs By Priority
     [Arguments]    ${priority}
     
     # In production, parse from meralco_vrfs.yaml
-    # For now, return test data
+    # For now, RETURN test data
     
     ${vrfs}=    Create List
     
     Run Keyword If    '${priority}' == 'critical'
-    ...    Return Test VRFs    critical
+    ...    RETURN Test VRFs    critical
     ...    ELSE IF    '${priority}' == 'high'
-    ...    Return Test VRFs    high
+    ...    RETURN Test VRFs    high
     ...    ELSE
-    ...    Return Test VRFs    medium
+    ...    RETURN Test VRFs    medium
     
-    [Return]    ${vrfs}
+    RETURN    ${vrfs}
 
-Return Test VRFs
+RETURN Test VRFs
     [Arguments]    ${priority}
     
     ${vrf1}=    Create Dictionary
@@ -377,7 +377,7 @@ Return Test VRFs
     @{critical}=    Create List    ${vrf1}    ${vrf2}    ${vrf3}
     
     Run Keyword If    '${priority}' == 'critical'
-    ...    Return From Keyword    ${critical}
+    ...    RETURN From Keyword    ${critical}
     
     ${vrf4}=    Create Dictionary
     ...    name=VPN_Tetra
@@ -387,10 +387,10 @@ Return Test VRFs
     @{high}=    Create List    ${vrf4}
     
     Run Keyword If    '${priority}' == 'high'
-    ...    Return From Keyword    ${high}
+    ...    RETURN From Keyword    ${high}
     
     @{medium}=    Create List
-    [Return]    ${medium}
+    RETURN    ${medium}
 
 Run VRF Validation Suite
     [Arguments]    ${handle}    ${vrf}    ${test_level}
@@ -427,7 +427,7 @@ Run VRF Validation Suite
     ${status}=    Set Variable If    ${passed}    PASS    FAIL
     Log    ${vrf}[name]: ${status}    console=yes
     
-    [Return]    ${passed}
+    RETURN    ${passed}
 
 Run Comprehensive VRF Tests
     [Arguments]    ${handle}    ${vrf}
@@ -459,23 +459,23 @@ Evaluate Rollback Necessity
     # - > 50% overall failure
     
     ${critical_failed}=    Check If Critical VRF Failed
-    Return From Keyword If    ${critical_failed}    ${TRUE}
+    RETURN From Keyword If    ${critical_failed}    ${TRUE}
     
     ${failure_rate}=    Evaluate    ${VRFS_FAILED} / ${VRFS_TESTED} if ${VRFS_TESTED} > 0 else 0
     ${high_failure_rate}=    Evaluate    ${failure_rate} > 0.5
     
-    [Return]    ${high_failure_rate}
+    RETURN    ${high_failure_rate}
 
 Check If Critical VRF Failed
     FOR    ${vrf}    IN    @{FAILED_VRFS}
         ${is_critical}=    Evaluate    '${vrf}' in ['VPN_SCADA', 'VPN_Telepro', 'VPN_ADMS']
-        Return From Keyword If    ${is_critical}    ${TRUE}
+        RETURN From Keyword If    ${is_critical}    ${TRUE}
     END
-    [Return]    ${FALSE}
+    RETURN    ${FALSE}
 
 Extract Route Count
     [Arguments]    ${output}
-    [Return]    150
+    RETURN    150
 
 Extract Latency Stats
     [Arguments]    ${output}
@@ -483,7 +483,7 @@ Extract Latency Stats
     ...    min=2.0
     ...    avg=5.5
     ...    max=15.0
-    [Return]    ${stats}
+    RETURN    ${stats}
 
 Generate VRF Validation Report
     Log    VRF validation complete    console=yes
