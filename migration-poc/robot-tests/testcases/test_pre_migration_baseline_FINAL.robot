@@ -7,7 +7,7 @@ Documentation    PRE-MIGRATION BASELINE CAPTURE - CONNECTION OPTIMIZED
 ...              - Avoids "connection reset by peer" errors
 ...              - Adds delays between operations to respect device limits
 
-Library          GoNetworkLibrary.py
+Library          ../GoNetworkLibrary.py
 Library          Collections
 Library          DateTime
 Library          String

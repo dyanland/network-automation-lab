@@ -10,7 +10,7 @@ Documentation    PRE-MIGRATION BASELINE CAPTURE - REVISED
 ...              - Fixed deprecated [Return] syntax
 ...              - Fixed ${TIMESTAMP} variable scope
 
-Library          GoNetworkLibrary.py
+Library          ../GoNetworkLibrary.py
 Library          Collections
 Library          DateTime
 Library          String
