@@ -99,7 +99,7 @@ PRE-002: Capture Device Inventory - ALL Devices
             Log    ✓ ${device}[hostname] captured    console=yes
             
             # Small delay to avoid overwhelming devices
-            Sleep    2s
+            Sleep    5s
             
         EXCEPT    AS    ${error}
             Log    ⚠ Failed to capture ${device}[hostname]: ${error}    WARN
@@ -136,7 +136,7 @@ PRE-003: Baseline OSPF - ALL Devices
             ...    neighbor_count=${neighbor_count}
             ...    neighbors=${neighbors}
             
-            Sleep    1s
+            Sleep    3s
             
         EXCEPT    AS    ${error}
             Log    ⚠ OSPF check failed on ${device}[hostname]: ${error}    WARN
@@ -178,7 +178,7 @@ PRE-004: Baseline BGP - ALL Devices, ALL VRFs
             END
         END
         
-        Sleep    1s
+        Sleep    3s
     END
 
 PRE-005: Baseline Interface Status - ALL Devices
@@ -219,7 +219,7 @@ PRE-005: Baseline Interface Status - ALL Devices
             END
         END
         
-        Sleep    1s
+        Sleep    3s
     END
 
 PRE-006: Baseline SCADA Connectivity
@@ -249,7 +249,7 @@ PRE-006: Baseline SCADA Connectivity
             
             Log    ✓ SCADA ${endpoint}: ${success_rate}%    console=yes
             
-            Sleep    1s
+            Sleep    3s
             
         EXCEPT    AS    ${error}
             Log    ⚠ SCADA test to ${endpoint} failed: ${error}    WARN
@@ -285,7 +285,7 @@ PRE-007: Baseline ADMS Connectivity
             
             Log    ✓ ADMS ${endpoint}: ${success_rate}%    console=yes
             
-            Sleep    1s
+            Sleep    3s
             
         EXCEPT    AS    ${error}
             Log    ⚠ ADMS test to ${endpoint} failed: ${error}    WARN
@@ -318,7 +318,7 @@ PRE-008: Baseline VPN_Data_Apps Connectivity
             
             Log    Data Apps ${endpoint}: ${success_rate}%    console=yes
             
-            Sleep    1s
+            Sleep    3s
             
         EXCEPT    AS    ${error}
             Log    ⚠ Data Apps test to ${endpoint} failed    WARN
@@ -354,7 +354,7 @@ PRE-009: Baseline Aggregation Reachability
             
             Log    ✓ Aggregation ${loopback}: ${success_rate}%    console=yes
             
-            Sleep    1s
+            Sleep    3s
             
         EXCEPT    AS    ${error}
             Log    ⚠ Aggregation test to ${loopback} failed    WARN

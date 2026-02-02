@@ -66,37 +66,37 @@ core_devices:
 #   - Pre-migration: Baseline OSPF/BGP from aggregation perspective
 #   - During: Monitor dual-homing during cutover
 #   - Post: Validate aggregation sees new core correctly
-aggregation_devices:
-  - hostname: SR201
-    ip: 172.10.1.201            # Management IP - CHANGE THIS!
-    device_type: ASR903
-    role: aggregation
-    location: Baliwag Substation
-    loopback0: 1.1.200.201
-    credentials: lab
-    connects_to:
-      - UPE9                    # Connects to new core
-      - Legacy_ASR9010          # Also connected to old core during migration
-    services:
-      - SCADA
-      - Telepro
-      - ADMS
-      - Metering
-    
-  - hostname: SR204
-    ip: 172.10.1.204            # Management IP - CHANGE THIS!
-    device_type: ASR903
-    role: aggregation
-    location: Malolos Substation
-    loopback0: 1.1.200.204
-    credentials: lab
-    connects_to:
-      - UPE10
-      - Legacy_ASR9010
-    services:
-      - SCADA
-      - OT_Management
-      - Substation_Automation
+#aggregation_devices:
+#  - hostname: SR201
+#    ip: 172.10.1.201            # Management IP - CHANGE THIS!
+#    device_type: ASR903
+#    role: aggregation
+#    location: Baliwag Substation
+#    loopback0: 1.1.200.201
+#    credentials: lab
+#    connects_to:
+#      - UPE9                    # Connects to new core
+#      - Legacy_ASR9010          # Also connected to old core during migration
+#    services:
+#      - SCADA
+#      - Telepro
+#      - ADMS
+#      - Metering
+#    
+#  - hostname: SR204
+#    ip: 172.10.1.204            # Management IP - CHANGE THIS!
+#    device_type: ASR903
+#    role: aggregation
+#    location: Malolos Substation
+#    loopback0: 1.1.200.204
+#    credentials: lab
+#    connects_to:
+#      - UPE10
+#      - Legacy_ASR9010
+#    services:
+#      - SCADA
+#      - OT_Management
+#      - Substation_Automation
 
 # ============================================
 # LEGACY CORE (Being Replaced)
@@ -107,33 +107,33 @@ aggregation_devices:
 #   - Pre-migration: Document current state for comparison
 #   - During: Monitor during cutover (Inter-AS link validation)
 #   - Rollback: Target for rollback if migration fails
-legacy_devices:
-  - hostname: UPE23
-    ip: 172.10.1.23             # Management IP - CHANGE THIS!
-    device_type: ASR9010
-    role: core_legacy
-    location: Duhat
-    loopback0: 1.2.2.23
-    status: to_be_decommissioned
-    credentials: lab
-    inter_as_link:              # Link to new core for migration
-      - interface: GigabitEthernet0/0/0/10
-        connects_to: SR201
-        description: "link for migration"
-        status: up
-  - hostname: UPE24
-    ip: 172.10.1.24             # Management IP - CHANGE THIS!
-    device_type: ASR9010
-    role: core_legacy
-    location: Plaridel
-    loopback0: 1.2.2.24
-    status: to_be_decommissioned
-    credentials: lab
-    inter_as_link:              # Link to new core for migration
-      - interface: GigabitEthernet0/0/0/10
-        connects_to: SR204
-        description: "link for migration"
-        status: up
+#legacy_devices:
+#  - hostname: UPE23
+#    ip: 172.10.1.23             # Management IP - CHANGE THIS!
+#    device_type: ASR9010
+#    role: core_legacy
+#    location: Duhat
+#    loopback0: 1.2.2.23
+#    status: to_be_decommissioned
+#    credentials: lab
+#    inter_as_link:              # Link to new core for migration
+#      - interface: GigabitEthernet0/0/0/10
+#        connects_to: SR201
+#        description: "link for migration"
+#        status: up
+#  - hostname: UPE24
+#    ip: 172.10.1.24             # Management IP - CHANGE THIS!
+#    device_type: ASR9010
+#    role: core_legacy
+#    location: Plaridel
+#    loopback0: 1.2.2.24
+#    status: to_be_decommissioned
+#    credentials: lab
+#    inter_as_link:              # Link to new core for migration
+#      - interface: GigabitEthernet0/0/0/10
+#        connects_to: SR204
+#        description: "link for migration"
+#        status: up
 # ============================================
 # CRITICAL LINKS
 # ============================================
