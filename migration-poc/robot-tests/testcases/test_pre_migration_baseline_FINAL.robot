@@ -18,8 +18,8 @@ Suite Setup      Initialize And Connect All Devices
 Suite Teardown   Disconnect All Devices
 
 *** Variables ***
-${USERNAME}             admin
-${PASSWORD}             admin
+${USERNAME}             meralco
+${PASSWORD}             meralco
 ${BASELINE_DIR}         ${CURDIR}/../baseline
 
 # VRF Source Interface Mapping

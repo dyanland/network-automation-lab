@@ -21,8 +21,8 @@ Suite Setup      Initialize Baseline Capture
 Suite Teardown   Generate Baseline Report
 
 *** Variables ***
-${USERNAME}             admin
-${PASSWORD}             admin
+${USERNAME}             meralco
+${PASSWORD}             meralco
 ${BASELINE_DIR}         ${CURDIR}/../baseline
 
 # VRF Source Interface Mapping (LAB Configuration)
