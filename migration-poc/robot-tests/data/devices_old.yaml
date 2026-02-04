@@ -1,0 +1,67 @@
+# Device Inventory for Lab Testing
+# Automatically generated from host_info.csv
+
+# Core P Routers (ASR9906)
+core_routers:
+  - hostname: "UPE1"
+    ip: "172.10.1.1"
+    device_type: "ASR9906"
+    role: "Core P Router"
+    site: "Lab"
+    
+  - hostname: "UPE9"
+    ip: "172.10.1.9"
+    device_type: "ASR9906"
+    role: "Core P Router"
+    site: "Lab"
+    
+  - hostname: "UPE21"
+    ip: "172.10.1.21"
+    device_type: "ASR9906"
+    role: "Core P Router"
+    site: "Lab"
+    
+  - hostname: "UPE24"
+    ip: "172.10.1.24"
+    device_type: "ASR9906"
+    role: "Core P Router"
+    site: "Lab"
+
+# PE Aggregation Routers (ASR903)
+aggregation_routers:
+  - hostname: "SR201"
+    ip: "172.10.1.201"
+    device_type: "ASR903"
+    role: "PE Aggregation"
+    site: "Lab"
+    
+  - hostname: "SR202"
+    ip: "172.10.1.202"
+    device_type: "ASR903"
+    role: "PE Aggregation"
+    site: "Lab"
+    
+  - hostname: "SR203"
+    ip: "172.10.1.203"
+    device_type: "ASR903"
+    role: "PE Aggregation"
+    site: "Lab"
+    
+  - hostname: "SR204"
+    ip: "172.10.1.204"
+    device_type: "ASR903"
+    role: "PE Aggregation"
+    site: "Lab"
+
+# L2 Switches
+switches:
+  - hostname: "Switch1"
+    ip: "172.10.1.50"
+    device_type: "Cat9300"
+    role: "L2 Switch"
+    site: "Lab"
+
+# Test credentials (update with your actual credentials)
+credentials:
+  username: "meralco"
+  password: "meralco"

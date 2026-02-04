@@ -1,0 +1,10 @@
+Hostname,IP_Address,Device_Type,Site,Role
+UPE1,172.10.1.1,ASR9906,Lab,Core P Router
+UPE9,172.10.1.9,ASR9906,Lab,Core P Router
+UPE21,172.10.1.21,ASR9906,Lab,Core P Router
+UPE24,172.10.1.24,ASR9906,Lab,Core P Router
+SR201,172.10.1.201,ASR903,Lab,PE Aggregation
+SR202,172.10.1.202,ASR903,Lab,PE Aggregation
+SR203,172.10.1.203,ASR903,Lab,PE Aggregation
+SR204,172.10.1.204,ASR903,Lab,PE Aggregation
+Switch1,172.10.1.50,Cat9300,Lab,L2 Switch

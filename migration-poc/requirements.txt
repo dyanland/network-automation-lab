@@ -1,0 +1,17 @@
+# Python Requirements for Network Migration POC
+# Only Robot Framework is needed - Go library has NO Python dependencies!
+
+# Core testing framework
+robotframework==7.0
+
+# Optional: For enhanced reporting (not required for basic POC)
+# robotframework-excellibrary==4.0.0  # If you want Excel report generation
+# robotframework-metrics==3.3.3       # If you want test metrics dashboard
+
+# Note: NO SSH libraries needed!
+# The Go remote library handles all SSH connections
+# This eliminates dependency issues with:
+# - paramiko
+# - netmiko  
+# - napalm
+# etc.
