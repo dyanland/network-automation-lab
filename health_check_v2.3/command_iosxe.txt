@@ -2,6 +2,7 @@
 # IOS-XE Commands (ASR903/920/ISR/IOSv)
 # ============================================
 term leng 0
+show running
 show version
 show platform
 show inventory
@@ -24,4 +25,4 @@ show xconnect all
 show l2vpn service all
 show bfd neighbors
 show logging | tail 50
-show running-config
+
