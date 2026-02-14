@@ -1,0 +1,410 @@
+# Network Migration POC - Visual Architecture
+
+## System Overview
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                    NETWORK MIGRATION TEST SYSTEM                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+                          [Field Engineer Laptop]
+                                    │
+                ┌───────────────────┼───────────────────┐
+                │                   │                   │
+         ┌──────▼──────┐    ┌──────▼──────┐    ┌──────▼──────┐
+         │   Windows   │    │    Linux    │    │    macOS    │
+         │             │    │             │    │             │
+         │  robot.exe  │    │   robot     │    │   robot     │
+         └──────┬──────┘    └──────┬──────┘    └──────┬──────┘
+                │                   │                   │
+                └───────────────────┼───────────────────┘
+                                    │
+                              JSON-RPC over
+                              localhost:8270
+                                    │
+                    ┌───────────────▼────────────────┐
+                    │  Go Remote Library Server      │
+                    │                                 │
+                    │  ┌───────────────────────────┐ │
+                    │  │  Robot Framework Protocol │ │
+                    │  │  Listener (Port 8270)     │ │
+                    │  └────────────┬──────────────┘ │
+                    │               │                 │
+                    │  ┌────────────▼──────────────┐ │
+                    │  │  SSH Connection Manager   │ │
+                    │  │  - IOS-XR (PTY mode)     │ │
+                    │  │  - IOS-XE (standard)     │ │
+                    │  └────────────┬──────────────┘ │
+                    │               │                 │
+                    │  ┌────────────▼──────────────┐ │
+                    │  │  Command Executor         │ │
+                    │  │  - Execute CLI commands   │ │
+                    │  │  - Handle timeouts        │ │
+                    │  └────────────┬──────────────┘ │
+                    │               │                 │
+                    │  ┌────────────▼──────────────┐ │
+                    │  │  Output Parser            │ │
+                    │  │  - OSPF neighbor parsing  │ │
+                    │  │  - BGP summary parsing    │ │
+                    │  │  - Ping result parsing    │ │
+                    │  └────────────┬──────────────┘ │
+                    │               │                 │
+                    │  ┌────────────▼──────────────┐ │
+                    │  │  Validation Engine        │ │
+                    │  │  - State comparison       │ │
+                    │  │  - Threshold checking     │ │
+                    │  └───────────────────────────┘ │
+                    └────────────────────────────────┘
+                                    │
+                            SSH (Port 22)
+                                    │
+            ┌───────────────────────┼───────────────────────┐
+            │                       │                       │
+    ┌───────▼────────┐     ┌───────▼────────┐     ┌───────▼────────┐
+    │   ASR9906      │     │   ASR903       │     │   Cat9300      │
+    │   Core Router  │     │   Aggregation  │     │   Switch       │
+    │                │     │                │     │                │
+    │   UPE1-UPE24   │     │   SR201-SR204  │     │   Switch1      │
+    └────────────────┘     └────────────────┘     └────────────────┘
+
+
+## Data Flow - Test Execution
+
+┌────────────────────────────────────────────────────────────────────┐
+│ Step 1: Test Initiation                                            │
+└────────────────────────────────────────────────────────────────────┘
+
+    robot testcases/poc_test.robot
+          │
+          │ Reads test case
+          ▼
+    ┌─────────────────────────────────┐
+    │  TEST-004: Get OSPF Neighbors   │
+    │  [Tags] ospf, routing           │
+    │                                  │
+    │  ${handle}= Connect To Device   │
+    │  ${ospf}= Get OSPF Neighbors    │
+    │  Validate neighbor count        │
+    └──────────────┬──────────────────┘
+                   │
+                   │ JSON-RPC call
+                   ▼
+
+┌────────────────────────────────────────────────────────────────────┐
+│ Step 2: Go Library Processing                                      │
+└────────────────────────────────────────────────────────────────────┘
+
+    Go Remote Library (Port 8270)
+          │
+          │ Receives: {"method": "run_keyword",
+          │            "args": ["Connect To Device",
+          │                     ["172.10.1.1", "ASR9906", "admin", "pass"]]}
+          ▼
+    ┌─────────────────────────────────┐
+    │  SSH Connection Establishment   │
+    │  - Dial TCP to 172.10.1.1:22   │
+    │  - Auth with credentials        │
+    │  - Request PTY (for IOS-XR)    │
+    │  - Return handle: "conn_1"     │
+    └──────────────┬──────────────────┘
+                   │
+                   │ Returns: {"status": "PASS",
+                   │           "return": "conn_1"}
+                   ▼
+    Robot Framework continues
+          │
+          │ Next call: {"method": "run_keyword",
+          │             "args": ["Get OSPF Neighbors", ["conn_1"]]}
+          ▼
+    ┌─────────────────────────────────┐
+    │  Command Execution              │
+    │  - Use connection "conn_1"      │
+    │  - Execute: show ospf neighbor  │
+    │  - Wait for output              │
+    │  - Raw output received          │
+    └──────────────┬──────────────────┘
+                   │
+                   │ Raw CLI output
+                   ▼
+    ┌─────────────────────────────────┐
+    │  Output Parsing                 │
+    │  - Split into lines             │
+    │  - Find "FULL" states           │
+    │  - Extract: neighbor_id         │
+    │  - Extract: interface           │
+    │  - Build structured data        │
+    └──────────────┬──────────────────┘
+                   │
+                   │ Returns: {"status": "PASS",
+                   │           "return": [
+                   │             {"neighbor_id": "10.0.0.1",
+                   │              "state": "FULL",
+                   │              "interface": "Gi0/0/0/0"},
+                   │             ...
+                   │           ]}
+                   ▼
+    Robot Framework receives results
+
+┌────────────────────────────────────────────────────────────────────┐
+│ Step 3: Validation & Reporting                                     │
+└────────────────────────────────────────────────────────────────────┘
+
+    Robot Framework
+          │
+          │ Validates returned data
+          ▼
+    Length Should Be    ${ospf}    4
+    FOR ${neighbor} IN @{ospf}
+        Should Be Equal ${neighbor}[state] FULL
+    END
+          │
+          │ Test result: PASS or FAIL
+          ▼
+    ┌─────────────────────────────────┐
+    │  Report Generation              │
+    │  - log.html (detailed)          │
+    │  - report.html (summary)        │
+    │  - output.xml (machine)         │
+    └─────────────────────────────────┘
+
+
+## Component Responsibility Matrix
+
+┌──────────────────────┬─────────────────────────────────────────────┐
+│ Component            │ Responsibilities                            │
+├──────────────────────┼─────────────────────────────────────────────┤
+│ Robot Framework      │ - Test case definition                      │
+│ (.robot files)       │ - Test execution flow                       │
+│                      │ - Result validation                         │
+│                      │ - Report generation                         │
+│                      │ - Pass/Fail determination                   │
+├──────────────────────┼─────────────────────────────────────────────┤
+│ Go Remote Library    │ - SSH connection handling                   │
+│ (Go binary)          │ - Device type detection                     │
+│                      │ - Command execution                         │
+│                      │ - Output parsing                            │
+│                      │ - Data structuring                          │
+│                      │ - Error handling                            │
+├──────────────────────┼─────────────────────────────────────────────┤
+│ Network Devices      │ - Execute CLI commands                      │
+│ (IOS-XR, IOS-XE)     │ - Return operational data                   │
+│                      │ - Maintain network state                    │
+└──────────────────────┴─────────────────────────────────────────────┘
+
+
+## Deployment Model
+
+┌────────────────────────────────────────────────────────────────────┐
+│ Traditional Python Approach (BEFORE)                                │
+└────────────────────────────────────────────────────────────────────┘
+
+    Field Engineer Laptop
+    ├── Python 3.x (50MB)
+    ├── pip packages
+    │   ├── paramiko (20MB)
+    │   ├── netmiko (15MB)
+    │   ├── napalm (30MB)
+    │   ├── cryptography (25MB)
+    │   ├── pyyaml (5MB)
+    │   ├── jinja2 (10MB)
+    │   ├── textfsm (8MB)
+    │   └── ... (20+ packages)
+    ├── Robot Framework (10MB)
+    └── Test cases
+
+    Total: ~200MB
+    Setup time: 20-30 minutes
+    Dependencies: 25+ packages
+    Issues: Version conflicts, SSL problems, platform differences
+
+
+┌────────────────────────────────────────────────────────────────────┐
+│ Go + Robot Framework Approach (AFTER)                              │
+└────────────────────────────────────────────────────────────────────┘
+
+    Field Engineer Laptop
+    ├── network-library-windows-amd64.exe (10MB) ← SINGLE FILE!
+    ├── Robot Framework (10MB) [optional, for test execution]
+    └── Test cases
+
+    Total: ~20MB (or just 10MB for binary)
+    Setup time: 10 seconds (copy file)
+    Dependencies: ZERO
+    Issues: NONE
+
+
+## Migration Workflow Integration
+
+┌────────────────────────────────────────────────────────────────────┐
+│ PRE-MIGRATION PHASE                                                 │
+└────────────────────────────────────────────────────────────────────┘
+
+    1. Capture Baseline
+       ├── OSPF neighbor state
+       ├── BGP peer status (all VRFs)
+       ├── Interface status
+       ├── MPLS forwarding state
+       ├── Route counts per VRF
+       └── Connectivity matrix
+                │
+                ▼
+       Store in variables & Excel
+
+┌────────────────────────────────────────────────────────────────────┐
+│ DURING MIGRATION                                                    │
+└────────────────────────────────────────────────────────────────────┘
+
+    2. Continuous Monitoring
+       ├── Ping tests every 5 seconds
+       ├── BGP status checks
+       ├── OSPF convergence monitoring
+       └── Trigger rollback on failure
+                │
+                ▼
+       Real-time status updates
+
+┌────────────────────────────────────────────────────────────────────┐
+│ POST-MIGRATION PHASE                                                │
+└────────────────────────────────────────────────────────────────────┘
+
+    3. Validation & Comparison
+       ├── Compare OSPF neighbors with baseline
+       ├── Compare BGP peers with baseline
+       ├── Verify route counts maintained
+       ├── Validate connectivity restored
+       └── Generate comparison report
+                │
+                ▼
+       PASS → Migration successful
+       FAIL → Execute rollback
+
+
+## Scalability Model
+
+    Single Device Test           Parallel Multi-Device Test
+    
+    ┌──────────┐                 ┌──────────┐
+    │  Robot   │                 │  Robot   │
+    └────┬─────┘                 └────┬─────┘
+         │                            │
+         ▼                            ▼
+    ┌─────────┐                 ┌─────────┐
+    │ Go Lib  │                 │ Go Lib  │
+    └────┬────┘                 └────┬────┘
+         │                           │
+         ▼                           ├────────┬────────┐
+    ┌─────────┐                     ▼        ▼        ▼
+    │ Device  │              ┌─────────┐ ┌────────┐ ┌────────┐
+    └─────────┘              │ Device1 │ │Device2 │ │Device3 │
+                             └─────────┘ └────────┘ └────────┘
+    
+    Time: 10 seconds         Time: 12 seconds (20% overhead)
+    
+    Result: Near-linear scalability with goroutines
+
+
+## Performance Characteristics
+
+    Operation Timeline (Single Device)
+    
+    0ms     ├─┐ Connect To Device
+            │ │
+    500ms   │ └─ Connected
+            │
+            ├─┐ Execute: show ospf neighbor
+    800ms   │ └─ Command completed
+            │
+            ├─┐ Parse output
+    850ms   │ └─ Parsing done
+            │
+            ├─┐ Execute: show bgp summary
+    1150ms  │ └─ Command completed
+            │
+            ├─┐ Parse output
+    1200ms  │ └─ Parsing done
+            │
+            ├─┐ Ping test (5 packets)
+    2200ms  │ └─ Ping completed
+            │
+    2210ms  └─ Close connection
+    
+    Total: 2.2 seconds for complete health check
+
+
+## Security Model
+
+    ┌────────────────────────────────────────────────┐
+    │ Credentials Storage                            │
+    ├────────────────────────────────────────────────┤
+    │ devices.yaml (local file)                      │
+    │ - Plain text (for POC)                         │
+    │ - Future: HashiCorp Vault integration          │
+    │ - Future: Environment variables                │
+    │ - Future: Encrypted files                      │
+    └────────────────────────────────────────────────┘
+               │
+               ▼
+    ┌────────────────────────────────────────────────┐
+    │ Communication Security                         │
+    ├────────────────────────────────────────────────┤
+    │ Robot ←→ Go Library: localhost only (8270)     │
+    │ Go Library ←→ Devices: SSH (port 22)          │
+    │ - Key-based auth supported                     │
+    │ - Password auth for POC                        │
+    └────────────────────────────────────────────────┘
+
+
+## Error Handling Flow
+
+    Connection Attempt
+           │
+           ├─ Success? ──────────────► Continue
+           │
+           └─ Failure
+              │
+              ├─ Retry (3 attempts)
+              │     │
+              │     ├─ Success? ──────► Continue
+              │     │
+              │     └─ Still failing
+              │           │
+              │           ▼
+              └─► Return error to Robot
+                        │
+                        ▼
+                  Test marked FAIL
+                        │
+                        ▼
+                  Log detailed error
+                        │
+                        ▼
+                  Continue with remaining tests
+
+
+┌────────────────────────────────────────────────────────────────────┐
+│ Key Architectural Principles                                        │
+├────────────────────────────────────────────────────────────────────┤
+│ 1. Separation of Concerns                                          │
+│    - Robot Framework: Test definition & validation                 │
+│    - Go Library: Device communication & parsing                    │
+│    - Devices: Network operations                                   │
+│                                                                     │
+│ 2. Fail Fast                                                       │
+│    - Immediate error reporting                                     │
+│    - No silent failures                                            │
+│    - Clear error messages                                          │
+│                                                                     │
+│ 3. Zero External Dependencies                                      │
+│    - Go binary is self-contained                                   │
+│    - No runtime dependency installation                            │
+│    - Works offline                                                 │
+│                                                                     │
+│ 4. Platform Independence                                           │
+│    - Same code runs on Windows, Linux, macOS                       │
+│    - No platform-specific behavior                                 │
+│    - Consistent results across all platforms                       │
+│                                                                     │
+│ 5. Extensibility                                                   │
+│    - Easy to add new keywords                                      │
+│    - Modular parser functions                                      │
+│    - Plugin architecture for new device types                      │
+└────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,368 @@
+# MERALCO VRF Configuration
+# All 20+ VRFs for L3VPN services across utility network
+
+---
+vrfs:
+  # CRITICAL VRFs - Zero Downtime Required
+  - name: VPN_SCADA
+    priority: critical
+    rd: "65000:10"
+    rt_import: ["65000:10"]
+    rt_export: ["65000:10"]
+    description: "SCADA/RTU Communication - Power Grid Control"
+    services:
+      - RTU polling
+      - HMI connectivity
+      - Data acquisition
+    sla:
+      latency_max_ms: 200
+      packet_loss_max_pct: 0
+      availability_pct: 99.999
+    test_endpoints:
+      - ip: 10.240.1.1
+        description: "HQ SCADA Master"
+      - ip: 10.240.2.1
+        description: "Remote RTU - Substation A"
+      - ip: 10.240.2.2
+        description: "Remote RTU - Substation B"
+    validation_method: "RTU poll response time < 200ms"
+
+  - name: VPN_Telepro
+    priority: critical
+    rd: "65000:240"
+    rt_import: ["65000:240"]
+    rt_export: ["65000:240"]
+    description: "Teleprotection - Protection Relay Communication"
+    services:
+      - Protection relay signaling
+      - Trip signals
+      - Distance protection
+    sla:
+      latency_max_ms: 10  # HARD REQUIREMENT
+      jitter_max_ms: 2
+      packet_loss_max_pct: 0
+      availability_pct: 99.999
+    test_endpoints:
+      - ip: 10.240.3.1
+        description: "Primary Protection Relay"
+      - ip: 10.240.3.2
+        description: "Secondary Protection Relay"
+    validation_method: "Trip signal latency < 10ms"
+    
+  - name: VPN_ADMS
+    priority: critical
+    rd: "65000:20"
+    rt_import: ["65000:20"]
+    rt_export: ["65000:20"]
+    description: "Advanced Distribution Management System"
+    services:
+      - Distribution automation
+      - Fault location
+      - Load management
+      - DMS integration
+    sla:
+      latency_max_ms: 100
+      packet_loss_max_pct: 0.1
+      availability_pct: 99.99
+    test_endpoints:
+      - ip: 10.240.4.1
+        description: "ADMS Server 1"
+      - ip: 10.240.4.2
+        description: "ADMS Server 2"
+    validation_method: "ADMS connectivity test"
+
+  # HIGH PRIORITY VRFs
+  - name: VPN_Tetra
+    priority: high
+    rd: "65100:90"
+    rt_import: ["65100:90"]
+    rt_export: ["65100:90"]
+    description: "Terrestrial Trunked Radio (TETRA) - Field Crew Communications"
+    services:
+      - Voice communication
+      - Radio dispatch
+      - Emergency services
+    sla:
+      latency_max_ms: 50
+      packet_loss_max_pct: 1
+      availability_pct: 99.9
+    test_endpoints:
+      - ip: 10.240.5.1
+        description: "TETRA Base Station - Plaridel"
+      - ip: 10.240.5.2
+        description: "TETRA Controller"
+    validation_method: "Radio registration successful"
+
+  - name: VPN_OT_Mgt
+    priority: high
+    rd: "65000:30"
+    rt_import: ["65000:30"]
+    rt_export: ["65000:30"]
+    description: "Operational Technology Management"
+    services:
+      - Substation automation
+      - Field equipment management
+      - IED configuration
+    sla:
+      latency_max_ms: 100
+      packet_loss_max_pct: 1
+      availability_pct: 99.9
+    test_endpoints:
+      - ip: 10.240.6.1
+        description: "OT Management Server"
+
+  - name: VPN_Transport_Mgt
+    priority: high
+    rd: "65000:210"
+    rt_import: ["65000:210"]
+    rt_export: ["65000:210"]
+    description: "Transport Network Element Management"
+    services:
+      - Router management
+      - Switch management
+      - Transport monitoring
+    sla:
+      latency_max_ms: 100
+      packet_loss_max_pct: 1
+      availability_pct: 99.9
+    test_endpoints:
+      - ip: 10.240.7.1
+        description: "NMS Server"
+
+  - name: VPN_Metering
+    priority: high
+    rd: "65000:50"
+    rt_import: ["65000:50"]
+    rt_export: ["65000:50"]
+    description: "AMI (Advanced Metering Infrastructure)"
+    services:
+      - Smart meter data collection
+      - Meter reading
+      - Load profiling
+    sla:
+      latency_max_ms: 200
+      packet_loss_max_pct: 2
+      availability_pct: 99.5
+    test_endpoints:
+      - ip: 10.240.8.1
+        description: "AMI Head-End System"
+
+  - name: VPN_Substation
+    priority: high
+    rd: "65000:60"
+    rt_import: ["65000:60"]
+    rt_export: ["65000:60"]
+    description: "Substation Automation Network"
+    services:
+      - IED communication
+      - Bay controllers
+      - Station bus
+    sla:
+      latency_max_ms: 50
+      packet_loss_max_pct: 0.5
+      availability_pct: 99.9
+    test_endpoints:
+      - ip: 10.240.9.1
+        description: "Substation Gateway"
+
+  # MEDIUM PRIORITY VRFs
+  - name: VPN_CCTV
+    priority: medium
+    rd: "65000:200"
+    rt_import: ["65000:200"]
+    rt_export: ["65000:200"]
+    description: "CCTV Surveillance Network"
+    services:
+      - Video surveillance
+      - NVR access
+      - Camera management
+    sla:
+      latency_max_ms: 200
+      packet_loss_max_pct: 2
+      availability_pct: 99.5
+    test_endpoints:
+      - ip: 10.240.10.1
+        description: "NVR Server"
+      - ip: 10.240.10.2
+        description: "Camera - Substation Entrance"
+
+  - name: VPN_Data_Apps
+    priority: medium
+    rd: "65000:40"
+    rt_import: ["65000:40"]
+    rt_export: ["65000:40"]
+    description: "Data Applications and Business Systems"
+    services:
+      - ERP connectivity
+      - Database access
+      - Application servers
+    sla:
+      latency_max_ms: 150
+      packet_loss_max_pct: 1
+      availability_pct: 99.5
+    test_endpoints:
+      - ip: 10.240.11.1
+        description: "App Server"
+
+  - name: VPN_IT_Mgt
+    priority: medium
+    rd: "65000:70"
+    rt_import: ["65000:70"]
+    rt_export: ["65000:70"]
+    description: "IT Management and Administrative Network"
+    services:
+      - Server management
+      - Backup systems
+      - IT infrastructure
+    sla:
+      latency_max_ms: 150
+      packet_loss_max_pct: 2
+      availability_pct: 99.0
+    test_endpoints:
+      - ip: 10.240.12.1
+        description: "IT Management Console"
+
+  - name: VPN_Video
+    priority: low
+    rd: "65000:80"
+    rt_import: ["65000:80"]
+    rt_export: ["65000:80"]
+    description: "Video Conferencing - Future Use"
+    services:
+      - Video conferencing
+      - Collaboration tools
+    sla:
+      latency_max_ms: 200
+      packet_loss_max_pct: 5
+      availability_pct: 99.0
+    test_endpoints:
+      - ip: 10.240.13.1
+        description: "VC Server"
+
+  - name: VPN_VoIP
+    priority: medium
+    rd: "65000:90"
+    rt_import: ["65000:90"]
+    rt_export: ["65000:90"]
+    description: "Voice over IP - Office Communications"
+    services:
+      - IP telephony
+      - Call manager
+    sla:
+      latency_max_ms: 150
+      jitter_max_ms: 30
+      packet_loss_max_pct: 1
+      availability_pct: 99.5
+    test_endpoints:
+      - ip: 10.240.14.1
+        description: "Call Manager"
+
+  - name: VPN_BWA
+    priority: medium
+    rd: "65000:100"
+    rt_import: ["65000:100"]
+    rt_export: ["65000:100"]
+    description: "Broadband Wireless Access"
+    services:
+      - Wireless backhaul
+      - Point-to-point links
+    sla:
+      latency_max_ms: 100
+      packet_loss_max_pct: 2
+      availability_pct: 99.5
+    test_endpoints:
+      - ip: 10.240.15.1
+        description: "BWA Controller"
+
+  - name: VPN_Guest
+    priority: low
+    rd: "65000:110"
+    rt_import: ["65000:110"]
+    rt_export: ["65000:110"]
+    description: "Guest Network Access"
+    services:
+      - Guest WiFi
+      - Visitor access
+    sla:
+      latency_max_ms: 300
+      packet_loss_max_pct: 5
+      availability_pct: 95.0
+    test_endpoints:
+      - ip: 10.240.16.1
+        description: "Guest Gateway"
+
+# VRF Groups for Batch Testing
+vrf_groups:
+  critical_services:
+    - VPN_SCADA
+    - VPN_Telepro
+    - VPN_ADMS
+  
+  high_priority_services:
+    - VPN_Tetra
+    - VPN_OT_Mgt
+    - VPN_Transport_Mgt
+    - VPN_Metering
+    - VPN_Substation
+  
+  medium_priority_services:
+    - VPN_CCTV
+    - VPN_Data_Apps
+    - VPN_IT_Mgt
+    - VPN_VoIP
+    - VPN_BWA
+  
+  low_priority_services:
+    - VPN_Video
+    - VPN_Guest
+
+# Testing Strategy per VRF Priority
+testing_strategy:
+  critical:
+    pre_migration_tests:
+      - BGP route verification
+      - 100-packet ping test (0% loss required)
+      - Latency measurement (100 samples)
+      - Traceroute path validation
+      - Application-layer validation
+    during_migration_tests:
+      - Continuous ping (5-second interval)
+      - Real-time latency monitoring
+      - Immediate rollback on failure
+    post_migration_tests:
+      - Full route table comparison
+      - 1000-packet ping test
+      - Extended latency test (10 minutes)
+      - Application-layer revalidation
+      - 24-hour stability monitoring
+  
+  high:
+    pre_migration_tests:
+      - BGP route verification
+      - 50-packet ping test
+      - Basic latency check
+      - Traceroute validation
+    during_migration_tests:
+      - Periodic ping (10-second interval)
+    post_migration_tests:
+      - Route table comparison
+      - 100-packet ping test
+      - Latency revalidation
+  
+  medium:
+    pre_migration_tests:
+      - BGP route check
+      - 10-packet ping test
+    during_migration_tests:
+      - Periodic ping (30-second interval)
+    post_migration_tests:
+      - Route count validation
+      - Basic connectivity test
+  
+  low:
+    pre_migration_tests:
+      - Basic connectivity check
+    during_migration_tests:
+      - Periodic check (60-second interval)
+    post_migration_tests:
+      - Connectivity verification

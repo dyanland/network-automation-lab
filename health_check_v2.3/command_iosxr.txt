@@ -1,25 +1,88 @@
 # ============================================
 # IOS-XR Commands (ASR9K/XRv/NCS)
 # ============================================
+#=====================Separate Health ========================
+term leng 0
+show running-config
 show version
 show platform
 show inventory
+show environment  altitude
 show redundancy
+show operational Platform
+show sdr
+show install active summary
+show install inactive summary
+show hw-module fpd
+admin show environment fans
+admin show environment temperatures
+show diag details
+show inventory all
+show context location all
+show users
+show filesystem
+show process cpu
+show memory summary
+show media
+show logging last 300
+show alarms brief system active
+show process blocked
+#=====================Separate Interfaces ========================
+show interfaces
 show interfaces brief
 show interfaces description
 show ipv4 interface brief
+show ipv4 vrf all interface brief
+show bundle brief
+show cdp neighbors
+show cdp neighbors detail
+#=====================Separate Routing ========================
+show route summary
+show route vrf all summary
+show route
+show cef ipv4 summary
 show ospf neighbor
 show ospf interface brief
-show bgp summary
+show ospf database
+show route ospf
+
+show bgp all all summary
+show bgp vrf all summary
+show bgp vrf all neighbor
 show bgp vpnv4 unicast summary
-show mpls ldp neighbor brief
-show mpls forwarding summary
-show mpls interfaces
-show segment-routing local-block
+show bgp ipv4 label summ
+show bgp ipv4 label labels
+show route bgp 
+
 show vrf all
+show vrf all afi-all detail
 show route vrf all summary
 show l2vpn xconnect summary
 show l2vpn bridge-domain summary
 show bfd session
 show logging last 50
-show running-config
+
+
+#=====================Separate MPLS ========================
+show ip rsvp neig
+show rsvp neigh
+show mpls traffic-eng tunnels brief
+show mpls ldp discovery brief
+show mpls ldp discovery all
+show mpls ldp neighbor brief
+show mpls forwarding summary
+show mpls interfaces
+`
+show segment-routing local-block
+show mpls forwarding | i SR
+show mpls label table detail | i  SRGB
+show mpls lsd private | i SRLB
+
+#=====================Separate QOS ========================
+show policy-map list
+show policy-map
+show policy-map interface all
+
+#=====================Separate Access-list ========================
+show access-list summary
+show access-list

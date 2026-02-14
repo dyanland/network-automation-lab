@@ -1,0 +1,380 @@
+Phase,Timestamp,Hostname,IP,DeviceType,OS,Command,MetricName,MetricValue
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show version,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show version,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show platform,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show platform,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show inventory,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show inventory,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show redundancy,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show redundancy,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show interfaces brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show interfaces brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show interfaces brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show interfaces description,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show interfaces description,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_Total,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_FULL,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show mpls ldp neighbor brief,LDP_Neighbors,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show mpls forwarding summary,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show mpls forwarding summary,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show mpls interfaces,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show segment-routing local-block,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show segment-routing local-block,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show vrf all,VRF_Count,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show route vrf all summary,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show route vrf all summary,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Up,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Down,0
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show logging last 50,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show logging last 50,OutputLines,1
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show running-config,Captured,Yes
+postcheck,20260123_135104,UPE21,172.10.1.21,ASR9906,IOS-XR,show running-config,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show version,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show version,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show platform,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show platform,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show inventory,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show inventory,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show redundancy,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show redundancy,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip interface brief,Interfaces_Up,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip interface brief,Interfaces_Down,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show interfaces description,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show interfaces description,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show interfaces status,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show interfaces status,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_Total,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_FULL,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Down,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show mpls ldp neighbor,LDP_Neighbors,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show mpls forwarding-table summary,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show mpls forwarding-table summary,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show mpls interfaces,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show vrf,VRF_Count,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip route vrf * summary,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show ip route vrf * summary,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show xconnect all,L2VPN_Up,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show xconnect all,L2VPN_Down,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show l2vpn service all,L2VPN_Up,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show l2vpn service all,L2VPN_Down,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Up,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Down,0
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show logging | tail 50,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show logging | tail 50,OutputLines,1
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show running-config,Captured,Yes
+postcheck,20260123_135104,SR202,172.10.1.202,ASR903,IOS-XE,show running-config,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show version,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show version,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show platform,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show platform,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show inventory,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show inventory,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show redundancy,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show redundancy,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show interfaces brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show interfaces brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show interfaces brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show interfaces description,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show interfaces description,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_Total,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_FULL,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show mpls ldp neighbor brief,LDP_Neighbors,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show mpls forwarding summary,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show mpls forwarding summary,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show mpls interfaces,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show segment-routing local-block,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show segment-routing local-block,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show vrf all,VRF_Count,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show route vrf all summary,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show route vrf all summary,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Down,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Up,0
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show logging last 50,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show logging last 50,OutputLines,1
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show running-config,Captured,Yes
+postcheck,20260123_135104,UPE24,172.10.1.24,ASR9906,IOS-XR,show running-config,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show version,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show version,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show platform,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show platform,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show inventory,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show inventory,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show redundancy,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show redundancy,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show interfaces brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show interfaces brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show interfaces brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show interfaces description,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show interfaces description,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_Total,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_FULL,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show mpls ldp neighbor brief,LDP_Neighbors,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show mpls forwarding summary,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show mpls forwarding summary,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show mpls interfaces,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show segment-routing local-block,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show segment-routing local-block,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show vrf all,VRF_Count,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show route vrf all summary,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show route vrf all summary,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Up,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Down,0
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show logging last 50,OutputLines,1
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show logging last 50,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show running-config,Captured,Yes
+postcheck,20260123_135104,UPE9,172.10.1.9,ASR9906,IOS-XR,show running-config,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show version,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show version,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show platform,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show platform,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show inventory,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show inventory,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show redundancy,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show redundancy,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show interfaces brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show interfaces brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show interfaces brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show interfaces description,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show interfaces description,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ipv4 interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_Total,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ospf neighbor,OSPF_Neighbors_FULL,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Down,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show bgp summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Total,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show bgp vpnv4 unicast summary,BGP_Neighbors_Established,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show mpls ldp neighbor brief,LDP_Neighbors,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show mpls forwarding summary,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show mpls forwarding summary,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show mpls interfaces,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show segment-routing local-block,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show segment-routing local-block,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show vrf all,VRF_Count,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show route vrf all summary,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show route vrf all summary,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show l2vpn xconnect summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Up,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show l2vpn bridge-domain summary,L2VPN_Down,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Down,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show bfd session,BFD_Sessions_Up,0
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show logging last 50,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show logging last 50,OutputLines,1
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show running-config,Captured,Yes
+postcheck,20260123_135104,UPE1,172.10.1.1,ASR9906,IOS-XR,show running-config,OutputLines,1
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show version,Version,Cisco IOS Software [IOSXE], Linux Software (X86_64BI_LINUX_L2-ADVENTERPRISEK9-M), Version 17.16.1a, RELEASE SOFTWARE (fc1)
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show version,Uptime,1 week, 1 day, 9 hours, 6 minutes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show inventory,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show inventory,OutputLines,2
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show ip interface brief,Interfaces_Up,6
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show ip interface brief,Interfaces_Down,0
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show ip interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show interfaces description,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show interfaces description,OutputLines,9
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show interfaces status,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show interfaces status,OutputLines,7
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show interfaces trunk,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show interfaces trunk,OutputLines,14
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show vlan brief,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show vlan brief,OutputLines,11
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show spanning-tree summary,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show spanning-tree summary,OutputLines,20
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show spanning-tree root,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show spanning-tree root,OutputLines,8
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show etherchannel summary,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show etherchannel summary,OutputLines,16
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show mac address-table count,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show mac address-table count,OutputLines,16
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show lldp neighbors,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show lldp neighbors,OutputLines,3
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show cdp neighbors,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show cdp neighbors,OutputLines,7
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show logging | tail 50,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show logging | tail 50,OutputLines,4
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show running-config,Captured,Yes
+postcheck,20260123_135104,Switch1,172.10.1.50,Cat9300,L2-SWITCH,show running-config,OutputLines,114
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show version,Uptime,2 weeks, 1 day, 9 hours, 41 minutes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show version,Version,Cisco IOS Software, IOSv Software (VIOS-ADVENTERPRISEK9-M), Version 15.9(3)M4, RELEASE SOFTWARE (fc3)
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show platform,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show platform,OutputLines,258
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show inventory,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show inventory,OutputLines,4
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show redundancy,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show redundancy,OutputLines,22
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip interface brief,Interfaces_Up,8
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip interface brief,Interfaces_Down,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip interface brief,Interfaces_AdminDown,1
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show interfaces description,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show interfaces description,OutputLines,12
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show interfaces status,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show interfaces status,OutputLines,4
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_Total,2
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_FULL,2
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Down,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Total,2
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Established,2
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Established,2
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Total,2
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show mpls ldp neighbor,LDP_Neighbors,12
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show mpls forwarding-table summary,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show mpls forwarding-table summary,OutputLines,4
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show mpls interfaces,OutputLines,5
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show vrf,VRF_Count,6
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip route vrf * summary,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show ip route vrf * summary,OutputLines,3
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show xconnect all,L2VPN_Up,1
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show xconnect all,L2VPN_Down,1
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show l2vpn service all,L2VPN_Up,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show l2vpn service all,L2VPN_Down,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Down,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Up,0
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show logging | tail 50,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show logging | tail 50,OutputLines,4
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show running-config,Captured,Yes
+postcheck,20260123_135104,SR203,172.10.1.203,ASR903,IOS-XE,show running-config,OutputLines,309
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show version,Version,Cisco IOS Software, IOSv Software (VIOS-ADVENTERPRISEK9-M), Version 15.9(3)M4, RELEASE SOFTWARE (fc3)
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show version,Uptime,1 week, 1 day, 9 hours, 3 minutes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show platform,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show platform,OutputLines,258
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show inventory,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show inventory,OutputLines,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show redundancy,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show redundancy,OutputLines,22
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip interface brief,Interfaces_Down,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip interface brief,Interfaces_AdminDown,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip interface brief,Interfaces_Up,7
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show interfaces description,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show interfaces description,OutputLines,18
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show interfaces status,OutputLines,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show interfaces status,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_Total,3
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_FULL,3
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Down,2
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Total,6
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Established,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Total,6
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Established,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show mpls ldp neighbor,LDP_Neighbors,18
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show mpls forwarding-table summary,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show mpls forwarding-table summary,OutputLines,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show mpls interfaces,OutputLines,8
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show vrf,VRF_Count,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip route vrf * summary,OutputLines,3
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show ip route vrf * summary,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show xconnect all,L2VPN_Up,1
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show xconnect all,L2VPN_Down,1
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show l2vpn service all,L2VPN_Up,0
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show l2vpn service all,L2VPN_Down,0
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Up,1
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Down,1
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show logging | tail 50,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show logging | tail 50,OutputLines,4
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show running-config,Captured,Yes
+postcheck,20260123_135104,SR201,172.10.1.201,ASR903,IOS-XE,show running-config,OutputLines,413
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show version,Version,Cisco IOS Software, IOSv Software (VIOS-ADVENTERPRISEK9-M), Version 15.9(3)M4, RELEASE SOFTWARE (fc3)
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show version,Uptime,1 week, 1 day, 8 hours, 37 minutes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show platform,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show platform,OutputLines,258
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show inventory,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show inventory,OutputLines,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show redundancy,OutputLines,22
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show redundancy,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip interface brief,Interfaces_Up,8
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip interface brief,Interfaces_Down,2
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip interface brief,Interfaces_AdminDown,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show interfaces description,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show interfaces description,OutputLines,17
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show interfaces status,OutputLines,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show interfaces status,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_Total,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip ospf neighbor,OSPF_Neighbors_FULL,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Up,0
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_Down,2
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip ospf interface brief,Interfaces_AdminDown,0
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Total,6
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show bgp summary,BGP_Neighbors_Established,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Total,6
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show bgp vpnv4 unicast all summary,BGP_Neighbors_Established,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show mpls ldp neighbor,LDP_Neighbors,23
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show mpls forwarding-table summary,OutputLines,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show mpls forwarding-table summary,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show mpls interfaces,OutputLines,9
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show mpls interfaces,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show vrf,VRF_Count,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip route vrf * summary,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show ip route vrf * summary,OutputLines,3
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show xconnect all,L2VPN_Up,1
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show xconnect all,L2VPN_Down,1
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show l2vpn service all,L2VPN_Up,0
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show l2vpn service all,L2VPN_Down,0
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Up,1
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show bfd neighbors,BFD_Sessions_Down,1
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show logging | tail 50,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show logging | tail 50,OutputLines,4
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show running-config,Captured,Yes
+postcheck,20260123_135104,SR204,172.10.1.204,ASR903,IOS-XE,show running-config,OutputLines,432
